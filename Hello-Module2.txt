@@ -336,3 +336,206 @@ $$$$ Hadoop
 	- make visualization by chart and graph of data
 	- more like make spark as data science tool for data scientist
 
+
+$$$$$ EMR Notebook, Security and Instance Type
+
+- like zeppline notebook in spark
+- access to s3, cluster
+- hosted on VPC, and can be accessed from aws only
+
+Use case :
+- create apache spark application and run query on it
+- supports python, pyspark, spark sql, sparkR, scala
+- in anaconda it is available so exploratory data analysis can be done on it with spark dataframe
+- notebook is not in cluster so you can spin up cluster from notebook
+- no charge for EMR customer, multiple users can use this notebook and explore spark on it
+
+EMR Security
+
+- IAM policies. can apply tagging based on cluster to access cluster by this policies
+- Kerberos - password incryption so p-data will not sent unencrypted -secret key cryptography technique used here
+- SSH(secure socket shell) - to connect to cluster via cmd, IAM roles - kerberos or ec2 key pair will be used to do client authentication
+- IAM roles like EMR service roles, auth roles, service linked roles how emr will access other aws services
+- every cluster in EMR must have service role and a role for amazon ec2 instance profile  - policies are giving permission on those roles
+- auto scaling role if your cluster has automatic scaling
+- service linked role is used for EMR if it lost ability to clean up EC2 resources
+- EMRFS service role is required to handle file system request on S3
+- If EMR integration with lake formation for automatic cluseter creation you can specify secuirty configuration as litte json snippet
+- Apache ranger integration from EMR - open source tool for data security on hadoop or hive
+
+Instance Types
+
+- Master node : if < 50 nodes then m4.large OR if > 50 node then m4.xlarge = total no of nodes on cluster
+- core & task node : general purpose solution  => m4.large = if something is cpu intensive but cant be accelerate on GPU
+- if task depends on external dependecy like web crawler = then small instance like t2.medium will work 
+- more performance m4.xlarge
+- high computation job - cpu optimized isntance type
+- database or memory caching app then high memory instances
+- heavy network / cpu intensive app line NLP or ML = cluster computer instances
+- Some AI stuff by using NN network then GPU instances(compute) like - g3,g4,p2,p3
+- Spot instance - for task node. As its data will lost. 	
+		- dont use on master or core node (unless you are testing or very cost sensitive app) 
+
+$$$$$ Feature Engineering
+
+- apply you knowledge of domain of data and extract better feature to train your data
+- Applied Machine Learning = Feature Engineering
+- select features wisely
+- to do feature extraction we can use PCA - required much computational power - its a dimensionality reduction unsupervised technique 
+- features created by it will just extract essence of feature - artifical features - not actual features
+- other UnSupervised technique is K-means clustering
+- send data in both algo and get smaller no of features by this technique
+- large features means curse of dimensionality
+
+*** Imputing Missing Data
+- Mean, Median and Mode value.
+- mean is average, median is robust to outlier, Mode is most occurance value for categorical feature
+- droppig row or using mean value to fulfill imputation is not best choice
+- if you are dropping some rows just take care those rows should not be biased - like highest salary/lowest salary, so poor/millinior people
+- some techniques :
+	KNN : find k nearest neighbor
+	      get the similar rows as row having missing data init. Get the average value from those rows and impute it	- eucledian distance will measure
+	      better approach  for numerical data. Not for categorical data as you can not find distance based nearest (one way though humming distance)
+
+	Deep Learning : For categorical data we can create one DLM to impute missing value - lot of computations and code and complexity yet best
+	
+	Regression : Multiple regression on other features in your dataset. By regression you can find linear/non-linear relationship between missing 
+		     feature and other features
+		     Advance technique MICE(Multiple Imputation By Chained Equation) - advanced so can be best technique to impute missing data
+
+- Better way is just get more data
+
+
+**** Handling Unbalanced Data
+
+- mainly a problem with nueral network
+- unbalancing of positive and negative data like fraud detection - least case are fraud
+- Oversampling
+	- duplicates the samples from minority class
+	- at random
+- Undersampling
+	- remove the samples from majority class - not good though at moral level
+	- throwing away data is not right thing todo unless you have big data and your hardware cannot handle it. You can do that- avoid big data scaling
+- SMOTE - Synthetic Minority Over-Sampling Technique
+	- it use k-nearest neighbor algo to artificaially generate samples from minority class - based on KNN-result(mean of neighbors)
+	- for unbalanced data SMOTE is good choice
+
+
+***** Adjusting Thresholds	
+
+- set some threshold value based on that you can say probability of positive or negative case
+- if too many false positive increase threshold 
+- it will decrease false positive but can be increase false negative too
+- choose threshold based on cost of FP vs FN
+
+
+***** Handling Outliers
+
+first know some definations - 
+
+$ Variance
+
+- Variance means - how spread-out the data is
+- variance = average(squared(difference(mean))) = sigma ^2
+- first find mean value
+- then find diff from each value - mean value
+- then find square of them
+- last find average of those - that is your variance
+
+$ Standard Deviation
+
+- SD means Square-Root of vairance = sigma
+- if variance is 5.04 SD = 2.24
+- SD is used to identify outlier 
+- one SD of mean => if mean is 4.4 then one SD is (4.4 + 2.24)  & (4.4 - 2.24)
+- you can specify that no of SD from mean and get to know outlier - like 1,2,3 SD away from Mean
+
+$ Dealing with outlier
+
+- think and make sense when trying to remove outlier from data - how it will effect whole model
+- ouliers are so much from same person rating or least from person rating
+- SD is one way to find out outliers
+- AWS has random cut forest algo to detect anomalies(outliers) in data or you can use 1.5 qunatile value to find outliers
+
+$ Binning
+- Take numerical data and transform into categorical
+- put each numerical data into certain range of category
+- why to do it : if some uncertainity in your values or measurement then applying binning
+- quantile binning : no of data point in each Q-bin will be same. so each Q-bin has the same size - it categorize the data by their place in data distribution
+
+$ Transforming
+- apply some function to features to make it better suited for training
+- exp(x)=e^x => exp(1)=2.718281828459  =>>>> where e is the base of the natural logarithm, 2.718281828459 <= called logerithmic transformation
+- numerical feature X can be represented by  SquareRoot(X) and X^2 too <= by this we can learn super and sub-linear function
+- so all three form can be passed to algo to get better result - X example apply in youtube recommandation system - for how long has it been since watch video
+
+$ Encoding
+- transforming data into new representation which is required by model
+- very common in Deep learning
+- OneHot Encoding 
+- in bucket so many categories. For values your category value will be 1 and other category will have 0
+- in DL all categories are represented by individual output neurons
+
+$ Scaling and Normalizing 
+- lot of model require their feature data normally distributed around 0(NN Model)
+- so those features can be comparable as they are in same  -1,0,1 range
+- otherwise feature with larger magnitude will have more wightage - not appropriate 
+- scikit has MinMax scaler , standard Scaler
+
+$ Shuffling
+- shuffle the training data
+- otherwise model will remember the order and performance will not as much good as we need
+
+
+****** Ground Truth
+
+- sometimes you dont have training data at all. 
+- you need human to generate it Exm : training the image classification, tag the objects in images
+- ground truth will manage who will label your data for training 
+- along with that GT will create its own model, and that model learn from those labels
+- as times goes on the model does not need to send all the images to human for labeling.. it can do by it self... it will just send those images which have ambiguous data in it will be send to human only... model becomes better by it self
+- like this it will reduce labeling job by 70 %
+- GT plus is AWS service where by some high level charges people from AWS will manage whole GT labeling task for you
+- any pre-trained model or unsupervised learning technique can be used to create this labels
+
+who are these labelers
+- amazon mechanical turk
+- your team
+- professional labeling companies
+
+$ other ways to generate labels
+
+- services by AWS
+
+1. Amazon Reckognition
+- Aws service for image reckognition
+- Automatically classify the images
+
+
+2. Comprehend
+- Aws service for text classification and topic modeling
+- classify text topic or sentiment associate with it
+
+
+
+*********** TF-IDF 
+
+- TF : how often the word occurs in given document
+- DF : how often the word occurs in all documents set which are given. examp: wikipedia/webpage
+
+Multiplication of 
+
+TF-IDF = TF * (1/DF) = it gives you how important and unique this word for this document
+
+- word frequency is exponential means it can increase explonentially as get more word in document. Its not fixed.
+- so we will use log for IDF - to give better weight to the word
+- TF-IDF has some issues
+	- it assumes documents is just a bag of words so it wont pay attension to the relationship between words 
+	- other problems like synonyms, abbreviation, tences, misspelling many more
+- Extension of TF-IDF is extended to bi-gram and tri-gram approach, n-gram too
+practicle based on TF-IDF
+
+- find TF-IDF for each term in corpus
+- for given search word sort TF-IDF score for that search term 
+- display result
+
