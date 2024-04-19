@@ -1,0 +1,332 @@
+Date : 15/04/24
+
+Deep Nueral Network
+- input + weight + bias terms + activation function => send to another no of layers => get the output result
+
+Types of NN
+
+1. Feed Forward Nueral Network : Basic
+2. Convolution Neural Network : For image classification
+3. Recurrent Nueral Network : Sequence in Time, predict the stock price, understand the words in sentence, translation. LSTM & GRU (flavour of RNN)
+
+Activation Function 
+- in side nueron it will sum up all incoming inputs and decide what output should sent out to the next neurons.
+
+1. Linear Activation Function : what ever input will be sent it will be sent as ouput so not very useful
+2. Binary Step Fucntion : When you need yes/no kind binary output then only you can use this. Not working with multiple category. It has Step
+3. Non Linear AF :
+	- complex mapping between input and output	
+	- Allow backpropagation - they have useful derivative
+	- Allow multiple layers
+
+1. Sigmoid/logistic : output between 0 & 1
+	- when goes toward to more 0 or 1 side the changes will be very small
+	- gradient will be small so output will be changed very little - called vanish gradient problem
+
+2. TanH/Hyperbolic tangent : output between -1 & 1
+	- when goes toward to more -1 or 1 side the changes will be very small
+	- gradient will be small so output will be changed very little - called vanish gradient problem
+
+- both are computationally very expensive
+- trigonometry used here which is not easy for computer to do it so if used it then algo will take more time to converge
+
+3. Rectified Linear Unit (ReLU) : Kind of Binary step but it has Slent	on positive side. Easy and fast compute.
+	- on 0 or - side inputs are there it will return 0 so it has dying ReLU problem
+4. Leaky ReLU : if input is < 0 => 0.01 * input - so on down negative side litter slaenting line you will get 
+	- it is solution for dying ReLu
+5. Paramtertic ReLU/PReLU : Slope here learn by back-propagation, computationally expensive 
+6. Exponential Linear Unit(ELU) : if negative -> alpha * (exponentiated(input) - 1). Exponential function on negative side. Kind of leaky relu but with Exponential function
+7. Swish : Created by google, you need 40 or more layers if you want ot see the benifits from swish, x * sigmoid(x)
+8. Maxout : output maximum of input, Relu is special case of maxout, ReLU = max(0 , x), Maxout double the parameters to train, so it is expensive.
+9. Softmax : For multiclass classification, in final layer of output, Convert output to probability distribution, can't produce more than one label. sigmoid can. Like if picture contains many things and you have to specify what they are sigmoid can do multiple label generation. 
+
+How to choose AF
+
+1. if multiclass classification - choose softmax
+2. if RNN choose TanH
+
+for all other things start with
+
+1. ReLU
+2. Leaky Relu
+3. PRelu or MaxOut
+4. swish - for really deep network
+
+Sigmoid will be appropriate if you wanna assign more than one classification at the same thing
+
+
+$$$ CNN
+
+- for images you can find features within it
+- machine translation          |
+- sentiment analysis           |  Feature location invariant
+- sentence classification      |	
+
+CNN inspired by human's visual cortex
+
+- we have individual local receptive fields that responds to specific parts that you see
+- your local receptive fields will scan your image and overlap with eachother looking for specific pattern that it can understand
+
+- it required higher level api like keras/tensorflow need to use
+
+for images data 
+width X length X color channles
+
+for Conv2D => for 2D image data - width, leangth
+for Conv1D => for text data
+for Conv3D => for 3D volumetric data
+
+MaxPooling - for 1D, 2D, 3D => it will reduce down the data dimension by taking maximum value in a given block. shrink images So it can reduce processing load on cnn
+Flattern - convertinto 1d to pass to the flatten layer of neurons
+
+Typical Use  - below are the layers
+=> Conv2D -> maxPolling2D -> Dropout -> Flatten -> Dense -> Dropout -> Softmax
+
+CNN are hard, resource insentive - CPU,GPU and memory requirement
+Lots of Hyper-parameters :  like kernel size, no of layers, amount of pooling, choice of optimizer
+getting training data and storing and accessing it are hard too
+
+For CNN specifically some specilized cnn architectures are there where HP tunning is well for particular problem
+
+like - 
+1. for handwriting recognition => LeNet-5
+2. for image classification, deeper thatn LeNet => AlexNet
+3. more deeper, better performance, with inception modules(group of Convolution layers) - GoogLeNet
+4. even deeper, maintain performance via skip connection - ResNet(Residual Network) => skip connection means diff kind of connection between perceptron layers to accelerate thing. Build upon the fundamental architecture of NN 
+
+ResNet 50 used widely for image classification and sagemaker 
+
+
+$$$$ RNN
+
+Time-Series Data
+- to predict future behaviour based on past behaviour
+- Web logs, sensor log(inputs from sensor - IoT), stock trades
+- where to drive self driving car based on past trajectories
+
+Data which consist sequence of arbitary length
+- machine translation
+- image caption
+- machine generated music
+
+
+- at diff time step recurrent NN will give some output for given input 
+- that output will be passed along with input to the next time step's input
+- as we want to perserve the info coming along with input tanH AF will be used for smooth curve 
+- these nueron will be called as memory cell as they maintain some info(sumup info) n send to next nueron
+
+RNN - can deal with sequence of data as it preserve memory
+
+types of RNN
+
+1. Sequence to Sequence - predict stock price based on histrocal data
+
+2. Sequence to Vector - get sentiment(pos/neg) out of word sequence input
+
+3. Vector to Sequence - create caption for image
+
+4. Encoder to Decoder - Sequence=>vector=>Sequence, machine translation
+
+Training RNN
+- its harder than CNN
+- as it introduce time-stamp based state of nuerons
+- as in previous all network only nueron based backpropagration was there 
+- but here BP through nueron and its state of time-stamp too
+- So these time-stamps can be looked like whole layers of nuerons while we train it.
+- so we need to train a deeper NN. N so cost of performing gradient decent on that deep network is increasing large
+- we limit back-propagation on limited no of time stamp - called truncated back-propagation through time.
+
+- in Rnn every time-stamp it goes on and state of older time stamp will be get dissolve getting thinner <- Main Problem in text problems(NLP)
+- LSTM - Long Short Term Memory - maintain long and short term state for data on each timestamp - takes more time to train than GRU
+- GRU - Gated Recurrent Unit - Simplified version of LSTM - so take less time than LSTM - input gate, output gate and forget gate are there to aggregate data on each time stamp, GRU popular
+
+- RNN are resource intensive as the are consisting time sensitive-state for each nueron.
+- very sensitive towards choice of HyperParameters
+- wrong choice of parameters or resource the RNN will not even converge at all
+
+
+$$$$ Transformer
+
+- based on attension mechanism
+- all input data from sentence will process sequentially like RNN but parallel manner all at once
+- in attension mechanism context is provided so no need to process one word at a time, this context allow us to process in parallel
+- weight will be significant in context to part of input word at a time
+
+Based on Transformer Architecture below models are there
+- BERT, RoBERTa, GPT-2, GPT-3, T5, DistilBERT
+- DistilBERT -> use knowledge to distilation(pre-train) reduce BERT model size by 40%
+- BERT - idirectional encoder representation from transformer - transformer based natural language processing model
+- GPT - generative pre-trained transformer - for chatGPT
+
+- All of these are pre-train model have hundreads of billions of parameters
+
+Hugging Face
+- Kind of repository for pre-train models
+- you cn use them directly or tune-in with your own training data
+- HF has integration with Sagemaker with HF deep learning container
+- HF offer deep learning container for BERT
+- bert is pre-trained on wikipedia and massive book corpus
+- you can use transfer learning and train this model by your own data
+- you have to start training with low learning rate with pre-train model 
+
+Transfer Learning
+1. fine tune pre-train model with large data you have using ----- low learning rate
+2. add new trainable layers on to the top of pre-train model - means old features and weights will be used to predict new result with help of new layer
+3. Train it from scratch - need more computation  and resources
+4. Use model as it is
+
+you can do both of them 1 & 2 with pretrain model
+
+
+$$$ Deep Learning on AWS
+
+on EMR & EC2
+1. EMR support apache mxnet and GPU instance type(they will do stuff parallelly)
+
+GPU instance type for deep learning - all are Nvidia chips
+
+P2,P3(expensive big task),G2,G	3(expensive big task)
+G5g - used in android game streaming
+P4d - A100 - Ultra-cluster means create cluster of thousands of P4d and can do supercomputing - massively huge like you can make chatGPT by using this
+Deep Learning AMI - amazon machine image - directly can be used - configuration you can select
+
+Amazon created some instance type to train large language models or NN network as below
+1. Trn1(powered by trainium2)  : 800 gbps of elastic fiber adpter(EFA - for fast networking cluster), optimized for training - savings are 50%
+2. Trn1n : more speed, 1600 gbps
+3. Inf1, Inf2
+	Inf2(powered by inferentia2): optimized for fast inference(getting result outof model) with help of custom hardware
+
+1, 2 hardware types are for training models
+3 hardware is for getting fast result outof model
+
+
+$$$ tunning model
+
+LR  : start learning at some random weight and get cost value, based on cost value it will try to minimize cost by using gradient decent method over epochs - weight and bais will be updated at each epochs to get minimum cost
+
+BatchSize - small batch size is most probably get better solution for weight and bias value, as it goes easily toward better solution quickluy
+	large batch size can get stuck in can not give you best solution.
+	choosing appropriate batch size is only option for you here
+
+small bs => will not get stuck in local minima
+large bs => will converge on wrong solution at random
+small lr => can lead to more time for training
+large lr => overshoot the correct solution
+
+$$$$ Regularization
+
+- to prevent overfitting : overfitting means give good accuracy on training data but not on validation/evaluation data set
+- deep NN can tends to overfit more often so we need regularization technique 
+- overfitt - you have complex model,many layers/nuerons can lead to it
+- use simple model - less nuerons/less layers
+
+Dropout
+- to prevent overfit
+- mainly used in CNN (agressive like 50% nuerons can be dropout)
+- remove(randomly) some of nuerons in model at each epoch while training
+- so model will not learn complex pattern 
+
+Early Stopping
+- accuracy on training data will increase, but on validation data after some epochs it wont get better
+- early stopping will automatically find that and stop training 
+
+L1, L2
+- prevent overfitting
+- L1 is sum of weights * λ => λ will control its value so
+	- perform feature selection
+	- entire features can goes to 0
+	- computationally inefficient
+	- sparse output
+	- you can reduce dimensions by this technique, computationally heavy but can makeup by giving you less no of features
+- L2 is sum of square of weights
+	- all features will be considered, just weighted differently
+	- computationally efficient
+	- dence output - not discarding anything
+	- when all features are important use this one
+
+- same idea can be applied to loss function too
+
+$ Handling Gradient Decent
+- slope of learning curve approch to 0 call vanish gradient problem
+- goes too slowly, so slow down training or give errors(numerical)
+- kinda problem for deep NN and RNN too
+- exploding gradient problem when slope is exploding with high value
+
+solutions
+1. multi level heirarchy : split deep NN layers and train onthose layers, then on another split and so on.which limits gradient go to 0 
+2. LSTM(for nlp), ResNet(for CNN) : Residual Network - ensemble networks for training
+3. Better choice for activation function like ReLU is best to solve GD problem
+   as RelU stays at 45 degree when it is positive which avoids numerical issues associated with GD(take derivatives to check)
+
+Gradient Checking
+- debugging technique
+- numerically check derivatives computed during training
+- useful for validating code for trainig NN
+
+$$ confusion metrics
+
+- for classification problem
+- TP,FP,TN,FN
+- True, False <= specify actual label
+- Positive, Negative <= specify predicted label
+- by heat-map multiclass confusion matrix 
+
+$$ metrics
+
+1. Precision : TP / (TP+FP), care about false positive, medical screening and drug testing
+2. Recall/sensitivity/completeness : TP /  (TP+FN) <= True Positive Rate, when you care about false negative. like fraud detection
+3. True Negative Rate/Specificity : TN / TN + FP
+4. F1 Score : 2 * (Precision*Recall / Precision+Recall) = harmonic mean of sensitivity, when you care about both precision and recall
+5. RMSE : Accuracy measurement, not care about rigth or wrong answer
+6. ROC - receiver operating characteristic Curve : 
+	Plot of True Positive Rate(recall) Vs. False Positive Rate at various threshold
+	points above diagonal is good classification
+	ideal curve will a single point in upper left corner
+	curve bent more towrds upper left corner will better
+7.  AUC : Area Under the Curve
+	area under roc curve
+	value towards 1 is great. less than 0.5 is useless
+	comonly used for comparing classifier
+8. P-R curve :  precision recall curve
+	good - higher area under curve is better 
+	better suuited for information retrival problem
+	and similar to ROC curve
+
+$$$$ Ensemble Methods
+
+- take multiple same type of models and get the result from all of it 
+- all model will have diff threshold, diff set of training data
+- decision tree are prone to overfitting 
+- they are used more commonly for ensemble method
+- its called random forest
+
+How to differ models for ensemle method
+
+@ Bagging
+
+- Random sampling with replacement
+- choose random datapoints create data set 
+- put all those datapoints back in main set and choose again by randomness
+- each model will be trained in parallel manner
+- vote on final result
+
+@ Boosting
+
+- training is sequential
+- in begining weight will be same
+- assign weight to each data points
+- wrongly predicted will get more weight than correctly predicted for next training
+- some will take part in next session of training
+
+How to choose between bagging and boosting
+
+- Boosting is very popular 
+- as it provides high accuracy
+- bagging avoid overfitting
+- boosting is sequential vs bagging is parallel
+	
+	
+	
+
+
+
