@@ -1146,7 +1146,7 @@ as specified in clarify
 
 27. Bias Metrics in Clarify
 
-Metrics are below
+Metrics are below - specify some bias in data and which needs to address
 
 1. Class Imbalance(CI)
 - data points which are from some class more than others, like age is class more data points where people are in their 20-30,less data in 50-60
@@ -1161,6 +1161,124 @@ Metrics are below
 
 4. LP-Norm(p-norm)(LP)
 - p-norm difference between distribution of outcome from different demographic user diverge
-()
-5. Total Variation Distance(L1-norm)
+
+5. Total Variation Distance(L1-norm)(TVD)
 - l1-norm difference between distribution of outcome from different demographic user diverge
+
+6. Kolmogorov-Smirov(KS)
+- Maximum Diverge between outcome distribution between different demographic user
+- same idea flip around in revrese from above
+
+7. Conditional Demographic Disparity(CDD)
+- Some demographic user group has more rejection than acceptance(disparity of outcome as whole or based on subgroup)
+
+
+28. SM Training Compiler
+
+- its only integrated with AWS Deep Learning Container(DLC) no other containers
+- compile & optimize training job only for GPU instances
+- can accelerate training upto 50%
+- convert model into hardware optimized instructions
+- tested with huggingface transformer library - so works pretty well with it
+- not compatible with SM distributed training library
+- best practise
+1. ensure GPU instance are used, like p3,p4
+2. PyTorch models must use PyTorch/XLA's save function for model
+3. enale debug flag in compiler_config parameter to enable debugging
+
+
+29. Feature Store
+
+- feature means processed columns which are used to train model and make prediction
+- in ML fast and secure access is required to feature to train and make prediction
+- they should be organized and sharable across the different models 
+
+### Where feature data comes from like from anywhere
+
+- SM data wrangler, glue databrew, EMR, glue, SM processing, sm pipeline, stepfunction, lambda, sm training, sm hosting, sm batch transform
+- SM Feature Store sit in middle of it and get and store features from those
+
+### how it organize your data
+
+- feature groups are there to organize them
+- record identifier, feature name, event time
+
+### Data Ingestion
+
+@ Stream Data
+- streaming data source like kinesis, apache kafka, spark, data wrangler 
+- PutRecordAPI & GetRecordAPI to write and read data in SM FS
+- its a online store - streaming store
+- It is online repository for features
+@ Batch Data
+- its a offline store
+- which create glue data catalog in s3 
+- we can access those data anytime 
+- it is batch/offline repository of features
+- it can be accessible by anything which can access s3 
+
+### security
+
+- everything is encrypted in rest and transit
+- can work with KMS master key
+- IAM based security
+- You can use AWS PrivateLink to make it secure
+
+
+30. SM ML lineage Tracking
+
+- it automatically create and store your ML workflows(MLOps)
+- it keep running history of models
+- tracking for auditing and compliance
+- automatically track or manually create tracking entities for tracking
+- integrate with AWS Resource Access Manager for cross account lineage
+- in form of artifact all result of ML process is stored and it can be tracked by SM ML LT
+
+###Lineage Tracking Entities
+
+Trial Component
+- processing job, transforming job, training job
+Trial
+- many trail components forms Trail
+Experiment
+- many trails form Experiment
+Context
+- logical grouping of entities
+Action
+- workflow step,model deployment
+Artifact
+- object or data like s3 bucket or image in ECR
+Association(between entities)
+- has association type like
+contributedTo, AssociatedWith, DerivedFrom, Produced, SameAs
+
+
+### Quering Lineage Entities
+- you can querying the lineage entities by LineageQuery API from Python - available in SM SDK
+- querying like do things like find all models or endpoint which use given artifact
+- product visualization by using external visual helper class from GitHub or any
+
+31. SM Data Wrangler
+
+- it prepare tabular and image data for ML
+- visual interface in SM studio to prepare data for ML 
+- import data
+- visualize data(check data)
+- transform data(more than 300 transformation are there to choose from) or
+  you can transform data by using pandas, PySpark, PySpark SQL
+- Quick Model feature to train a model with some less no of data and get result
+  by this you can transform data in different way and get better result
+- it can take data from anything like
+  s3, lakeformation, SM feature store, athena, redshift or any source which can be connected by JDBC like databrick or SaaS
+- it will give output to A SM Processing, A SM Pipeline, A SM Feature Store
+- mainly it will create python code for all ETL job for data - jupyter notebook output it will give
+- so it will produce code that will go into pipeline
+
+
+### TroubleShoot
+- studio user should has proper IAM role to access DW
+- Data Source permission is set for DW access -  you can use amazonsagemakerfullaccess policy
+- EC2 instance limit
+  if you are getting error "the following instance type is not available..."
+  means you have to increase your quota - like choose bigger instance  like m4,m5 xlarge or something
+- go to Service Quota => A SM => Studio KernelGateway Apps running on ml.m5.4xlarge
