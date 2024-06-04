@@ -64,6 +64,7 @@ etc
 
 @@@ Amzon Translate @@@
 
+- take text as input
 - Ofcourse for translation
 - support some custom Terminology like 
 	* In CSV or TMX format(standard format in MT)
