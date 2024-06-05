@@ -1,0 +1,365 @@
+Date : 04/06/2024
+
+ML IMPLEMENTATION & OPERATIONS
+
+
+@@@ SM & Docker Container @@@
+
+- every ML model and deployment into SM need to hosted inside a docker container which register with ECR
+- that can be anything like
+	- pre-built (DL, spark ml, sci-kit, TF, PT, MXN, chainer)
+	- your own training or inference code, or use pre-built SM algo 
+	- TF training will not get distributed across multiple machine automatically	
+	- for that framework Horovod or Parameter server will be used
+- from all of above you have to create docker container
+- so all SM model need docker image 
+- which specify some important things to run the model
+- like where model's code, and how its called, any lang it use
+- any script, any algo be used in SM
+- containers are isolated and holding all dependencies and resources to run
+
+- docker container built from docker image
+- docker image built from docker file
+- file will specify how to put all things together
+
+- docker image will (have all resulting code and resources) saved into repository
+- that repository is amazon Elastic container registry
+
+
+- two docker container one for model training(code) and model deployment(having inference code)
+- training data take from s3
+- train model with use of docker image of training code with available resources in image
+- trained model will be stored as artifact in s3 
+- deployment code in another docker images will be used to deploy model and create inference 
+- this deploy model container will have all info and required sources to deploy model and create interference
+- like no of endpoints that need to decide to give realtime inference
+
+* structure of training container
+
+opt/ml/
+- input
+	- config-> hyperparameters.json, resourceConfig.json
+	- data-> channel/inputdata
+- model 
+- code -> script files like train.py
+- output
+
+
+* structure of deployment container
+opt/ml/
+- input
+	- config-> hyperparameters.json, resourceConfig.json
+	- data-> channel/inputdata
+- model -> model files(for inference)
+- code -> script files
+- output
+
+
+* structure of Docker Image
+
+- WORKDIR
+	- nginx.conf : configuration file for NGINX frontend.we are running a web-server at runtime this file specify how to configure toit
+	- predictor.py: this program implement flask webserver for making prediction at runtime. customize this code for your application which will do runtime prediction from frontend
+	- serve/ : directory has program which will start when container will start for hosting. The file inside will launch G- unicornm server, which runs multiple intances of flask  application which specified in predictor.py script
+	- train/ : invoke the program when run container for training. for your own training algo modify code here.this directory structure is as above
+	- wsgi.py : small wrapper to invoke your flask app for serving result
+
+*** you can have separate  docker images for training and inference or you can combine them into one this dir
+
+*** assembling it in dockerfile as below
+
+from tensorflow/tensorflow2.0.0
+
+pip install sagemaker-training
+
+copy train.py /opt/ml/code/train.py
+
+#define some env variable to tell sm training to run train.py file
+
+ENV SAGEMAKER_PROGRAM train.py <= run the script which is inside opt/ml/code
+
+$$$ other Environmental variables  $$$
+
+SAGEMAKER_TRAINING_MODULE   => MXNET, TENSORFLOW kind of modules
+SAGEMAKER_SERVICE_MODULE    => MXNET, TENSORFLOW kind of modules
+SM_MODEL_DIR    	    => MODELS checkpoint will be saved and pushed in s3
+SM_CHANNELS, SM_CHANNELS_TRAIN/TEST/VALIDATION => channel from where train test validation data will come
+SM_HP, SM_HP_* 		    => hyper parameters for model tunning
+
+
+$$$ invoke docker images $$$
+
+cd dockerfile
+!docker build -t foo
+
+from sagemaker.estimator import Estimator
+
+estimator = Estimator(image_name='foo', role='SageMakerRole', train_instance_count=1, train_instance_type='local')
+estimator.fit()
+
+
+$$$ Production Variants $$$
+
+- by using this feature in SM you can test out multiple model on live traffic
+- if you want to roll out a new model, you can test new on production variant make it separate from current one
+- this variant can be comparable with existing one based on performance
+- you can set variant weight parameter which distribute traffic on variant model and you can do comparison
+- new variant can have 10% variant weight
+- if it perform well gradually you can increase that weight and ramp it upto 100%
+
+- this technic is called A/B testing
+- by this you can validate performance in real-world setting
+- offline validation are not always useful like recommendation system as user's behaviour changes on time
+
+
+@@@ SageMaker Neo @@@
+
+- deploy your SM model to edge devices
+- like embedded computer in your self driving car/smart camera like deeplence where you can deploy your trained model
+
+- Neo will compile your inference code to your edge devices
+- and optimize them for different devices which are embedded somewhere
+- train once and run anywhere - like as above
+- it supports architecture from Nvidia processor, ARM, Intel specialized in building deep learning enabled edge devices
+- this edge devices are embedded in your car or whatever you want
+- no need to go to internet to run inference from cloud you can do it from your local devices
+
+- SM neo is deploying the code of your trained ML model to the edge device that surrounding you
+- any deep learning code written in TF, PT, MXN, ONNX, XGBoost, Keras, DarkNet and optimize them to the specific devices
+  (recompile them towards the diff architecture that is reside in those devices)
+- Neo has compiler and runtime library 
+- compiler : recompile the code into bicode expected by edge processors
+- runtime : runs on edge devices to consume neo-generated code
+
+$$$ Neo & IoT Greengrass
+
+- Take Neo-compiled model and deployed it on https endpoints 
+- https endpoints are like c5, m4, m5, p2,p3 instances
+- they should be same as neo used to compile the model
+
+Greengrass 
+- it  a mechanism whereby you can deploy code to edge device
+- so by this your trained model will be get on actual edge device
+- so use SM to train model with data that model image will
+- will be compiled by neo
+- and deploy it on edge device by greengrass
+- greengrass uses the LAMBDA function to get inferences for device
+
+
+@@@ SageMaker Security @@@
+
+- IAM service - Identity and  Access Management - give only required permission to users not all
+- use MFA - Multi Factor Authentication - root/administrator account should use MFA
+- SSL/TLS - when to connect to anything - like connecting to EMR instance
+- Amazon CloudTrail - to log any activity related to API or USER - gives you audit trail
+diff CloudTrail and cloudWatch : Trail for auditing trail/log of the activity and Watch is monitoring log data and rise alarm if things goes wrong
+-Use Encryption - specially with PII = Personally Identifiable information in rest and in transit
+
+## At REST protecting data
+
+== AWS Key management service(KMS)
+- accepted by all notebooks and SM jobs who store the data in aws
+- data like training artifact, HP tunning, batch transformation, or coming from endpoints
+- all notebooks and everything under opt/ml and temp folder in your docker containers to encrypt data
+
+== S3	
+- securing training data and data which are used for hosting model use s3 default encryption technique at rest
+- s3 can use KMS too
+
+
+## At Transit
+
+- all traffic supports SSL/TLS within SM
+- Give IAM roles to SM to give specific permission to access resources
+- inter-node training communication traffic can be encrypted too - training on multiple node 
+	- can increase training time and cost of deep learning
+	- its called inter-container traffic encryption -  when multiple instances for training are used
+	- enable by console / api when training or tunning job setting up
+
+
+@@@  security for SM and VPC @@@
+
+- in SM training job will be run in VPC(virtual private cloud)
+- for more security you can use private VPC
+- SM needs to access s3 for training data and model artifact
+- if PVPC used the it cant access s3 directly - set s3-vpc endpoint to enable that communication
+- custom endpoint security and bucket policy will be used to keep that communication secure
+- SM notebooks are internet enabled - download data from internet - security hole
+- if you disable it - you need PrivateLink(interface endpoint) or NAT gateway which will
+- allow outbound connection so your model training(s3 access) and hosting can work
+- training and inference containers are also internet enabled 
+- here you can do network isolation but still you need access to s3
+
+## SM + IAM roles
+
+$ User Permissions
+
+-CreateTrainingJob,
+-CreateModel,
+-CreateEndpointConfig,
+-CreateTransformJob,
+-CreateHyperParameterTunningJob,
+-CreateNotebookInstance,
+-UpdateNotebookInstance
+
+$ Predefined Policies
+
+AmazonSageMakerReadOnly
+AmazonSageMakerFullAccess
+AdministratorAccess
+DataScientist
+
+$$$ Logging and Monitoring
+
+# CloudWatch
+
+- CloudWatch can log, monitor and alarm
+- can monitor invocation and latency of endpoint - imp for runtime performance
+- health of instance node like CPU, memory can be monitor
+- monitor GroundTruth - check howmany workers are working on my job - monitor performance of human doing labeling task
+
+# CloudTrail
+- do logging any actions made by user, roles, and services in SM
+- that log will be sent to S3 for later auditing purpose
+
+
+@@@ Resource Management in SM @@@ 
+
+if Deep Learning Model
+- use GPU instance like P3, g4dn
+
+for inference
+- use cpu instance C5
+
+if not deep learning model
+- can use m5 for trainin
+
+- it is also cost effective when single machine with multiple GPU rather than Many CPU instances
+
+## Managed Spot Training
+
+- can use EC2 spot instances for training which can reduce training cost upto 90%
+- machine translation models are very expensive to train - can be used spot instances here
+
+catch
+- spot instance can be interrupted any time
+- so use checkpoint at s3 so training can be pick up where it left off
+- this thing can increase training time as we have to wait for spot instance to become available
+- but its money saver
+
+
+@@@ SM with Elastic Inference (EI)- deprecated since April 2023 c@@@
+
+- money saver
+- at fraction of cost of GPU instance used to get inference from deep learning model
+- EI accelerators are used alongside a CPU instance (total cost will be lower than GPU)
+- instance like ml.eia1.medium/large/xlarge
+- EI accelerators can be used with notebook too to make it work faster
+- but EI only can work on deep learning framework only like TF, MXN, PT - for pre-built or custom model it will work
+- can work with ONNX- to export model to MXNet and after that it will be compatible with EI
+- can work with image classification and object detection pre-built algo in SM
+
+@@@ Automatic Scaling @@@
+
+- when deploy model in SM set scaling policy 
+- like target matrix, min/max capacity, cooldown period
+- so SM will automatically add more/fewer inference node to your deployment
+- so its money saver
+- work alongside cloudwatch and monitor performance of inference node and scale them up/down
+- auto adjust no of instance for production variants
+- scale up/down each production variants' need. so work based on individual production variants
+- make sure AS works well on test environment before moving it to production env
+
+@@@ SM + AZ @@@
+
+- SM automatically attempt to distribute instance across all AZ
+- so make your app much more resilient to failure
+- you need more instance for that, one SM can not distribute across AZ
+- so use multiple instance for each production endpoint
+- for VPC, configure VPC with at least two subnet at diff AZ
+
+
+@@@ Serverless Inference in SM @@@
+
+- pay per use pricing
+- specify your container, memory requirement and concurrency requirement
+- AWS will figure out which kind of hardware required for this specification
+- so capacity of your inference is automatically provisioned and scaled - great when u dont know which kind of traffic will be
+- infrequent, unpredictable traffic - can goes down to 0 when no request for inference
+- monitor by CloudWatch 	
+	ModelSetupTime : how much time will be taken to deploy your new inference model - as it scaled up/down
+	Invocation : if they have errors in them
+	MemoryUtilization :  to look for memory requirements for your container and concurrency is accurate or not
+
+@@@ Amazon SageMaker Inference Recommender @@@
+
+- if you want to deploy inference type instance then this feature will guide what type you can use
+- recommending best instance type and configuration for your model
+- automated load testing and model tunning
+- and deploy it at optimal inference endpoint based on result of those test
+
+How it works
+
+- Register your model in model registry
+- BenchMark diff endpoint configurations - we will try and check which will work good
+- for instance type - collect and visualize metrics -and decide which instance type work best
+- based on cost and latency you can decide which instance type you can use
+
+Two Modes it can run
+
+1. Instance Recommendation
+
+- run the load test on instances which are recommended and decide from that best one
+- it takes 45 min
+
+2. Endpoint Recommendation
+
+- custom load test
+- specify instance, traffic patterns, latency requirement, throughput requirement
+- takes about 2 hours
+
+@@@ SM Inference Pipelines @@@
+
+- use docker image of inference which use trained model and gives inference on ECR
+- you can use more than one container string them together in inference pipeline
+- linear sequence of 2-15 containers
+- these containers can have any kind of algorithms like pre-train, built-in or custom
+- combine pre-processing, prediction and post processing
+- you can use Spark ML or Sci-kit-learn containers
+- Spark ML can be used with glue or EMR and serialized on Mleap format
+- it can handle real-time or batch inference
+
+
+@@@ Mlops with SM and Kubernetes @@@
+
+Mlops = how i manage larger pipeline the workflow that surrounds building, testing, deploying ML models
+
+Kubernetes = Kubernetes is an open source container orchestration engine for automating deployment, scaling, and management of containerized applications. 
+
+so integrate SM in KN based ML infrastructure
+Tools for that
+- Amazon SM operator for KN : wrap SM operation so KN can see them and treat them like anything else CA
+- Components for Kubeflow pipelines : Kubeflow is capability of KN for MLops, define pipeline for event which happens. Like wrap whole process of building, deploying, testing, tunning  in MLops Environment
+
+- Hybrid ML workflow is enabled by this : Kubernetes ML workflow runs on premise by this integrate it with SM gradually - so Kubernetes env or Kubeflow pipeline can integrate with SM
+
+- install SM operator on amazon Elastic Kubernetes service - EKS
+- by that you can create SM job by using Kubernetes api
+- kube control is command line tool that start SM jobs
+- Kubernetes operator is application controller which will manage application on behalf of Kubernetes user
+
+$$ SM components for Kubeflow pipelines
+
+- Kubeflow pipeline runs on amazon EKS
+- diff SM components will be perform each step in Kubeflow pipeline
+- steps like processing, HP tunning, training, inference
+- Spark container will be used in SM processing other will be from SM
+
+$$ SM Pipelines
+
+- SM studios native MLOPs
+- as part of SM project you can create SM pipelines
+
+- Use code repository for building and deploying ML solutions
+- SM pipeline will define the steps for like data pre-processing, training, evaluate model, register model, monitor/update model, build image
+- SM project = SM Mlops - can create difficult workflow too

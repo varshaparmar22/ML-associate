@@ -1,0 +1,34 @@
+Date :  04/06/2024
+
+==> Build your own alexa
+
+-> input = speech , output = speech
+-> amazon transcribe -> amazon lex automated designer -> amazon polly
+
+==> Build your own universal translator
+
+-> input = speech , output = speech
+-> amazon transcribe -> amazon translate -> amazon polly
+
+==> Build your own celebrity detector
+
+-> input deeplence device and associate with recognition and fire alarm is show celebrity specified
+-> aws deeplence -> amazon recognition
+
+==> Build system to check people calling you are happy or sad or sentiment any
+
+-> input = speech, output = sentiment with score
+-> amazon transcribe -> amazon comprehend
+
+
+@@@@@@@@@@@@ model implementing @@@@@@@@@@@2
+
+accuracy => accuracy on training data
+val_acc => accuracy on unseen data <- to check overfitting check this it should be high for no overfitting
+
+- if overfitting do regularization based on algo we will choose
+- if cnn then choose dropout layer to overcome overfitting
+
+- high batch size will stuck model in local minima not good solution
+- high learning rate is also same overshoot the correct solution
+- small batch size required small learning rate
