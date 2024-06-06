@@ -474,4 +474,5 @@ like
 - very similar to ground truth - but do all in one plate
 
 @@@  AWS DeepLens  @@@
-AWS DeepLens is a cutting-edge, innovative device offered by Amazon Web Services (AWS) that combines the power of deep learning and Internet of Things (IoT) in a compact package. This smart video camera empowers developers with the ability to build and deploy custom computer vision models directly on the device itself.
+AWS DeepLens is a cutting-edge, innovative device offered by Amazon Web Services (AWS) that combines the power of deep learning and Internet of Things (IoT) in a compact package. 
+This smart video camera empowers developers with the ability to build and deploy custom computer vision models directly on the device itself.
