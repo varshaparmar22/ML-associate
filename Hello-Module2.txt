@@ -25,7 +25,7 @@ $$$$ Type of Data
 ## quntitative dataS
 - discrete data : iteger data - no of children, no of purchase, no of head flip, page load no
 - continuouse data : infinite possibility of data number like rain fall, salary, time, height,  stock price
-## categorical dataS
+## categorical dataS - nominal comes from "name" to help you remember
 - qualitative data (data dont have mathematical meaning)
 - binary(0/1)
 - colors
