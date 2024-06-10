@@ -1,4 +1,4 @@
-Date : 06/04/2024
+	Date : 06/04/2024
 
 
 Series : one dimesional structure - single raw from data frame
@@ -201,7 +201,8 @@ QS Pricing
 QS Visual Types
 
 - AutoGraph - based on properties of data - not filtered... you can use or apply your changes on top of it
-- for comparision & distribution  : Bar chart and histogram
+- for comparison : Bar chart
+- for Distribution: box plot and histogram
 - for checking changes over time : line graph, line chart, area line chart, stracked area line chart
 - for correlation :  Scatter Plot and Heat-map(gene expression values defined by heat map)
 - for aggregation : tree map(hierarichical data with nested rectangles), pie chart
