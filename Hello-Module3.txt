@@ -276,8 +276,9 @@ $$ metrics
 1. Precision : TP / (TP+FP), care about false positive, medical screening and drug testing
 2. Recall/sensitivity/completeness : TP /  (TP+FN) <= True Positive Rate, when you care about false negative. like fraud detection
 3. True Negative Rate/Specificity : TN / TN + FP
+   False Positive Rate : 1-Specificity
 4. F1 Score : 2 * (Precision*Recall / Precision+Recall) = harmonic mean of sensitivity, when you care about both precision and recall
-5. RMSE : Accuracy measurement, not care about rigth or wrong answer
+5. RMSE : Accuracy measurement, not care about rigth or wrong answer, used for regression model=> square root(sum((y-y^)^2)/n), prefered over MSE. specify how residual dispersed from mean. root(mean(square(error=y-y^)))
 6. ROC - receiver operating characteristic Curve : 
 	Plot of True Positive Rate(recall) Vs. False Positive Rate at various threshold
 	points above diagonal is good classification
@@ -324,9 +325,3 @@ How to choose between bagging and boosting
 - as it provides high accuracy
 - bagging avoid overfitting
 - boosting is sequential vs bagging is parallel
-	
-	
-	
-
-
-
