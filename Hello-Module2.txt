@@ -540,3 +540,6 @@ practicle based on TF-IDF
 - for given search word sort TF-IDF score for that search term 
 - display result
 
+TF ======= (no of occurance of word in doc / total no of words in doc)
+
+IDF ======  log (total no of doc / no of doc having that word)
