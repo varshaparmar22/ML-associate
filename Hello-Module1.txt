@@ -454,4 +454,67 @@ MQTT
 - getting data from sensors everywhere and feed data to repository
 - standard messaging protocol used in IoT world
 - MQTT is protocol to connect aws IoT device sdk
-	
+
+AWS CloudFront
+- it use edge location to cache content close to user to deliver with low latency
+- to access cache content
+- check if edge location has it, if not then
+- edge location go=>to regional edge location
+- then 	regional edge location go=>to origin
+
+AWS OUTPost
+- cloud service on-premise data center
+- run aws services and infrastructure on premise
+- low latency cloud service will be available to premise
+
+
+@@@ You can use incremental training to:
+
+Train a new model using an expanded dataset that contains an underlying pattern that was not accounted for in the previous training and which resulted in poor model performance.
+
+
+@@@ Transfer Learnig mode
+In transfer learning mode, the network is initialized with pre-trained weights and just the top fully connected layer is initialized with random weights. Then, the whole network is fine-tuned with new data. In this mode, training can be achieved even with a smaller dataset. This is because the network is already trained and therefore can be used in cases without sufficient training data.
+
+
+@@@ Support Vector Machine 
+(SVM) is a supervised machine learning algorithm that can be employed for both classification and regression purposes. SVM can solve linear and non-linear problems and work well for many practical problems. SVM creates a line or a hyperplane which separates the data into classes.
+SVM is used for text classification tasks such as category assignment, detecting spam and sentiment analysis. It is also commonly used for image recognition challenges, performing particularly well in aspect-based recognition and color-based classification.
+Since SVM can classify for non-linear boundary, so that’s the right option.
+
+@@@ EFS - Kinesis Data Analytics cannot directly write data into EFS, so this option is incorrect. -EC2 instance is needed for creating EFS
+
+@@@ Regression Model and Residual
+- residual = Y - Y^ = R
+
+- R should be independent and random and unpredictable and plotting its value on graph it form bell shaped curve. It will have constant variance.
+- then it will be appropriate linear regression model
+- if residual shows increasing or decreasing trends as potting x value and residual then that residual will not have constant variance
+- then that model will not be fit for linear regression type
+
+
+@@@@@ shards calculation
+
+number_of_shards = max (incoming_write_bandwidth_in_KB/1000, outgoing_read_bandwidth_in_KB/2000)
+
+where
+
+incoming_write_bandwidth_in_KB = average_data_size_in_KB multiplied by the number_of_records_per_seconds. = 500 * 2 = 1000
+
+outgoing_read_bandwidth_in_KB = incoming_write_bandwidth_in_KB multiplied by the number_of_consumers = 1000 * 7 = 7000
+
+So, number_of_shards = max(1000/1000, 7000/2000) = max(1, 3.5) = 4
+
+So, 4 shards are needed to address this use case.
+
+@@@@ AWS fargate
+
+AWS Fargate is a technology that you can use with Amazon ECS to run containers without having to manage servers or clusters of Amazon EC2 instances. With AWS Fargate, you no longer have to provision, configure, or scale clusters of virtual machines to run containers.
+
+@@@ AWS cloudFront
+
+Amazon CloudFront is a content delivery network operated by Amazon Web Services. The content delivery network was created to provide a globally-distributed network of proxy servers to cache content, such as web videos or other bulky media, more locally to consumers, to improve access speed for downloading the content.
+
+@@@ AWS Direct Connect
+AWS Direct Connect is a networking service that provides an alternative to using the internet to connect to AWS. Using AWS Direct Connect, data that would have previously been transported over the internet is delivered through a private network connection between your facilities and AWS.
+ 
