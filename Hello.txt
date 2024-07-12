@@ -1,0 +1,623 @@
+Date : 18-2-2024
+
+
+Migrating to Cloud will bring you 
+
+-Speed
+-Scale
+-Innovation
+-Productivity
+
+
+Shared Responsibility of AWS and Customer
+- AWS : operate, manage and control host operating system, physical security of facility in which service operates.
+- Customer :  mange guest operating system, updates, security patches, associates application software, configuration of aws provided security.
+
+
+JOb Roles
+
+Cloud Architect :
+Deliver overall cloud strategy, incharge of entrire cloud environment, supervise the deployment in cloud environment and application architecture for all aspects of cloud.
+- how services are connected and integration of services - understanding
+- Amazon CloudWatch logging - understanding
+- AWS Identity and Access Management an security associated with it - understanding
+
+System Administrator :
+responsible of overall cloud performance, manage configurations, completing detailed task, assist DB admin for setting up DB environment in cloud.Deploying, configuring, monitoring hybrid and cloud solutions. Proeficient in configuration mangement, deploying planning, completing detailed task, requirement gathering.
+- configuration managing, updating, requirement gathering and deploying according to that.
+
+
+Security Administrator:
+SA 's primary task is to handle security in the cloud(which is custonmer's task)
+intigrity, confidentiality and protections of data and resources in cloud.
+define security requirement based on companies need. 
+- understaing of all security rules and  regulation applicable to the business.
+- communicate with developer to apply those rules as per business requirement.
+
+
+DevOp Adminstrator:
+optimize the use of AWS cloud.
+Orchestring the Pipelining so must have knowlegde of Programming lang, QA, Testing, Operations and manage developer and  database team.'
+Orchestring the tools and pipelining Stages.
+
+
+
+
+###################### AWS Cloud Practitioner Essentials ##############################
+
+
+*Cloud Computing*
+- On demand delivery of IT resources over the internet as-pay-as-go strategy.
+
+Deployment Types provided by Cloud Computing
+1. Clous based Deployment - run all component of app in cloud. Either migrate to cloud or create new app in cloud
+2. On-premise Deployment - Private Cloud Deployment - deploy the resources by virtualization and resource mangement tool - increase resource utilization by using application management and virtulization technologies.
+3. Hybrid Deployment - Connect or integrate to cloud resource with on-premise application infrastructure or legacy IT applications.
+
+
+*Amazon EC2*
+
+- on demand virtual server provided to you- this service is EC2 - flexible, fast, cost effective
+- sharing the hardware or resources by all the applications called multitanency
+- amazon provide secure, resizable compute capacity in form of EC2 instance - in cloud.
+
+for EC2 Instance 
+Launch - create and configure instance
+Connect - connect to instance via program or other way
+Use - start accessing data or installing software or other lib as per your need.
+
+*EC2 Instance Types*
+
+1. General Purpose Instances : good balance of memory, compute and networking resources. - if need balance in everything can be used in any application
+
+2. Compute Optimized Instances : for compute bound application. give you a high performance processor. like gaming server.
+
+3. Memory Optimized Instances :  They give you fast performance where you need to load large data in memory and use it. memory will hold all data and instructions for cpu to process the data. 
+
+4. Accelerated computing Instances(begin to move more quickly) : provide access to hardware accelerator or co-processor for some computing to accelerate - which not that efficient in normal cpu. - graphic processing, floating point calculating, data pattern matching.
+
+5. Storage Optimized Instances: workload which require high, sequential read and write access to large dataset in local storage. like
+distributed file system, data warehouse application, high frequency online transaction processing(OLTP) system.
+- input output per second performace (IOPS) will measure performance of storage device. 
+- if you need high IOPS use storage optimized instances.
+
+*EC2 Pricing*
+
+1. On Demand : for short-term or irregular workload. No interruption, no uofront cost, pay for only compute time used. run until you stop.
+
+2. Reserved Instances :  Discounted billing on in-demand workload as it has some term set like 1-3 years plan
+	
+	1. Standard Reserved Instance : Instance Type, size, os on run to,  and region if you know. Use this. 
+	2. Convertible Reserved Instance : Diff type of EC2 instnace or Diff availability zone in whihc you want to run instance then use.
+
+3. Saving Plan : can be usable when you choose instance family and region for hourly base. upto 72% saving on on-demand cost. regardless of os, availability zone, size and tenancy(possession on)
+
+4. Spot Instance : workload can have flexible start and end time, can handle interruptions, cost saving 90%.  you can get ec2 instance whihc are not in use, but once some one want it they can get it back 2 min prior warnnig to finish your running task. 
+
+5. Dedicated Host : physical server provided with EC2 instance only for your use. 
+
+
+*EC2 Scalability*
+
+- Scaling in/out if resource demand is changed more/less.
+
+Amazon EC2 Auto Scaling
+
+Dynamic Scaling : for changing demand scale up/down.
+Predictive Scaling : on predictive demand allocate no of ec2 instance on timely manner
+
+for fast scaling use both option in you app.
+
+computing power is prgramatic resource. if you need it more/less you will need more/less instances. This scaling can be set by setting auto scaling group. In which you will set minimum, desired, maximum instance no. Launch with minimum no of instance.
+
+
+*Elastic Load Balancing*
+
+- Distribute incomming application traffic to multiple resources like ec2 instances. A single point contact for all incoming traffic to distribute.
+- All request route to load balancer first and request will be handle according to it. Either from frontend or from backend
+- frontend the request for ec2 instance use, from backend notifiying the ec2 isntance is generated and direct traffic according to it.
+- it is kind of host - directing everything to balance load on all resources.
+
+
+*Messaging and Queuing*
+
+Communication sevice between application's component like web server, database server, amazon lambda funs, business logic, user interface.
+this kind of application's components are connected to each other then this app is called decoupled app or microservice
+
+# Amazon Simple Queue Service
+- You can send, store and receive message without losing it or requireing other service to be available to recieve it instantly.
+- send, recieve, retrive, process and delete the message after processing by app component.
+
+# Amazon Simple Notification Service
+- publish/subscribe service
+- By this publisher will publish message to all its subscriber like say exa - new product launch, discount info
+- like app component has subscribe for publisher then will receive message from it.
+- can send message, email, http requests too
+
+
+*Additional Compute Services*
+
+in EC2(virtual server) => get the instances, upload code, and manage configuration of instances to run your application.
+
+# serverless
+
+- you dnt have to specify instance or manage them to run your code.
+AWS Lambda is serverless 
+- just upload the code, it will learn and manage all resources for you.
+- set the trigger for code to run like some event source. 
+- code will run only when triggered.
+- pay for compute time used to run
+
+
+# containers
+- you can package your code and dependencies into a single object. 
+- to have security, reliability and scalability you can use containers.
+- one os and server can handle multiple containers.
+
+Amazon Elastic Container Service(Amazon ECS)
+- It support docker container service 
+- docker is software platform to build, test and deploy application
+- By api call to Amazon ECS it will launch/stop docker application
+
+Amazon Kubernetes Service(Amazon EKS)
+- Kubernetes is open source software to deploy and manage your application.
+- large no of volunteers mange Kubernetes services.
+- all kubernetes features and fucntionalities are available on EKS managed applications.
+
+
+AWS Fargate
+- serverless compute engine for container services like ECS and EKS
+- Manage and run your application.
+
+
+
+*Global Infrastructure and Reliability*
+
+Regions
+Chossing a region for your application or data storage 
+
+1. Compliance(Where you want to launch your app)
+2. Proximity(Region from whihc more customers are there)
+3. Feature Availability(Some region have some features, some dont)
+4. Pricing(Service prices are varies based on region selected)
+
+
+Availability Zone
+- one or group of availability zone are there in a region.
+- availability zone consists data center one or more
+- run your application in atlease 2 availibilty zone in a region. - so disater can not effect on your running application.
+- when you launch a ec2 instance it create a virtual server on  a physically located hardware in one of availability zone of your region.
+- so one region has multiple availability zone having multiple hardware. 
+- availability zone == ( single data center and hardware story or group of data center and hardware story)
+
+Many aws services run at region level.
+Means this service run in multiple availability zone synchronyously like Elastic Load Balancing.
+
+
+Edge Location
+- it is a place where amazon cloudfront use to store cache copy of your content for your nearby customer for fast delivery of data to them.
+
+AWS Outpost
+- small kind of region for dedicated customer site. 
+- compute and store capacity deployed at customer site.
+- aws operate, monitor and manage like part of aws regions
+- you can create your subnet and use them when createing aws resources like ec2 instance, ebc volume, ECS cluster, RDS instances
+
+
+*COnnect to AWS*
+- everything in aws is api call.
+
+four different way to interect with aws
+
+AWS
+1. Management Console - console provided by aws - click and go- prone to error
+2. Command line interface - run prewritten command to make api call
+3. Software Development Kit - by programming lang you can create api request. which we always do developers.
+4. aws managed services like Cloud Formation, AWS Elastic Beanstalk
+
+AWS Elastic Beanstalk
+
+- provide your app code and configuration settings
+- beanstalk deploy the resource to perform task like - 
+- load balncing, 
+- app delpoying, 
+- save configuration to create environment again whenever need, 
+- adjust capacity
+- automatic scaling
+- app health monitoring
+- all api calls managed and done by beanstalk
+- creating and managing security group, auto scaling group, load balancing for db and ec2 instances.
+
+Aws cloudformation
+
+- cloudformation templates in json or yaml lang.
+- declare all your required resources in this template
+- cloudformation engine will create all those resources specified in template for you.
+- it is a code tool.
+- not need to give details how to built the resources
+- can work in database, storage, analytics, ML requirements too
+- cloudformation will manage all api calls
+- this template can be run in any region, it will create the whole environment specified as in code template.
+- can roll back operation if any error is there.
+
+
+
+
+*Networking*
+
+VPC - Virtual Private Cloud : logically isolated section in which we can launch amazon resources. This resources either public or private
+
+this public and private grouping is called subnet. Public subnet, Private Subnet. They have their own IP address in VPC
+
+- VPC is private network of your own in aws Cloud - isolated section of cloud for you only.
+- in VPC your resources are in private or public subnet. 
+- if public resources then internet gateway is accessible door for public(internet) to connect to your resources
+- if private resources are there only then virtual private gateway is a doorway.
+- virtual private Network connection will be done between your private neatwork(datacenter or corporate network) virtual private cloud.
+- route using for reuqest is same as public route for reuqest, so may be some times busy too.
+
+this busy route because of public internet connection you can use other direct connect service of AWS
+regular internet connection sharing same bandwidth as public use
+
+AWS Direct Connect
+- a dedicated private connection between amazon VPC and your private network
+- private dedicated network connection for your network to aws VPC
+- direct physical line between your network and aws VPC
+- reduce network cost and increase amount of bandwidth.
+
+
+*Subnets*
+- based on operational need and security of resources they are grouped in private or public group called subnet in VPC.
+- Private subnet, public subnet.
+- public subnet can have store website whihc is accessible publicaly
+- private subnet can have the databse.
+- all subnet can communicate with eachother.
+
+# Network ACL(Access control list)
+
+- virtual firewall for in/out traffic at subnet level
+- stateless(every time it check for in/out traffic of same packet)
+
+all in/out bound traffic are allowed for account's default netwrok.
+for custom network all traffic denied if rules are not specified.
+if rules related to packet is not there that in/out traffic will be denied too
+
+# Security Group
+
+-virtual firewall for in/out traffic at resource level inside the VPC - like for EC2 instance, Databse
+- all in/out traffic will be deined if rules are not specified
+- Statefull(for incoming packets they remember previous decision made to allow in.)
+- traffic go from security group to outside and once again come back to same security group it will remember the traffic and let it in.
+
+
+Global Networking - how customer will interact with your web application
+
+*AWS route 53*
+- AWS Domain Name Service
+- it translate website nanme into the IP address.
+- it has diff routing policies
+- by that route geolocation, geoproximity, weithed round route, latency route.
+- you can register your domain name by this service too.
+
+*Amazon CloudFront*
+- it use content delivery network (CDN) network which helps edge location to deliver content to the customer based on their geolocation.
+- it is service combine edge location, CDN to delivery content to proximity customer.
+
+
+
+*Module 5 : Storage and Database*
+
+Instance Store  - temporary storage available and attached to ec2 instance and same lifespan as ec2 instance. temporary storage.
+
+EBS - Elastic Block Store - virtual hard drive - behave like physical hard drive - EBS volume - attach to EC2 instance
+EBS - seperate drive from host computer of EC2 instance.
+snapshot - EBS volume's incremental backup - take regularly - last resent changed data will be saved - (full backup - all data will be saved everytime)
+even if teminate ec2 instance data will be stay in EBS so can be used by other instance.
+
+
+Amazon S3 :
+Data store and retrive - data stored as object in bucket, max file size 5TB, version the object for accidental deletation. you can create multiple bucket.
+Object - have data, metadata(for data search, what data, size, how to use), key
+in object if file is updated entire object will be updated.
+
+Archive(Preservation)
+
+S3 storage classes(Simple storage service)
+s3 is web enabled - whole static website can be stored as html files in s3. API call db
+
+1. Standard : frequently access data store, store in atleast 3 AZ. Higher cost to save
+2. Standard Infrequent Access: infrequent data store, lower storage price, higher retrival price, store in atlease 3 AZ
+3. One Zone InFrequent Access : one AZ storage, lower storage price than SIA(2 option)
+4. Intelligent-Tiering : for data which has changing or unknown access pattern. Moving data object based on access pattern, if frequent than in 1, not frequent than in 2 group.
+5. Glacier Instant Retrieval : immediate retrival require than use(in few milliseconds)
+6. Glacier Flexible Retrieval : archive data on low cost(old photos, files, customer records), retrival will be few minutes to hours.
+7. Glacier Deep Archive : lowest cost for archives(long term), retrive data within 12 hours, whihc are accessed once or twice in year. - all objects stored in atleast 3 AZ.
+8. S3 outpost : create s3 bucket at customer's site(outpost), easy fast access, store, retrival for data for outpost.
+
+S3 Vs EBS
+- if you want to use whole object and/or occssional changed in object data than s3 will be win(as if change whole object will be re-write again)
+- if you wan to do complex read, write, change on data frequently than EBS will win
+
+
+EFS(Elastic File System)
+- shared file system data(large) storage. multiple ec2 instance can access EFS at the same time. scaling and replication done by aws.
+
+EBS vs EFS
+
+- ec2 and EBS attached in same AZ, storage volume is fixed not scaled up or down as per need.
+- its regional resource, actual file system on linux server, many instance can write in EFS, scale up/down as per need. can store data on multiple AZ.
+  by Amazon Direct connect it can be accessible as it is in many AZ
+
+EFS is ideal for when large no of resource or services need to access same data at the same time.
+
+
+# Amazon Relational Database Management Service(Amazon RDS)
+- Run Relational Database in cloud 
+- can connect to AWS lambda for quering data
+- security offered by encryption of data on storing, transit(sending, recieving)
+- Supports DB engines like - 
+1. amazon aurora
+2. PostgreSQL
+3. MySQL
+4. Oracle
+5. MariaDB
+6. Microsoft SQL Server
+
+#Amazon Aurora
+- relational db
+- faster than MySql, PostgreSQL
+- six copy of data across 3 AZ
+- backup data to S3
+- high availability
+
+
+# Amazon DynamoDB
+- Serverless DB
+- Non-relational DB
+- key-value pair of data storing
+- No row and column structure to store data.
+- simple schema not like Mysql, PostgreSQL
+- relation not spreaded accross too many table, so accessing is fast. highly scalable and available
+
+
+# Amazon RedShift
+
+- Db warehousing service. You can access big data out of it. 
+- if you wnt to look up in past data(your app need ) - you can use this service.
+- very fast
+- can store data from multiple resource
+- you can understand relation between all data.
+
+# AWS Database Migration Service
+1.  Homogeneous MS
+
+both source and target db are same type
+same schema, same data types, same structure
+
+2. Heterogenous MS
+
+both source and target db are diff type
+first convert schema and db structure to target type and migrate
+
+- Development and test migration : test appication with production data without effecting production user
+- DB Consolidation : merge many db in single db
+- Continous Replication : continuous on going migration of data instead of single migration from source to target.
+
+
+# Additional DB Service
+
+Amazon Document DB - supports MongoDB program. Document based storing db system
+Amazon Nuptune : Graph DB service - highly connected db like recommandation system, knowledge graph, fraud detection
+Amazon Quantum Ledger Database(QLDB) - ledger  db service - you can view history of all changes made to your db
+Amazon Managed BlockChain - create and manage blockchain network on db by this service. blockchain means multiple parties can run transaction and share data witout any central authority.
+Amazon ElastiCache :  create cache layer on your data to improve response time. supports Redis, Memcached data stores
+Amazon DynamoDB Accelerator(DAX) : in memory cache of dynamoDB to improve response time from milli to microsec
+
+
+*AWS Shared Responsibility Model*
+
+AWS - security of the cloud
+Customer - security in the cloud
+
+AWS handles - Physical, Network, Hypervisor
+
+physical - AZ, Region, Edge location, hardware/aws global infrastructure, compute, storage, database
+Network - Networking
+Hypervisor - software
+
+Customer has to handle - OS, Application, Data
+os - os , network and firewall configuration
+application - platform, applcation, identity and access management
+Data - customer side data encryption, server side encryption, network traffic protection
+
+# user permission and access 
+
+root user(can be authenticated by multi factor authentication)
+= all access
+
+AWS IAM (Identity Access Management)(talking about one single AWS account)
+
+default created user
+= no access at all at start, just give access
+
+policies(document describe permission for service and resources)
+= can be attached to users and group.
+
+IAM role(temporary access to permission)
+= user can gain temporary access to the permission.
+
+
+# AWS organization(Talking about multiple AWS account)
+- central location to manage multiple AWS accounts
+- once created root will handle all this management
+- you can create organizational unit in which you can place these account. 
+- for that ou you can specify service control policies (scp) for giving access to service and resource to OU
+- consolidate billing is advantage of aws o
+
+
+
+# AWS Artifact
+- on demand access to aws security and compliance report
+- select online agreement.
+- AWS artifact agreement and AWS artifact Report
+
+- if you have to sign some agreement related to info which u r using by AWS services. u can use AWS artifact agreement
+- if you want info about some regulatory standard reports  u can use AWS Artifact reports.(written by third party auditors)
+reports based on security standard and regulation
+
+#Customer Compliance Center
+- have the resources by which you can learn more about AWS compliance
+
+
+#Distributed Denial of service(DDOS)(distributed means many request from diff ip address comes - seperate machines say by army of attackers)
+DDOS attack - overwhelming application so it can not longer respond and work and becomes unavailable for other users.
+
+types of attack
+- UDP flood - sender send request for some simple request to the return address of your system. System will flood with unrequired data - more ec2 instance on more AZ or region can handle this kind of attack already
+- HTTP request attack
+- slowloris attack - Elastic Load Balancer(region level work) handle it
+- AWS shield with AWS waf(web application firewall) - ML capability detection of attack
+
+# AWS Shield
+- protect against DDOS attack
+- two level of protection
+1. Standard : 
+	free of cost and protect all AWS customer, use techniques find malicious traffic and mitigate it
+2. Advanced : 
+	Paid service, can be attached to WAF to mitigate complex attack
+	it can integrate to cloudfront, elastic load balancer, route 53 for mitigating more sofisticated attacks
+
+# Additional Security Services
+
+@ AWS Key Management System
+- key for using encryption and decryption of data.
+- management of this keys done by KMS
+- keys stays in KMS so it is secure too
+
+@ AWS WAF(Web application Firewall)
+- monitor the network request that come to your web application
+- work with amazon cloudfront and application load balancer.
+- use web access control list to protect resources 
+
+@ Amazon Inspector
+- Automated security assessment service
+- inspector do assessment and list the finding and also suggest the resolution of it.
+
+@ Amazon Guard Duty
+- intelligent threat detection for your aws service and resources.
+- continuous monitoring on your network activity, account behaviour in aws environment
+- on aws management console you can check this finding. 
+- can attach lambda func to do some remediation step in response to those findings
+
+
+*Module 7 :  Monitoring and analytics*
+
+* Amazon CloudWatch
+- access all metrics and logs from on location
+- configure alarms action based onthose metrics data(set threshold value and associate alarm by that).
+- metrics are like data points(attributes) of AWS resources.
+- metrics will be sent by AWS services, and cloudwatch create graph based on those metrics values.
+- Cloudwatch dashboard is live page showing all metrics for your resources.
+- cloudwatch alarm can be integrated with sns service so SMS can be sent too
+
+
+* AWS CloudTrail
+- Records all api call for your account. in log
+- save log in s3 buckets - with vault lock security on it.
+- within 15 min after api call it is logged in cloudtrail
+- cloudtrail insight - detect unusual api activity in you account.
+
+
+* AWS Trusted Advisor
+- inspect aws environment and provide real time recommandation for aws best practise.
+- five categories it will check
+1. Cost optimization
+2. Performacance
+3. Security
+4. Fault Tolerance 
+5. Service limits
+
+by this recommandation you can start taking action to optimize your aws account.
+
+*Module 8 : Pricing and Support*
+- if you have multiple aws account under aws organization then consolidate billing will send only one bill to owner
+- which specify billing amount account vise but in one bill.
+- max account for billing is 4
+- share bulk discount pricing - means all account usage can be aggregated and if discount is apply on that then that discount plan can be used by all account in same conslidated billing organization
+
+
+# AWS Budget
+- create budget and set threshold, and you will get notification if cost goes beyond your budget threshold
+
+# AWS Cost Explorer
+- you can visualize, manage, understand your cost and usage over time.
+- you can generate report of cost and usage too for top 5 cost accuring services
+
+# TAM technical account manager - comes in picture if you have enterprice level support plan
+
+# AWS MarketPlace
+- a digital catalog displays list of all third party software from different vendor that you can test and purchase and run in your aws
+
+
+*Module 9: Migration*
+- hosting in AWS called migration
+- AWS Cloud Adoption Framework(CAF) - help to do smooth migration to AWS
+- give you action plan for migration
+
+six perspective to take care while migrating to aws
+Business
+people
+Governance
+Security
+Platform
+Operations
+
+
+Six strategies for migration
+1. Rehosting - lift and shift for hosting - no changes in code
+2. Replatforming - changing just appropriate platform like MySQL  =>  RDS MySQL
+3. Refactoring/Re-architechturing - add new features by adding code 
+4. Repurchasing - like which s/w contract is about to die, purchase appropriate on AWS  related s/w - new product
+5. Retaining - some app are about to deprecate nearby time, chose wisely to migrate them to AWS, mostly dont
+6. Retiring - ending some app which are not in use or already replaced by some other
+
+
+# AWS SnowFamily - physical devices - transport data to and out of AWS
+
+* SnowCOne
+- 2 cpu, 4gb memory, 14 TB storage
+
+* SnowBall
+Two devices
+
+1. Snowball Edge Storage Optimized
+- 80 TB HDD(Hard disk drive)
+- 1 TB SSD(solid state drive) for block storage
+- 80 GiB Memory
+- 40 vCPUs
+
+2. Snowball Edge Compute Optimized
+- 80 TB HDD
+- 28 TB for block storage
+- 416 GiB memory
+- 104 vCPUs
+- optional Tesla GPU
+
+
+* SnowMobile
+- 100 PetaByte 
+- data can be transfer(in container) by semi trailer truck 
+
+
+# AWS Well- Architected Framework
+
+six pillar for well architected framework
+
+1. Operational Excellence - run and monitor sytem efficiently - workload run effectively and gain insight into operation
+2. Security - protect information, system and asset 
+3. Reliability - recover from infrastructure or service distruption, dynamicaly get computing resource, handle misconfiguration and network issue. Workload perform its itended function correctly
+4. Performance Efficeincy - use computing resources efficiently and maximize performance even demand and technoloy change
+5. Cost Optimization - run the system and deliver business value at lowest price
+6. Sustainability - minimize energy usage, minimize resource required and maximize efficiency of all components of workload
+
+###################### AWS Cloud Practitioner Essentials ##############################
