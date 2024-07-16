@@ -265,6 +265,7 @@ for word2vec
  - negative_samples
 
 *text classification
+ - mode : supervised
  - learning_rate
  - epochs
  - vector_dim
