@@ -325,3 +325,10 @@ How to choose between bagging and boosting
 - as it provides high accuracy
 - bagging avoid overfitting
 - boosting is sequential vs bagging is parallel
+
+### Learning Rate
+- constant value used in SGD algo
+- it is speed by which your algo will reach to optimal weight
+- size of update is also based on LR
+- too large will overlook optimal weight 
+- too small take more time to reach to optimal weight - large training
