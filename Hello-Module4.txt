@@ -1283,3 +1283,19 @@ contributedTo, AssociatedWith, DerivedFrom, Produced, SameAs
   if you are getting error "the following instance type is not available..."
   means you have to increase your quota - like choose bigger instance  like m4,m5 xlarge or something
 - go to Service Quota => A SM => Studio KernelGateway Apps running on ml.m5.4xlarge
+
+
+#### t-SNE 
+
+- unsupervised
+- use for data exploration
+- dimensionality reduction
+- visualize data in high dimension
+
+- used for dimension reduction but update the dimension(features)
+
+### LDA - linear discriminant analysis
+
+- dimensionality reduction technique
+- update dimension 
+- so relevant features from dataset is gone 
