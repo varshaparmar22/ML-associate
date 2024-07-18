@@ -341,6 +341,7 @@ How to choose between bagging and boosting
 
 2. F1 score
 - when you care more about positive class
+- when multi-class ML model
 
 3. ROC AUC
 - when you can equally about positive and negative class
