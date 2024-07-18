@@ -332,3 +332,22 @@ How to choose between bagging and boosting
 - size of update is also based on LR
 - too large will overlook optimal weight 
 - too small take more time to reach to optimal weight - large training
+
+
+### choose the metric as per requirement
+
+1. use Accuracy
+- when balancd dataset and every class is same important for you
+
+2. F1 score
+- when you care more about positive class
+
+3. ROC AUC
+- when you can equally about positive and negative class
+- like true negative and true positive equally care
+- for ranking prediction
+- dont use for heavily imbalanced data
+
+4. PR AUC
+- used for heavily imbalanced data
+- care about positive class more so less care about frequent negative class
