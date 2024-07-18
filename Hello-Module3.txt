@@ -351,3 +351,12 @@ How to choose between bagging and boosting
 4. PR AUC
 - used for heavily imbalanced data
 - care about positive class more so less care about frequent negative class
+
+
+### High Precision - Moderate Recall
+- predicted positive should be positive - high P
+- afford some positive can be predicted negative - Mod - R
+
+### High Recall - Moderate Precision
+- predicted positive should be positive - high R
+- afford some negative can be predicted positive - Mod - P
