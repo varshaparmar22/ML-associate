@@ -56,6 +56,8 @@ Deployment
 - two ways to deploy :
 1. Persistent Endpoint - whenever inference request will come the model will do prediction. Server will be stayed open
 2. SM Batch Transform : whole dataset batch inference will be generated and then  server will be closed.
+3. Serverless Inference :  when endpoint can handle cold start problem, & idle time between traffic spike
+4. Asynchronous inference : large payload up-1GB, long processing time, near real-time latency
 
 options are available along with deployment in SM
 - inference pipeline - for more complex processing of inference result and tie them together
