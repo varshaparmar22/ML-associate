@@ -333,7 +333,6 @@ How to choose between bagging and boosting
 - too large will overlook optimal weight 
 - too small take more time to reach to optimal weight - large training
 
-
 ### choose the metric as per requirement
 
 1. use Accuracy
@@ -361,3 +360,12 @@ How to choose between bagging and boosting
 ### High Recall - Moderate Precision
 - predicted positive should be positive - high R
 - afford some negative can be predicted positive - Mod - P
+
+### how to identify the FN or FP is important
+
+- positive = 1
+- negative = 0
+
+- cost of positive is more <- specify in sentence
+- so model can not afford to miss-classify it as negative => FN
+- so choose model which as FN small <- best model
