@@ -56,8 +56,6 @@ Deployment
 - two ways to deploy :
 1. Persistent Endpoint - whenever inference request will come the model will do prediction. Server will be stayed open
 2. SM Batch Transform : whole dataset batch inference will be generated and then  server will be closed.
-3. Serverless Inference :  when endpoint can handle cold start problem, & idle time between traffic spike
-4. Asynchronous inference : large payload up-1GB, long processing time, near real-time latency
 
 options are available along with deployment in SM
 - inference pipeline - for more complex processing of inference result and tie them together
@@ -179,8 +177,13 @@ eXtreme Gradient Boost
 - implemented with attension by using rnn and cnn
 
 ### input data
-- recordIO-protobuf - tokens must be in integer
+- only recordIO-protobuf in training - tokens must be in integer
 - spamle code provided in SM to convert word tokens in integer in recordio-protobuf format.
+- need train, validation and vocab channel to work otherwise error
+
+- for inference application/x-recordio-protobuf or application/json
+- for batch transform => application/jsonlines
+- input and output will be in same format
 
 ### how to use
 - takes lots of time even in SM(large training host available in SM)
@@ -196,9 +199,8 @@ eXtreme Gradient Boost
 * optimize_on : accuracy(compare agaist validation daataset), blue_score(compare against multiple reference translation), perplexity(cross-entropy) - last two are main for machine translation problem 	
 
 ### instance type
-- deep learning algo so use GPU
-- mainly p3 host
-- only can use single machine for training but can have multiple gpu on single machine
+- deep learning algo so only GPU
+- only single machine but can have multiple gpu on single machine
 
 4.DeepAR 
 
@@ -653,6 +655,7 @@ inference
 
 - unsupervised clustering
 - divide data into k number of groups
+- you define attributes based on which algo will do grouping
 - based on Euclidean distance find data points are similar and assign then in cluster
 - it calculate center point of each cluster too
 - here in sm it provide large scale(web-scale) clustering on large dataset
