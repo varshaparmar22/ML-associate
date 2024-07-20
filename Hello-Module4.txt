@@ -527,6 +527,7 @@ inference
 - organize/classify/summarize the document  based on topics
 - unsupervised technique so not assigning topic but just organize in one group 
 - algo called neural variational inference
+- can parallelized training across multiple GPU instance
 
 ### input type
 
@@ -574,7 +575,7 @@ for training
 - it use perplexity (inability to understand) and topic coherence to put document in particular topic
 - perplexity is metric for language modeling - it gives per-word-accuracy - but its not align to human always
 - so coherence is followed here to identify topic for given document
-
+- LDA has better perplexity, NTM has high topic coherence - so choose based on hardware - GPU, CPU
 
 ### inputs
 
@@ -1303,3 +1304,5 @@ contributedTo, AssociatedWith, DerivedFrom, Produced, SameAs
 - dimensionality reduction technique
 - update dimension 
 - so relevant features from dataset is gone 
+
+
