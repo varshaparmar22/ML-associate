@@ -571,6 +571,10 @@ for training
 - unsupervised - so no labeled data
 - it used more commonly for topic modeling but it can be used for other things rather than words like grouping of customer based on their purchase, harmonic analysis of music
 - it is more general purpose for grouping thing based on some common features they shows
+- it use perplexity (inability to understand) and topic coherence to put document in particular topic
+- perplexity is metric for language modeling - it gives per-word-accuracy - but its not align to human always
+- so coherence is followed here to identify topic for given document
+
 
 ### inputs
 
