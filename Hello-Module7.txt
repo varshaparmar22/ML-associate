@@ -363,3 +363,25 @@ $$ SM Pipelines
 - Use code repository for building and deploying ML solutions
 - SM pipeline will define the steps for like data pre-processing, training, evaluate model, register model, monitor/update model, build image
 - SM project = SM Mlops - can create difficult workflow too
+
+
+$$ Deploy model on SM
+
+three step process
+
+1. create model
+tell about
+- s3 path for model artifact
+- docker container image - registry path for inference code
+
+2. create endpoint configuration for https endpoint
+tell about
+- model production variant 
+- compute instance for that
+on same endpoint
+- multiple model
+- multiple production variant
+- combination of model and production variant
+
+3. create https endpoint
+- SM will use 2 and 1 step info and deploy model/s
