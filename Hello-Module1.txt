@@ -180,8 +180,18 @@ Kinesis Capacity Mode
 Provisioned mode(sepcified mode)
 - choose no of shard can scale up/down by api or manually
 - shard IN - 1MB / 1000 records per sec
-- Shard OUt - 2MB
+- Shard OUt - 2MB /2000 records per sec
 - pay per shard provisioned per hour
+
+
+number_of_shards = max (incoming_write_bandwidth_in_KB/1000, outgoing_read_bandwidth_in_KB/2000)
+
+where
+
+incoming_write_bandwidth_in_KB = average_data_size_in_KB  X  number_of_records_per_seconds. = 500 * 2 = 1000
+
+outgoing_read_bandwidth_in_KB = incoming_write_bandwidth_in_KB  X  number_of_consumers = 1000 * 7 = 7000
+
 
 On Demand Mode
 - shard IN - 4MB/ 4000 records per second
