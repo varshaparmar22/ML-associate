@@ -43,18 +43,18 @@ rules can be created for prefix and object tag
 use case questions
 
 - if say easily recreated file => can be put in s3 one zone IA
-- if want to delete some file => set lifecylcle configuration for that condition
+- if want to delete some file => set lifecycle configuration for that condition
 - if file need to access immediately => s3 standard
 - if days are concern than = add lifecycle rule with s3 Standard
-- if waiting is there for access retrival => use glacier as per waiting time period
+- if waiting is there for access retrieval => use glacier as per waiting time period
 
 To recover after deleting
 
-- enble versioning
-- under version delete is marker => from that you can retrive file
+- enable versioning
+- under version delete is marker => from that you can retrieve file
 - noncurrent version = not topmost version
 - to recover => put in standard IA (if less than 90 days)
-- to recover => put in s3 glacier deep archiev if days are more than 180
+- to recover => put in s3 glacier deep archive if days are more than 180
 
 How can you decide which lifecycle rule will be better 
 
@@ -91,10 +91,10 @@ Encryption : encrypt object for security
 	- default enabled (key will owned, managed and handled by AWS only)
 	- user will never get it
 	- encryption type AES- 256
-2. Server Side Encryption(SSE) by Amz Key mangement service(SSE - KMS)
+2. Server Side Encryption(SSE) by Amz Key management service(SSE - KMS)
 	- you can manage key by KMS (amz service)
-	- user can control + audit by cloudtrail(amz log)
-	- encryotion type aws:kms
+	- user can control + audit by CloudTrail(amz log)
+	- encryption type aws:kms
 	- for generating and decrypting KMS key api call happen
 	- if s3 having massive no of objects than all are by KMS
 	- access to objects can be go in thread link kind of case(multiple api calls)(limitation of KMS)
@@ -109,9 +109,9 @@ Encryption : encrypt object for security
 	- can be accessible by CLI only not in console
 
 4. Client side Encryption
-	- client entrypt the data before sending to s3
+	- client encrypt the data before sending to s3
 	- client can use client library like amazon s3 client side encryption library
-	- cleint side decryption after getting file from s3
+	- client side decryption after getting file from s3
 
 Encryption in transit/flight(SSL/TLS)
 	- HTTPS - for in transit/flight
@@ -132,7 +132,7 @@ s3 bucket policy
 	principal : account /user on which policy will apply
 - use case
 	grant public access to bucket
-	object to encrypt at uplaod
+	object to encrypt at upload
 	cross account access
 
 
@@ -140,7 +140,7 @@ Default Encryption VS Bucket Policy
 
 - default encryption is by default apply on s3 object (can change that encryption type like s3/kms/dkms)
 - we can enforce encryption by using bucket policy(which apply first do access/deny calculate based on that)
-- set condition in b policy like sserver side encryption is kms or set condition like customer algorithm true
+- set condition in b policy like server side encryption is kms or set condition like customer algorithm true
 
 EC2 Instance
 	- set IAM role for granting access permission
@@ -156,24 +156,28 @@ $$$ AWS Kinesis $$$$
 
 - managed alternative to APache Kafka
 - use for gathering application log, IoT, click stream, metrics
-- realtime meand kinesis
+- Realtime means kinesis
 - data replicated in 3 AZ automatically
+- Kinesis Data Streams manages the infrastructure, storage, networking, and configuration needed to stream your data at its throughput level
+- replicate data in 3 AZ
 
 Kinesis Stream 
 	- low latency , streaming ingest at scale
 Kinesis Analytics 
-	- perform realtime anlytics on stream using sql
+	- perform real-time analytics on stream using sql
 Kinesis Firehose
-	- data delivery to s3, redshift, elastisearch
+	- data delivery to s3, redshift, Elasticsearch
 Kinesis Video Strems
-	- realtime video stream service
+	- Realtime video stream service
 
 Streams are devided into shard
 - default data retension is 24 hours can go upto 365 days
 - reprocess/replay data
 - multiple app can consume stream at once
 - once data inserted can not be deleted
-- records upto 1 mb - small stream
+- record has sequence number, partition key, data blob(actual data of size 1mb)
+- partition key is used to assign record to shard-all record has same partitioned key assign to same shard
+- sequence number is unique for each record - generated when PutRecord/s API call is made
 
 Kinesis Capacity Mode
 
@@ -193,10 +197,14 @@ incoming_write_bandwidth_in_KB = average_data_size_in_KB  X  number_of_records_p
 outgoing_read_bandwidth_in_KB = incoming_write_bandwidth_in_KB  X  number_of_consumers = 1000 * 7 = 7000
 
 
-On Demand Mode
+On Demand Mode - automatic mode - scale up/down automatic
 - shard IN - 4MB/ 4000 records per second
-- scale based on last 30 days usage
+- scale based on last 30 days usage  it will double the capacity based on that
 - pay per stream per hour and data in/out per GB
+
+
+- You can switch between on-demand and provisioned mode twice a day
+- You can add data to a Kinesis data stream through PutRecord and PutRecords operations, KPL, or Amazon Kinesis Agent(prebuilt Java application that offers an easy way to collect and send data to KDS).
 
 Kinesis Data Stream
 
@@ -207,9 +215,22 @@ Producer(write)
 Consumer(read)
 - 2mb/shard accross all consumer
 - 5 api call/sec per shard accross all consumer 
+- shared fanout and enhanced fanout consumer
+- SFO - share 2mb or 5 call with all consumer
+- EFO - each will get 2mb can access in parallel - use SubscrieToShard api by consumer
 
 - so to get more capacity need to add shard 
 
+Kinesis Data Stream
+        |
+shard1,shar2, shard3.....shardn
+  |
+drec1, drec2,drec3.....<= have all same sequence key - diff for each shard.
+  |
+seq no, partition key, data blob
+(autoin seq no)
+
+application name  = control table = dynamodb table = namespace for cloudwatch 
 
 Kinesis Data Firehose
 
@@ -223,15 +244,17 @@ Kinesis Data Firehose
 - data conversion(csv/json to parquet/orc)/ transformation by aws lambda csv=> json
 - support compression for s3 destination
 - pay for only data go through it
+- json => parquet
+- csv => parquet
 
 
 Kinesis Data Stream Vs Firehose
 
 stream 
-- to built realtime application(cusom code) by producer and consumer to read and write data
+- to built Realtime application(custom code) by producer and consumer to read and write data
 - data storage 1-365 days, multiple consumer can replay 
-- realtime 70 ms- 200 ms latency
-- auto sacle on demand
+- Realtime 70 ms- 200 ms latency
+- auto scale on demand
 firehose
 - delivery/ingestion service
 - near real time, not real time
@@ -240,12 +263,12 @@ firehose
 Kinesis Analytics
 - streaming ETL : select column and make simple transformation on streaming data
 - create metrics on streaming data
-- responsive analytics : check some critria and set some alert/filter based on threshold value
+- responsive analytics : check some criteria and set some alert/filter based on threshold value
 
 features:
-	pay for recource consumed not cheap
+	pay for recourse consumed not cheap
 	serverless
-	IAM permission to access source and destin
+	IAM permission to access source and destine
 	SQL/Flink	
 	schema discovery
 	lambda can be used for preprocessing
@@ -253,24 +276,29 @@ features:
 
 ML on Kinesis Data Analytics(Manged Apache flink)
 
+Apache Flink
+- stream processing and batch processing framework
+- written in java and scala
+- handle data in parallel & piplelined manner
+
 two algo
 
 1. Random cut Forest
 - sql function is used to find anomaly(something different) in numeric column in stream
 - work on recent history
 - so if data change algorithm will change over time
-- freqent changing algo
+- frequent changing algo
 
 2. HOTSPOTS
-- locate and return dence region in your data
+- locate and return dense region in your data
 - less changing algo 
 
 Kinesis Data Analytics + Lambda
 
-- destin will be labda
-- tranforming data, translating n enriching data,
-- aggreagation data, encryption data
-- data can go in any service which lambda can talk like aurora, red shift, dynamodb, sqs, cloudwatch, sns, s3
+- destine will be lambda
+- transforming data, translating n enriching data,
+- aggregation data, encryption data
+- data can go in any service which lambda can talk like aurora, red shift, DynamoDB, sqs, CloudWatch, sns, s3
 
 Apache FLink
 - Managed service for Apache flink(Kinesis data analytics)integrate flink with AWS
@@ -286,8 +314,8 @@ kinesis video stream
 - security camera, smartphone camera, aws deep lence, radar data, rtsp camera, audio feed, image, body worn camera - all called producer
 - one video stream per producer
 - kvs has playback capability
-- counsumers are : ML app by mxnet, tensorflow, sagemaker, amazon reckognition video
-- data retension for 1 hour to 10 years
+- consumers are : ML app by mxnet, tensorflow, sagemaker, amazon reckognition video
+- data retention for 1 hour to 10 years
 
 KVS use case in ML
 
@@ -295,7 +323,7 @@ KVS use case in ML
 - check point by dynamodb to check all video consumed completely
 - now send video frame in decode format to sagemaker to perform inference
 - based on result create kinesis data  stream that can be used by other aws service like lmbda func
-- and create alert or perform prefered action based on that data(like threat detection n all)
+- and create alert or perform preferred action based on that data(like threat detection n all)
 
 
 KDS => creating realtime application by ml like evaluating stream of data by sagemaker
@@ -334,14 +362,16 @@ Glue ETL
 	Bundle Transformation : drop field, drop null field, filter, join, map(add/delete/map to some field)
 	ML tansformation :  FindMatches ML - find duplicate or matching records in your dataset, even when records do not have common
 			    Unique identifier or fields are not matching exactly
-- support format conversion into csv, json, avro, parque, orc , xml
+- support format conversion into csv, json, avro, parque, orc(apache hive optimized row columnar) , xml
+- not support => database is Amazon Timestream - which is for low latency large scale data ingestion consume 10s if gigabyte TS data
 - apache spark transformation : k-means algo
+- De-duplication of data can be done by Glue ETL
 
 Glue Data Brew
 
 - user interface based normalization and cleaning of data
 - 80%faster
-- 250+ already made transformation like - corect invalidval, data conversion, filter anomalies
+- 250+ already made transformation like - correct invalid Val, data conversion, filter anomalies
 - source can be any
 
 $$$ parquet
@@ -528,3 +558,51 @@ Amazon CloudFront is a content delivery network operated by Amazon Web Services.
 @@@ AWS Direct Connect
 AWS Direct Connect is a networking service that provides an alternative to using the internet to connect to AWS. Using AWS Direct Connect, data that would have previously been transported over the internet is delivered through a private network connection between your facilities and AWS.
  
+
+@@@@ PySpark
+Amazon SageMaker provides an Apache Spark Python library ( SageMaker PySpark ) that you can use to integrate your Apache Spark applications with SageMaker.
+
+@@@@ Dynamic Frame
+A distributed table that supports nested data such as structures and arrays. Each record is self-describing, designed for schema flexibility with semi-structured data. Each record contains both data and the schema that describes that data.
+Dynamic frame & apache spark dataframe both can be used in Glue ETL, they can be transform into eachother, dynamicframe is advance for data cleaning.
+
+@@@ Temporary Security Credential
+AssumeRole or GetFederationToken to obtain temporary security credentials for third party users outside of aws
+
+@@@ Amazon Q
+The most capable generative AI–powered assistant for accelerating software development and leveraging companies' internal data
+- Amazon Q generates code, tests, debugs, and has multistep planning and reasoning capabilities that can transform and implement new code generated from developer requests. 
+- Amazon Q also makes it easier for employees to get answers to questions across business data—such as company policies, product information, business results, code base, employees, and many other topics—by connecting to enterprise data repositories to summarize the data logically, analyze trends, and engage in dialogue about the data.
+
+@@@ Amazon Q Business 
+- is a generative AI–powered assistant that can answer questions, provide summaries, generate content, and securely complete tasks based on data and information in your enterprise systems. It empowers employees to be more creative, data-driven, efficient, prepared, and productive.
+- Amazon Q easily and securely connects to over 40 commonly used business tools, such as wikis, intranets, Atlassian, Gmail, Microsoft Exchange, Salesforce, ServiceNow, Slack, and Amazon Simple Storage Service (Amazon S3).
+
+@@@ Amazon Bedrock
+The easiest way to build and scale generative AI applications with foundation models
+- provide service from AI companies providing foundation models like AI21 lab, meta, amazon, cohere, anthropic, mistral AI, stability AI and more
+- by unified API you can access all those models from one place
+- build generative AI applications with security, privacy, and responsible AI. 
+- we use fine-tunning and RAG to create agents which can execute task by using enterprise data-source
+- it is serverless
+- Amazon will take care of all infra need
+
+use cases
+- Text generation
+- image generation
+- virtual assistant
+- text and image search
+- text summarization
+
+features
+- experiment with prompt and configuration
+- augmented response generation with your source data(that you have to upload)
+- create application which can reason through how to help customer
+- adapt models for specific task with training data
+- improve efficiency and output of FM by purchasing provisioned throughput
+- find best model for your use case
+- prevent unappropriated content by guardrails
+
+@@@ Retrieval Augmented Generation 
+Generation - use gen IA tools, Augmented - add to prompt, Retrieval - retrieve from database
+- example to say - generate text which are augmented with those data which we retrieve from database 
