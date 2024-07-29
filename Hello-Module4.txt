@@ -50,12 +50,15 @@ Training
 - other training option like built-in training algorithms are there to use
 - use spark mllib, custom code by tf, pt, mxnet, sklearn, RLEstimator for reinforcement learning, xgboost, huggingface, chainer
 - your own docker image, or algo purchased from aws
+- Use Amazon FSx for Lustre to accelerate File mode training jobs.
 
 Deployment
 - save the model you just trained to s3
 - two ways to deploy :
 1. Persistent Endpoint - whenever inference request will come the model will do prediction. Server will be stayed open
 2. SM Batch Transform : whole dataset batch inference will be generated and then  server will be closed.
+3. Serverless Inference :  when endpoint can handle cold start problem, & idle time between traffic spike
+4. Asynchronous inference : large payload up-1GB, long processing time, near real-time latency
 
 options are available along with deployment in SM
 - inference pipeline - for more complex processing of inference result and tie them together
@@ -1311,3 +1314,24 @@ contributedTo, AssociatedWith, DerivedFrom, Produced, SameAs
 - so relevant features from dataset is gone 
 
 
+"Action": [
+      "sagemaker:action1",
+      "sagemaker:action2"
+]
+"NotAction": [
+      "sagemaker:action1",
+      "sagemaker:action2"
+]
+
+SageMaker does not support resource-based policies.
+
+SageMaker-studio-classic only support service linked policies - so its partial support.
+
+SageMaker supports service roles.
+
+Authorization Based on SageMaker Tags.
+
+SageMaker does not support specifying resource ARNs in a policy.
+
+Using Temporary Credentials with SageMaker
+- temporary security credential with aws sts api operation - AssumeRole, GetFederationToken
