@@ -67,6 +67,19 @@ options are available along with deployment in SM
 - shadow testing - evaluate new model against currenly deployed model to check for errors
 - elastic inference - for accelerating DL model
 
+$$$ Incremental Training
+
+- CreateTrainingJob request
+- InputDataConfig : ----   ChannelName = "model", ContentType = "application/x-sagemaker-model"
+- You can also seed the training of a new model with the artifacts from a model that you trained previously with SageMaker. 
+- set HP which are required
+- compressed model artifacts (in .tar.gz format) output by SageMaker.
+- Incremental training saves training time when you want to train a new model with the same or similar data.
+
+$$$ Transfer Learning
+
+ trained using transfer learning when a large number of training images are not available
+
 $$$$$$$$$$$$$$$$$$$$$$$$ SM algos $$$$$$$$$$$$$$$$$$$$$$$
 
 1. Linear Learner
@@ -139,15 +152,23 @@ eXtreme Gradient Boost
 - wins lots of Kaggle competition
 - use gradient decent method to decrease loss once new tree will be added
 - can be used for classification and regression problems too - it called regression tree
+- Its robust handling of a variety of data types, relationships, distributions.
+- The variety of hyperparameters that you can fine-tune.
+- You can use XGBoost for regression, classification (binary and multiclass), and ranking problems.
+- you can use XGBoost as a built-in algorithm or framework. 
 
-### inputs
-- takes csv, libsvm input type
-- also take recordIO-protobuf and parquet
+### data formats for training and inference:
+-text/libsvm (default) : after label column, features the zero-based index value pairs. format:<label> <index0>:<value0> <index1>:<value1>
+-text/csv
+-application/x-parquet
+-application/x-recordio-protobuf
 
 ### how to use
-- in python we can serialize/deserialize xgboost model by pickle
+- Booster.save_model => to save model in internal binary format <= new version   |  >= Versions 1.3-1
+- in python we can serialize/deserialize xgboost model by pickle <= old version
 - in SM notebook it is available by sagemaker.xgboost
 - it can be used as in-built SM algo -so you can use xgboost docker image elastic registry container and deploy it to your training host for larger training job
+- For increased performance - use File mode
 
 ### Hyper Parameters
 
@@ -159,7 +180,7 @@ eXtreme Gradient Boost
 *eval_metric - on which you are caring about more like rmse(accuracy), AUC(when you care about false positive rate more - ROC means true positive rate(recall) vs false positive rate), error
 *scale_pos_weight - when unbalanced pos/neg cases you can set balance between that, can be set to sum(neg)/sum(pos)
 *max_depth - max depth of tree, default is 6, more deep value lead to overfitting of model
-
+*tree methods - approx, hist and gpu_hist
 
 #### Instance Type
 - its memory bound not compute bound
@@ -169,8 +190,9 @@ eXtreme Gradient Boost
 - in xgboost 1.5+ => distributed training is also available(cluster of many G5), for that set some params like
 	=> tree_method=gpu_hist
 	=> use_dask_gpu_training = true
-	=> distribution = fully_replicated(to distribute training data on cluster)
-        => only supports for csv and parquet input
+	=> distribution = fully_replicated(to distribute training data on cluster) <= with Dask, otherwise shardedbyS3Key
+        => only supports for csv and parquet input	
+	=> with dask supports only pipe mode
 
 
 3. Seq2Seq 
@@ -180,7 +202,8 @@ eXtreme Gradient Boost
 - implemented with attension by using rnn and cnn
 
 ### input data
-- only recordIO-protobuf in training - tokens must be in integer
+- only support recordIO-protobuf 
+- tokens must be in integer
 - spamle code provided in SM to convert word tokens in integer in recordio-protobuf format.
 - need train, validation and vocab channel to work otherwise error
 
@@ -206,20 +229,36 @@ eXtreme Gradient Boost
 - only single machine but can have multiple gpu on single machine
 
 4.DeepAR 
-
+- S
 - for forecasting one dimensional time series data
 - RNN
 - can train deepAR model with several related time series
-- example from given stock price predict future stock price
+- stock price prediction, serverload, demand of product, request of web pages 
 - it can learn seasonality and frequency from series data well
+- out-perform ARIMA and ETS
 
 ### input types
-- json input like Gzip or parquet
+- jsonlines input like Gzip or parquet file format. diff extension need to specify in SDK in python except these
 - each record has "start" : timestamp, "target" : time series value, "dynamic_feat" : dynamic features like promotion applied on product while purchase, "cat" : categorical features
+- vector of static - time independent - cat
+- vector of dynamic - time dependent - dynamic_feat
+- use all files from folder for training specified - except those that start with a period (.) and those named _SUCCESS.
+- target & dynamic_feat has same length
+- it forecast only for categories that have been observed during training. 
+- cat id discreet value
+- If the algorithm is trained without cat and dynamic_feat fields, it learns a "global" model
+ 
+jsonlines
+
+{"start": "2009-11-01 00:00:00", "target": [4.3, "NaN", 5.1, ...], "cat": [0, 1], "dynamic_feat": [[1.1, 1.2, 0.5, ...]]}
+{"start": "2012-01-30 00:00:00", "target": [1.0, -5.0, ...], "cat": [2, 3], "dynamic_feat": [[1.1, 2.05, ...]]}
+{"start": "1999-01-30 00:00:00", "target": [2.0, 1.0], "cat": [1, 4], "dynamic_feat": [[1.3, 0.4]]}
 
 ### how to use
 - always include entire dataset for training, testing and validation
-- use entire dataset as test data set, last datapoints for training, evaluate on withheld datapoints
+- use entire dataset as test data set
+- remove last datapoints(prediction_length) and set it for training
+- evaluation will be done in test on withheld datapoints
 - use < 400 as prediction length
 - train on many time series which are related not on one. to get full power of deepAR
 
@@ -227,8 +266,9 @@ eXtreme Gradient Boost
 
 - epochs, mini_batch_size, learning_rate, num_cells(no of neurons to use)
 - context_length : no of time points model will see before making prediction
-	=> will be smaller than sesonality period
+	=> will be smaller than seasonality period
 	=> model will lag every year data point value anyhow - and pick up seasonality - so  send all data for training
+	=> The model uses data points further back than the value set in context_length for the lagged values feature.
 
 ### Instance type
 - CPU, GPU, sigle machine or multi machine
@@ -236,12 +276,14 @@ eXtreme Gradient Boost
 - use gpu only for large deepar model or when minibatchsize is > 512
 - for inference supports only cpu
 - for tunning model more larger instance will be needed
+- right now DeepR required observation no at least 300
 
 5. BalzingText 
 
-- for text classification - predict label for given sentence - supervised learning technique(labels should be pass along) - useful for web search, information retrival, work for only sentence not for entire document
-- generate word2vec - create vector representation of word- nearby vector for similar kind of word - work on word only- used in machine translation and sentiment analysis - find similar kind of words
-- word2vec will find relationship between word in a sentence
+- for text classification - predict label for given sentence - supervised learning technique(labels should be pass along) - useful for web search, information retrieval, ranking, and document classification. work for only sentence not for entire document
+- generate word2vec - create vector representation of word- nearby vector for similar kind of word - work on word only- downstream NLP tasks, such as sentiment analysis, named entity recognition, machine translation, etc - find similar kind of words
+- word2vec will find relationship between word in a sentence.  word embeddings capture the semantic relationships between words.
+- The BlazingText algorithm is not parallelizable.
 
 
 ### training inputs
@@ -249,9 +291,9 @@ eXtreme Gradient Boost
 for supervised mode in text classification 
 - one sentence per line, that sentence will have __label__[label_value] followed by sentence which space separated tokens in lower case
 - also support augmented manifest text format - means text format created by SM which specify details about sentence. like json format
-{"source": "Linux ready for prime time", "label":1}
+{"source": "Linux ready for prime time", "laranking, and document classification.bel":1}
 
-for word2vec 
+for word2vec mode
 - it takes text file which has one sentence per line
 
 
@@ -261,6 +303,7 @@ for word2vec
  - CBow - word order not matter
  - Skip-Gram
  - batch Skip gram : distributed computation over many cpu - gram technique order metters
+ - only train channel supported 
 
 ### HyperParameters
 
@@ -285,11 +328,21 @@ word2vec
 - for cbow and skipgram => ml.p3.2xlarge
 - any signle cpu or gpu instance will work
 - for batch_skipgram => signle or multiple cpu instance will work
+- in batch_skipgram if multiple cpu then s3 distribution type = fullyreplicated, algo will take care of distribution process
 
 textclassification
 - if training data < 2gb then c5 <= cpu
 - for large dataset => ml.p2.xlarge, ml.p3.2xlarge <= can be used gpu
 
+model artifact for inference
+
+* for word2vec
+- vectors.txt, vectors.bin
+- send word and get vector file in json
+
+* for text classification
+- model.bin
+- send sentences and get label with prediction score
 
 6. Object2Vec
 
@@ -298,6 +351,7 @@ textclassification
 - take features of object and get low dimenation vector representation of that object
 - it can work on image, document, or any kind of object
 - so more general purpose
+- preserve semantics relationship between pair of the objects
 - this vector representation can be compare and shown how related they are
 - so it can compute nearest neighbour of object for clustering purpose
 - visulaize cluster
@@ -319,8 +373,8 @@ find relationship between them and train model
 - here it is pair based 
 - so two encoders will be used 
 - each encoder will take one input and send encoder result to one comparator 
-- encoder types will be CNN, bi-directional LSTM, average pooled embedding
-- comparator is send the result to feed forward neural network and generate label
+- encoder types will be Hierarchical CNN, bi-directional LSTM, average pooled embedding
+- comparator is send the result to feed forward neural network and generate label & score
 
 ### HP
 
@@ -337,15 +391,21 @@ for training
   cpu - ml.m5.sxlarge, gpu-ml.p2.xlarge, for large if needed ml.m5.4xlarge, ml.m5.12xlarge
 - gpu type p2,p3, g4dn, g5
 
-for inference - specifically recommended ml.p3.2xlarge
-- INFERENCE_PREFERRED_MODE to encoder embedding not for classification or regression
+- for categorical label generation => loss = "cross_entropy"
+- for regression score/rate generation => loss = MSE
 
-7. Object Detection
+for inference - specifically recommended ml.p3.2xlarge
+- for GPU set INFERENCE_PREFERRED_MODE to
+   GPU optimization:encoder embedding 
+   GPU optimization:classification or regression
+
+7. Object Detection - S
 
 two variants used in SM
 
 input = image
 output = all object specify their category and confidence score
+
 
 1. Maxnet
 
@@ -368,6 +428,14 @@ models
 for MxNet
 - RecordIO
 - ImageFormate(jpg or png) with imageformat supply json file like - {"file":url,"image_size":{width:100,height:100,depth:5},"annotations":{data about boxes of object},"categories":{categories to identify}}
+- you can also train in pipe mode using the image files (image/png, image/jpeg, and application/x-image), without creating RecordIO files, by using the augmented manifest format.
+- application/x-recordio in pipe mode - with augmented manifest format
+{"source-ref": "s3://your_bucket/image2.jpg", "bounding-box":{"image_size":[{ "width": 400, "height": 300, "depth":3}], "annotations":[{"class_id": 1, "left": 100, "top": 120, "width": 43, "height": 78}]}, "bounding-box-metadata":{"class-map":{"1": "cat"}, "type": "groundtruth/object-detection"}}
+- order of these attributes is matter in pipe mode
+- train and validation channels are required
+- train_annotation and validation_annotation <= as it is object detection so object annotation are required
+- .rec file format
+- RecordIO or image formats for input data
 
 for TensorFlow - specific to it
 
@@ -391,7 +459,7 @@ for inference
 - for gpu p2,p3,G4dn,g5
 
 
-8. Image Classification
+8. Image Classification - S
 
 - image classification tell you stuff is in the image or not - like its a cat/not
 
@@ -406,7 +474,17 @@ MXNet
 	can add new layer on top of it which is fully connected there initialize with random weight
 	train with new data
 - default image size is 224X224 with 3 channel RGB
+- validation and train .lst file will be needed for training as only three tab separated column in it
+- 1. image index, 2. category label index, 3. image file path
 
+for augmented manifest file format for pipe mode - no need to convert in recordio format
+{"source-ref":"s3://image/filename1.jpg", "class":"0"}
+{"source-ref":"s3://image/filename2.jpg", "class":"1", "class-metadata": {"class-name": "cat", "type" : "groundtruth/image-classification"}}
+for multi-class 
+{"image-ref": "s3://mybucket/sample01/image1.jpg", "class": "[1, 0, 1]"}
+{"image-ref": "s3://mybucket/sample02/image2.jpg", "class": "[0, 0, 1]"}
+- multi-hot label-format is used here "class": "[1, 0, 1]" <= category 0 and 2 both will be considered here
+- "application/x-recordio; label-format=multi-hot"
 
 TensorFlow
 
@@ -434,9 +512,10 @@ for inference
 - GPU or CPU can be used
 - for cpu => m5
 - for gpu p2,p3,G4dn,g5
+- The input image is resized automatically for inference
 
 
-9. Semantic Segmentation
+9. Semantic Segmentation - S
 
 - pixel level object classification
 - in object detection boxes around object, in image classification labels
@@ -449,6 +528,8 @@ for inference
 - labels are there in annotation
 - augmented manifest image format will be support in pipemode - data can be used directly from s3 here to generate inference in pipemode
 - for inference accept Jpg image
+- It tags every pixel in an image with a class label from a predefined set of classes.
+- with Augmented Manifest,  RecordWrapperType= "RecordIO" and ContentType = application/x-recordio.
 
 What is an augmented manifest file?
 
@@ -457,16 +538,19 @@ An augmented manifest file is a labeled dataset that is produced by Amazon SageM
 
 ### how is it used
 
-- for mxnet it is built on Gluon and Gluon CV
+- MXNet Gluon framework and the Gluon CV toolkit
 - 3 algo to choose
 	1. Fully Convolution Network
 	2. Pyramid Scene Parsing
 	3. DeepLabv3
-- choice of backbone
+- choice of backbone(encoder)
 	1. ResNet50
 	2. ResNet101
 	- both train on ImageNet database
 - with this algo you can do incremental training or training from scratch
+
+** encoder will create activation map of features - can use model artifact as it is pre-trained
+** decoder is there too will create segmentation mask from that activation map of features - never pretrained
 
 ### HP
 
@@ -488,10 +572,35 @@ training
 inference
 - either cpu or gpu 
 - cpu => m5, c5 ,  gpu => p3 or G4dn
+- image and an AcceptType specify for inference
+- AcceptType = image/jpeg or image/png or application/x-recordio-protobuf
+- return will be jpeg seg-men-mask, png-seg-men-mask, recordio file with class probability encoded
+- images will be taken from s3
 
+For training
+s3://bucket_name
+    |
+    |- train
+                 |
+                 | - 0000.jpg
+                 | - coffee.jpg
+    |- validation
+                 |
+                 | - 00a0.jpg
+                 | - bananna.jpg
+    |- train_annotation
+                 |
+                 | - 0000.png
+                 | - coffee.png
+    |- validation_annotation
+                 |
+                 | - 00a0.png
+                 | - bananna.png
+    |- label_map
+                 | - train_label_map.json
+                 | - validation_label_map.json 
 
-
-10. Random Cut Forest
+10. Random Cut Forest - U - only cpu
 
 - anomaly detection
 - unsupervised
@@ -506,6 +615,7 @@ inference
 - can use file or pipemode
 - test channel available on which you can compute accuracy, f1, recall, precision on labeled data(anomaly or not)
 - it is unsupervised model so no actual testing but test channel is there
+- The train channel only supports S3DataDistributionType=ShardedByS3Key and the test channel only supports S3DataDistributionType=FullyReplicated
 
 ### how it is used
 
@@ -518,7 +628,7 @@ inference
 ### HP
 
 - num_trees: increase to reduce noise
-- num_samples_per_tree : ration of anomalous to normal data = 1/num_samples_per_tree - to do better job for algo
+- num_samples_per_tree : ratio of anomalous to normal data = 1/num_samples_per_tree - to do better job for algo
 
 ### instance type
 
@@ -528,7 +638,7 @@ inference
 
 
 
-11. Neural Topic Model
+11. Neural Topic Model - U
 
 - get what document about
 - organize/classify/summarize the document  based on topics
@@ -541,12 +651,14 @@ inference
 for training
 
 - it is unsupervised
-- training, testing, validation and auxiliary
+- training, (testing, validation and auxiliary - optional)
 - RecordIo-protobuf or CSV
-- word must be tokenize into integers
-- vocabulary will be created for those tokens
-- auxiliary channel is used for that vocabulary data
+- word must be tokenize and create vocab.txt file <- only with word but in same integer sequence that model will follow to show result
+- auxiliary channel(content type text/plain) <=> vocab.txt
 - file or pip mode can be used - pipe is faster
+- latent representations of documents are expected to capture the semantics of the underlying documents
+- based on those latent representation grouping will be done for documents
+- return application/json or application/x-recodio-protobuf & topic_weight vector for each observation
 
 ### how to use
 
@@ -572,7 +684,7 @@ for training
 
 
 
-12. LDA - Latent Dirichlet Allocation
+12. LDA - Latent Dirichlet Allocation - U
 
 - not deep learning
 - not using neural network
@@ -580,15 +692,17 @@ for training
 - it used more commonly for topic modeling but it can be used for other things rather than words like grouping of customer based on their purchase, harmonic analysis of music
 - it is more general purpose for grouping thing based on some common features they shows
 - it use perplexity (inability to understand) and topic coherence to put document in particular topic
-- perplexity is metric for language modeling - it gives per-word-accuracy - but its not align to human always
+- perplexity is metric for language modeling - it gives per-word-accuracy - it is inverse - so minimize it
 - so coherence is followed here to identify topic for given document
 - LDA has better perplexity, NTM has high topic coherence - so choose based on hardware - GPU, CPU
+- topic models aim to minimize perplexity and maximize topic coherence.
+- return application/json or application/x-recodio-protobuf & topic_mixture vector for each observation
 
 ### inputs
 
 - train channel and optional test channel as unsupervised
 - RecordIO-Protobuf or CSV
-- all tokens with their associated count in document will be sent as input along with their integer representationv- in csv format
+- word count(important) in document + integer representationv- in csv format
 - pipe mode supports only in redordIO format
 
 
@@ -606,16 +720,15 @@ for training
 
 ### Instance Type
 
-- single cpu for training only
+- single cpu for training/inference
 
 
-13. KNN - K nearest neighbour
+13. KNN - K nearest neighbour - S
 
-- classification or regression  algorithm
+- classification or regression  
 - it use distance metric and find nearest neighbour 
 - for classification it use most common label
 - for regression it take average of value
-- supervised technique
 
 ### inputs
 
@@ -627,13 +740,11 @@ for training
 - in csv first column is label
 - file or pipe mode 
 
-### how is it used
+### how is it used - three steps for training
 
 - first do sampling - over/under
-- do dimensionality reduction - reduce no of features
-- but take care of accuracy and noise
-- to do dimensionality reduction some methods like sign/fjlt
-- indexing, serializing and quering model to get k no of neighbour
+- do dimensionality reduction - methods like - random projection and the fast Johnson-Lindenstrauss transform.
+- indexing, serializing and querying model to get k no of neighbour
 
 
 ### HP
@@ -654,7 +765,7 @@ inference
 
 
 
-14. K-Means Clustering
+14. K-Means Clustering - U
 
 - unsupervised clustering
 - divide data into k number of groups
@@ -687,9 +798,11 @@ inference
 
 ### HP
 - K - elbow method is used to find K value initially
-- mini_batch_size
+- mini_batch_size - important to remember
 - extra_center_factor
 - Init_method = random or k-means++
+
+k-means returns a closest_cluster label and the distance_to_cluster for each observation.
 
 ### Instance type
 
@@ -702,7 +815,7 @@ if want to use GPU then
 - p2,p3,G4dn, G4 are supported
 
 
-15. PCA
+15. PCA - U
 
 - Principal component analysis
 - dimensionality reduction technique
@@ -742,14 +855,17 @@ two type to use
 - based on input data
 
 
-16. Factorization Machine
+16. Factorization Machine - S
 
 - specialized in classification or regression in sparse data
 - FM use for recommendation system more as it has sparse data
 - why sparse 
 	- as it is pair wise item-user kind(so it should have atleast 2 no of dimension)
 	- user will not interact with most of page, click or product so sparse data
-- it is supervised
+- It is an extension of a linear model that is designed to capture interactions between features within high dimensional sparse datasets
+- pair-wise (2nd order) interactions between features.
+- In regression mode, - RMSE. - LIKE movie rating- rate value
+- In binary classification mode - Binary Cross Entropy (Log Loss), Accuracy and F1 Score.
 
 ### inputs
 
@@ -759,21 +875,7 @@ two type to use
 ### How is it used
 
 - find the factors based on which we can map users to items, product, page, click, rating(regression) etc(create matrix which do that mapping)
-- usually used for recommendation system
-
-
-### HP
-
-initialize method for 
-- bias
-- factor
-- linear
-
-like
-- uniform
-- normal
-- constant
-
+- click prediction and item recommendation.
 
 ### Instance Type
 
@@ -782,14 +884,13 @@ like
 - GPU works well when only dense data(which is not sparse)
 
 
-17. IP insights
+17. IP insights - U
 
-- unsupervised technique
 - It will check usage pattern of IP address and find fishy behaviour
 - it will find fishy behaviour from some anamolous IP address
 - like login or creating resources from account from some anamolous IP address
 - it is kind a security tool
-- flag something suspious and shut down session
+- flag something suspicious and shut down session
 
 ### input
 - username
@@ -799,6 +900,7 @@ like
 - but as unsupervised validation channel is option
 - validation is used to compute AUC score
 - CSV only accept with entity(username/accountid) and ip address
+- supports only file mode
 
 ### how is it used
 
@@ -806,6 +908,7 @@ like
 - NN is used to form vector representation of entities and IP address
 - entities are hashed and embedded so need sufficient large hash size
 - negative samples generated during training by randomly mapping entities and IPs
+- embedding representation of ip address will created n can be used for other algo's downstream task
 
 ### HP
 
@@ -824,7 +927,7 @@ like
 
 18. Reinforcement Learning
 
-- learninf about virtual environment & how to navigate through that environment in optimal manner
+- learning about virtual environment & how to navigate through that environment in optimal manner
 - agent explore some space
 - based on agent action he will get reward or penalty and it will learn based on those action
 - once exploration is done entirely agent will yield fast online performance
@@ -885,7 +988,7 @@ how to explore all state efficiently
 ### HP
 
 - No specific HP to tune
-- You can use SM HP tunning capability to set and tunne HP
+- You can use SM HP tunning capability to set and tune HP
 
 ### Instance Type
 
@@ -902,6 +1005,7 @@ HP Tunning
 
 ### what to specify for AMT
 
+- algorithm to tune
 - HP, range of HP value and metrics for optimization
 - SM do HP tunning job
 - you can set no of HP combination to tune based on your cost
