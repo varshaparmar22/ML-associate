@@ -9,7 +9,7 @@ Amazon Services - AI/ML
 - source can be any like email, social media input, web pages, medical records(medical comprehend)
 - Does NLP stuff at high level
 
-- COMprehend will extract
+- Comprehend will extract
 1. key phrases
 2. entities
 3. sentiments
@@ -73,6 +73,15 @@ etc
 - translate can work on streaming data(use transcribe to convert speech to text and translate)
 - Gives confidence score
 
+Amazon Translate uses a Translation Model that consists of two (2) components:
+Encoder
+Read a source text one word at a time.
+Creates a semantic representation of each word.
+Decoder
+Uses the constructed semantic representation of the encoded text and translates it to the target language one word at a time.
+The decoder also uses a method called the Attention mechanism to translate obscure words or phrases correctly.
+
+When Automatic Language Detection is enabled, Amazon Translate uses Amazon Comprehend on the backend to automatically detect the language used in the source text.
 
 @@@ Amazon Transcribe @@@
 
@@ -81,8 +90,15 @@ etc
 - Streaming audio is also supported from HTTP/2 or Web Socket
 - Gives the text English, French, Spanish only 
 
+* use cases
+customer calls
+Meeting transcription
+captioning
+Generating metadata to create a searchable archive
+
 * Gives speaker identification 
 - no of speaker and identify they are talking
+- max 10 speaker
 
 * Channel Identification
 - Two callers could be transcribed separately
@@ -93,9 +109,10 @@ etc
 - you don't have to specify lang 
 - It identify dominant one automatically
 
-* Custom Vocabulary
+* Custom Vocabulary, Vocabulary Filtering
 - Vocabulary Lists - like some special words : names, acronyms
 - Vocabulary Tables - like "SoundsLike", "IPA"(international Phonetic Alphabet), "DisplayAs" <- it specify how to pronounce them, and how to transcribe them
+- Allows you to create a list of words to filter from the transcript.
 
 * Use Cases
 
@@ -114,6 +131,19 @@ $ Amazon Transcribe Medical
 $ Amazon Transcribe Subtitling
 
 - provide live subtitle output from audio you feed in
+- It adds timestamps to every word, making it easier to use for movie subtitles.
+
+$ confidence score is added to result
+$ lo-fi, hi-fi can handle
+
+
+* concepts
+
+A confidence score is between 0 and 100, indicating the probability that a given prediction is correct.
+Low-fidelity (lo-fi) is a term used to describe audio recordings that exhibit poor sound quality. The term high-fidelity refers to high-quality audio recordings.
+Automatic content redaction
+	A process that censors sensitive information within the transcript output. 
+	Replaces redacted information with the [PII] tag.
 
 
 @@@ Amazon Polly @@@
@@ -121,6 +151,8 @@ $ Amazon Transcribe Subtitling
 - Text to Speech - remember parrot
 - Neural 
 - Many voices and languages it can create
+- save into MP3, OGG, and PCM file formats.
+- Offers Standard and Neural TTS (NTTS)
 
 * Lexicon
 - Customize pronunciation of some specific words and phrases
@@ -142,7 +174,7 @@ $ Amazon Transcribe Subtitling
 
 @@@ Amazon Rekognition @@@
 
-- its computer vision
+- its computer vision - easily build powerful applications to search, verify, and organize millions of image & extract motion-based context from stored or live stream videos and helps you analyze them.
 - object and scene detection
 - can use your own face collection
 - image moderation - it will tell you if image has some offensive stuff init
@@ -151,6 +183,8 @@ $ Amazon Transcribe Subtitling
 - face comparison
 - text extracting in image
 - video analysis : object, people, celebrity detection. people pathing - path that people follow when system start tracking people and identify facial landmarks like position of the left eye when person detected in video
+- Rekognition Video allows you also to index metadata like objects, text, activities, scene, celebrities, and faces that make video search easy.
+- DetectLabels API to detect label for object, scene, things etc with confidence score
 
 ## Inputs
 
@@ -161,6 +195,8 @@ $ Amazon Transcribe Subtitling
 	* H.264 encoded
 	* 5-30 frames per seconds
 	* resolution is more important than framerate - to get result
+	* analyze videos (up to 8GB) stored in Amazon S3
+	* formats are MPEG-4 and MOV.
 - Lambda - to trigger image analysis
 
 ### Rekognition Custom Label
@@ -375,6 +411,24 @@ item_metadata_hidden_dimension : metadata provided for item by you - specify min
 
 1. Amazon Textract
 - its OCR which is smart can handles form, fields, and tables too from document
+use cases:
+Building search indexes
+Importing documents into a business application
+Building automated document processing solutions
+Text extraction for Natural Language Processing (NLP) Applications
+Maintaining document compliance
+
+Amazon Textract returns a confidence score for each identified element, which indicates the probability that a given prediction is correct.
+
+A low-confidence score can be rerouted to Amazon Augmented AI (A2I) for further human review.
+
+The asynchronous operation allows you to process multipage PDF documents.
+
+Detect Document Text API
+	Uses optical character recognition (OCR) technology to extract printed text and handwriting from a document.
+Analyze Document API
+	Extracts printed text, handwriting, and other data from tables and key-value pairs from forms.
+
 2. AWS DeepRacer
 - Reinforcement learning powered 1/18 scale car racer
 3. Industrial Application 
@@ -476,3 +530,28 @@ like
 @@@  AWS DeepLens  @@@
 AWS DeepLens is a cutting-edge, innovative device offered by Amazon Web Services (AWS) that combines the power of deep learning and Internet of Things (IoT) in a compact package. 
 This smart video camera empowers developers with the ability to build and deploy custom computer vision models directly on the device itself.
+wireless deep-learning enabled camera
+Optimized for Apache MXNet, TensorFlow, and Caffe
+Integrates with Amazon Rekognition for advanced image analysis
+computing power (1 billion operations per second)
+
+AWS DeepLens needs 3 AWS services to create a project:
+
+Amazon SageMaker 
+	Train/validate custom or pre-trained models 
+AWS Lambda
+	Preprocessing 
+	Capturing inference
+	Displaying output
+AWS IoT Greengrass
+	Deploys application project and Lambda runtime to AWS DeepLens 
+	Handles software and configuration updates
+
+AWS DeepLens Device Library
+awscam module
+	Runs inference code based on a project’s model.
+mo module
+	Converts Caffe, Apache MXNet, or TensorFlow deep-learning model artifacts into AWS DeepLens model artifacts.
+	Provides optimizations for AWS DeepLens model artifacts.
+DeepLens_Kinesis_Video module
+	Can send video feeds from the AWS DeepLens device to Amazon Kinesis Video Streams.
