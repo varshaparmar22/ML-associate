@@ -471,7 +471,10 @@ Analyze Document API
 * AWS DeepComposer
 
 - AI-powered keyboard
-- create entire song if you feed one melody 
+- create entire song if you feed one melody
+- it use GAN network - Gen AI
+- which compose of generator and discriminator NN 
+- generating new content by learning to mimic the distribution of the training data. 
 
 * Amazon Fraud Detector
 
