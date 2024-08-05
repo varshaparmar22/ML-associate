@@ -86,7 +86,7 @@ CNN are hard, resource insentive - CPU,GPU and memory requirement
 Lots of Hyper-parameters :  like kernel size, no of layers, amount of pooling, choice of optimizer
 getting training data and storing and accessing it are hard too
 
-For CNN specifically some specilized cnn architectures are there where HP tunning is well for particular problem
+For CNN specifically some specialized cnn architectures are there where HP tunning is well for particular problem
 
 like - 
 1. for handwriting recognition => LeNet-5
@@ -232,17 +232,19 @@ Early Stopping
 
 L1, L2
 - prevent overfitting
-- L1 is sum of weights * λ => λ will control its value so
+- L1(Lasso) is sum of weights * λ => λ will control its value so
 	- perform feature selection
 	- entire features can goes to 0
 	- computationally inefficient
 	- sparse output
 	- you can reduce dimensions by this technique, computationally heavy but can makeup by giving you less no of features
-- L2 is sum of square of weights
+	- result more essential features
+- L2(Ridge) is sum of square of weights
 	- all features will be considered, just weighted differently
 	- computationally efficient
 	- dence output - not discarding anything
 	- when all features are important use this one
+	- reduce model's complexity
 
 - same idea can be applied to loss function too
 
@@ -330,7 +332,7 @@ How to choose between bagging and boosting
 - constant value used in SGD algo
 - it is speed by which your algo will reach to optimal weight
 - size of update is also based on LR
-- too large will overlook optimal weight 
+- too large will overlook optimal weight - overshooting the true minimum of the loss function
 - too small take more time to reach to optimal weight - large training
 
 ### choose the metric as per requirement
@@ -369,3 +371,24 @@ How to choose between bagging and boosting
 - cost of positive is more <- specify in sentence
 - so model can not afford to miss-classify it as negative => FN
 - so choose model which as FN small <- best model
+
+### check things based on moral level for finding metric to consider
+
+- if prison is for positive 
+- then no one negative should be mis classify as positive
+- so FP will be more to consider
+- if precision(TP/(TP+FP)) is there in option then select it or specificity => TN/ (TN+FP)
+
+@@@ Gradient checking 
+It is used to verify the correctness of backpropagation implementation by comparing the gradients to numerical approximations(derivatives).
+
+@@@ Adam optimizer 
+“Adaptive Moment Estimation,” is an iterative optimization algorithm used to minimize the loss function during the training of neural networks. Adam can be looked at as a combination of RMSprop and Stochastic Gradient Descent with momentum.
+
+@@@ Optimizer remember
+ 
+- Adam optimizer achieves the highest accuracy in a reasonable amount of time. 
+- RMSprop achieves similar accuracy to Adam but with a much longer computation time. 
+- SGD algorithm required the least training time and produced the best results
+
+all  above algo use to minimize loss while training and optimize training efficiency.
