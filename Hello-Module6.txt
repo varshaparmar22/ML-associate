@@ -1,3 +1,5 @@
+29,40,49,58 question revise
+
 Date :  04/06/2024
 
 ==> Build your own alexa
@@ -32,3 +34,45 @@ val_acc => accuracy on unseen data <- to check overfitting check this it should 
 - high batch size will stuck model in local minima not good solution
 - high learning rate is also same overshoot the correct solution
 - small batch size required small learning rate
+
+@@@@@@@@@@@@@@@@@@@@@ important points to remember @@@@@@@@@@@@@@@@@@@@@2
+
+- mostly web application use port 8080
+
+- standard http port is 80
+
+- model artifact compressed in tar.gz file format
+
+- if binary classification problem and threshold settings is there in option it can be most approx.  answer for FN/FP related issue
+
+- Encryption needs to be implemented at the application layer (such as SSL/TLS) or by using AWS services designed for encryption
+
+- Boosting- model training technique - increasing the accuracy by giving more weight to difficult to predict observations in sequential model training.
+
+- if skewed(feature) dataset, and you need to uniform it by binning-apply quantile binning to convert it into bins having equal no of observation
+
+- Training for more epochs often leads to overfitting, as the model starts to memorize rather than generalize from the training data.
+
+- silhouette score if >1 data point very far from nearest cluster, 0 on one cluster or on boundary of two cluster, -1 assign in wrong cluster
+
+- EMRFS -Hadoop file system API, allowing direct interaction between EMR-hosted applications like MapReduce & S3. By using the `s3://` file prefix.
+
+- S3A (Amazon S3A File System) Hadoop-compatible interface for accessing data in S3-accessing public data sets without requiring AWS credentials.
+
+- Amazon Comprehend use LDA feature - for topic modeling
+
+- if NN has more layers than use ReLU as it solve vanishing gradient problem because of more layers for convergence
+
+- if accuracy is not as required you can change activation function 
+
+- if convergence issue than it is indicating problem with gradient loss - use Relu to solve it - specially if Network is complex already
+
+- if outliers are in dataset we can use median values for imputation
+
+- labeling by ground truth incorporates both precision and speed as it provide automatic labeling by self learning algo and human reviewing
+
+- Reckognition in asw if custom logo or character you need to identify, fir train recoknition with labeled dataset(even a small one). final model will be created and trained and you will get api for that model to use for your specific use case - you need labeled dataset for custom reckognition
+
+- blazing text can handle n-gram technique so it break word in subword and handle OOV by aggregating subword vector so good performance on morphologically rich language.
+
+- access to s3 in sagemaker handled by IAM roles & policy not by bucket access control list(ACL) - role based access control 
