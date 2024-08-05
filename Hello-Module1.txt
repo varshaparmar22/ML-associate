@@ -159,7 +159,6 @@ $$$ AWS Kinesis $$$$
 - Realtime means kinesis
 - data replicated in 3 AZ automatically
 - Kinesis Data Streams manages the infrastructure, storage, networking, and configuration needed to stream your data at its throughput level
-- replicate data in 3 AZ
 
 Kinesis Stream 
 	- low latency , streaming ingest at scale
@@ -181,7 +180,7 @@ Streams are devided into shard
 
 Kinesis Capacity Mode
 
-Provisioned mode(sepcified mode)
+Provisioned mode(specified mode)
 - choose no of shard can scale up/down by api or manually
 - shard IN - 1MB / 1000 records per sec
 - Shard OUt - 2MB /2000 records per sec
@@ -235,7 +234,8 @@ application name  = control table = dynamodb table = namespace for cloudwatch
 Kinesis Data Firehose
 
 - data delivery service
-- kinesis data stream/ cloudwatch/ IoT device to firehose
+- stream of data from kinesis data stream/ kinesis agent/ cloudwatch/ IoT device(click-stream) captured by firehose
+- direct click-stream data can be captured by firehose
 - firehose read 1mb per sec and create batchs(data  transformation can be done by aws lambda )
 - all batches will write on destination like s3, redshift(by copy command from s3 only),amazon elasticsearch(data with index)
 - can write on 3rd party destination(mondodb, splunk) or secure http endpoint 
@@ -362,10 +362,11 @@ Glue ETL
 	Bundle Transformation : drop field, drop null field, filter, join, map(add/delete/map to some field)
 	ML tansformation :  FindMatches ML - find duplicate or matching records in your dataset, even when records do not have common
 			    Unique identifier or fields are not matching exactly
-- support format conversion into csv, json, avro, parque, orc(apache hive optimized row columnar) , xml
+- support format conversion into csv, json, avro, parquet, orc(apache hive optimized row columnar) , xml
 - not support => database is Amazon Timestream - which is for low latency large scale data ingestion consume 10s if gigabyte TS data
 - apache spark transformation : k-means algo
 - De-duplication of data can be done by Glue ETL
+- Python shell jobs are meant for workloads requiring lesser compute power.
 
 Glue Data Brew
 
@@ -611,3 +612,49 @@ Generation - use gen IA tools, Augmented - add to prompt, Retrieval - retrieve f
 @@@ Amazon Keyspaces DB
 it (for Apache Cassandra) is a scalable, highly available, and managed Apache Cassandra–compatible database service. 
 With Amazon Keyspaces, you can run your Cassandra workloads on AWS using the same Cassandra application code and developer tools that you use today.
+
+
+@@@ AWS PrivateLink
+AWS PrivateLink provides private connectivity between virtual private clouds (VPCs), supported AWS services, and your on-premises networks without exposing your traffic to the public internet.
+
+@@@ NAT Gateways
+A NAT gateway is a Network Address Translation (NAT) service. You can use a NAT gateway so that instances in a private subnet can connect to services outside your VPC but external services cannot initiate a connection with those instances. outbound - allowed, inbound - not allowed
+
+@@@ Parquet = columnar text data.
+
+@@@ ORC = tabular data.
+
+@@@ Set EnableSageMakerMetricsTimeSeries to false to minimize monitoring cost
+
+@@@ AWS SQS
+simple queue service - decouple software system and component as queue
+
+@@@ AWS SNS
+simple notification service - message publisher can publish messages to its subscribers
+
+@@@ AWS MQ 
+Managed service for message brokers like Apache ActiveMQ and RabbitMQ
+
+@@@ Edge Location
+AWS Edge Locations are points in the AWS network optimized for low-latency content delivery to users.
+
+@@@ instance types
+P/G => gpu instances
+M => computation instances
+T => cost efficient instances
+R => memory intensive instances
+
+
+@@@ Generative Adversarial Network - GEN AI
+made of two deep neural networks
+- generator - convolutional neural networks (CNN)
+- discriminator -  deconvolutional neural networks (DNN).
+- Both networks train in an adversarial game, 
+- where one generate data <=Generator and the other predict data is fake/real <=discriminator.
+
+
+@@@ Amazon Cognito - platform, server, directory to authenticate, authorize user
+Amazon Cognito is an identity platform for web and mobile apps. It’s a user directory, an authentication server, and an authorization service for OAuth 2.0 access tokens and AWS credentials. With Amazon Cognito, you can authenticate and authorize users from the built-in user directory, from your enterprise directory, and from consumer identity providers like Google and Facebook.
+
+@@@ Amazon Timestream
+Amazon Timestream offers powerful capabilities for time-series data analysis. Data will be stored in time-stream db - which has storage cost too
