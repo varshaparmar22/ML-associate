@@ -182,13 +182,18 @@ diff CloudTrail and cloudWatch : Trail for auditing trail/log of the activity an
 - in SM training job will be run in VPC(virtual private cloud)
 - for more security you can use private VPC
 - SM needs to access s3 for training data and model artifact
-- if PVPC used the it cant access s3 directly - set s3-vpc endpoint to enable that communication
+- if PVPC used the it cant access s3 directly - set s3-vpc endpoint to enable that communication - called gateway endpoints(free) too
 - custom endpoint security and bucket policy will be used to keep that communication secure
 - SM notebooks are internet enabled - download data from internet - security hole
 - if you disable it - you need PrivateLink(interface endpoint) or NAT gateway which will
 - allow outbound connection so your model training(s3 access) and hosting can work
 - training and inference containers are also internet enabled 
 - here you can do network isolation but still you need access to s3
+- NAT gateway support outbound traffic to aws services & outside internet too, not in-bound
+- for NAT gateway you need device(router) for translating network address
+- PrivateLink will be formed between peered VPC(multi region), on-premise access
+- Transit Gateway - use to interconnect your virtual private clouds (VPCs) and on-premises networks
+
 
 ## SM + IAM roles
 
@@ -328,6 +333,7 @@ Two Modes it can run
 - you can use Spark ML or Sci-kit-learn containers
 - Spark ML can be used with glue or EMR and serialized on Mleap format
 - it can handle real-time or batch inference
+- invoked as http request to call first container for inference
 
 
 @@@ Mlops with SM and Kubernetes @@@
