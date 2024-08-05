@@ -34,7 +34,7 @@ From console
 
 Data Format works well with SM
 - RecordIO/Protobuf : enable user to store large amount of data to store in binary format so it is more compact and faster to read
-- can be used athena, redshift, EMR, amazon keyspace DB
+- can be used athena, redshift, EMR, amazon keyspace(=apache Cassandra) DB
 - can be use scikit, numpy, pandas from notebook
 
 Processing
@@ -54,7 +54,7 @@ Training
 
 Deployment
 - save the model you just trained to s3
-- two ways to deploy :
+- four ways to deploy :
 1. Persistent Endpoint - whenever inference request will come the model will do prediction. Server will be stayed open
 2. SM Batch Transform : whole dataset batch inference will be generated and then  server will be closed.
 3. Serverless Inference :  when endpoint can handle cold start problem, & idle time between traffic spike
@@ -65,16 +65,16 @@ options are available along with deployment in SM
 - SM Neo to deploy model on some endpoint application(edge devices)
 - Automatic scaling - for persistent endpoint it will increase endpoint to give inference on demand
 - shadow testing - evaluate new model against currenly deployed model to check for errors
-- elastic inference - for accelerating DL model
+- elastic inference - for accelerating inference for DL model only
 
 $$$ Incremental Training
 
 - CreateTrainingJob request
 - InputDataConfig : ----   ChannelName = "model", ContentType = "application/x-sagemaker-model"
-- You can also seed the training of a new model with the artifacts from a model that you trained previously with SageMaker. 
-- set HP which are required
-- compressed model artifacts (in .tar.gz format) output by SageMaker.
-- Incremental training saves training time when you want to train a new model with the same or similar data.
+- new model + expanded dataset when underlying pattern  was not accounted in previous training and which resulted in poor model performance.
+- Use the model artifacts or a portion of the model artifacts for training job. You don't need to train a new model from scratch.
+- Resume a training job that was stopped.
+- Train several variants of a model, either with different hyperparameter settings or using different datasets.
 
 $$$ Transfer Learning
 
@@ -82,26 +82,16 @@ $$$ Transfer Learning
 
 $$$$$$$$$$$$$$$$$$$$$$$$ SM algos $$$$$$$$$$$$$$$$$$$$$$$
 
-1. Linear Learner
+1. Linear Learner - weight related all things will apply
 
-as per linear regression - 
-training data should be fit as per line
-prediction based on that line
-
-while LL - but data should be fit as per line too
-can handle regression(numeric) prediction and classification(categorical) prediction
-
+- training data should be fit as per line
+- prediction based on that line
+- regression(numeric) prediction and multi & binary classification(categorical) prediction
 - for classification it use linear threshold function
-- it can do binary and multiclass classification
 
 * inputs
-- RecordIO wrapped protobuf file format - float32 data only
-- can take csv - where first column will be label column and other will be feature columns
-- data will be taken by two mode 
-1. file mode : all t data will be stored in file at once and then pass to training from s3
-2. pipe mode : data as per model setting will be taken from s3 and then put in training as needed - pipe is more efficient than file
-
-- if training taking too much time we can use pipe mode not file mode
+- RecordIO wrapped protobuf (float32) & csv
+- file/pipe mode 
 
 $ preprocessing
 
@@ -138,8 +128,7 @@ $ Validation
 - single or multiple machine which can have one cpu or gpu only
 - multiple gpu on single machine will not help
 
-&&& it can be used to classify the handwriting recognition problem (classification)&&&
-- it works in similar way as nn 
+LL => handwriting recognition problem (classification) work line NN
 
 
 2. XGBoost
@@ -172,9 +161,10 @@ eXtreme Gradient Boost
 
 ### Hyper Parameters
 
-*Subsample - prevent overfitting
-*Eta - step size shrinkage for preventing overfitting
-*Gamma - minimum loss reduction for creating new partition for tree
+*Subsample - prevent overfitting- increase  for that - more samples on each tree, so tree will generalize on overall more data
+*Eta - step size shrinkage for preventing overfitting- increase it for overfitting
+*Gamma - minimum loss reduction for creating new partition for tree-increase for overfitting
+Increasing 'gamma' makes the model more conservative by controlling the formation of new nodes, which can help reduce overfitting by penalizing complex models.
 *Alpha - L1 Regularazation - larger value - more secure model
 *Lambda - L2 Regularazation - larger value - more secure model
 *eval_metric - on which you are caring about more like rmse(accuracy), AUC(when you care about false positive rate more - ROC means true positive rate(recall) vs false positive rate), error
@@ -204,7 +194,7 @@ eXtreme Gradient Boost
 ### input data
 - only support recordIO-protobuf 
 - tokens must be in integer
-- spamle code provided in SM to convert word tokens in integer in recordio-protobuf format.
+- sample code provided in SM to convert word tokens in integer in recordio-protobuf format.
 - need train, validation and vocab channel to work otherwise error
 
 - for inference application/x-recordio-protobuf or application/json
@@ -729,6 +719,8 @@ for training
 - it use distance metric and find nearest neighbour 
 - for classification it use most common label
 - for regression it take average of value
+- it use all features as it to calculate nearest neighbour
+- it Is lazy algorithm
 
 ### inputs
 
@@ -773,6 +765,8 @@ inference
 - based on Euclidean distance find data points are similar and assign then in cluster
 - it calculate center point of each cluster too
 - here in sm it provide large scale(web-scale) clustering on large dataset
+- elbow method - (within-sum-of-squares) can be used for finding intial k value
+- multiple models with diff k value will be trained and choose optimal value of k in sagemaker 
 
 ### input
 
@@ -1032,9 +1026,10 @@ HP Tunning
 
 - In apache spark all pre-processing of data will be done like mapping and reduce
 - at the output of spark it will create dataframe object 
-- instead of using spark MLlib we use SageMakerEstimator 
+- instead of using spark MLlib we use SageMakerEstimator for training
 - which provide PCA, XGBoost, KMeans Clustring kinda
 - SageMakerModel will be used to create inference
+- The SageMaker Spark library is available in Python and Scala
 
 ### how is it work
 
@@ -1233,6 +1228,9 @@ as specified in clarify
 	2. Canary : shift small portion and monitor and check okay than terminate blue
 	3. Linear : shift traffic slowly linearly spaced and monitor model performance meanwhile
 - auto rollback : things goes wrong - rollback to blue fleet which is working
+- a/b testing => production variant
+- canary => testing new feature on small scale
+- rollout => systematic updates to all users
 
 ### Shadow test
 
@@ -1381,7 +1379,7 @@ contributedTo, AssociatedWith, DerivedFrom, Produced, SameAs
 - it prepare tabular and image data for ML
 - visual interface in SM studio to prepare data for ML 
 - import data
-- visualize data(check data)
+- visualize data(check data) - you can check outliers by using this too 
 - transform data(more than 300 transformation are there to choose from) or
   you can transform data by using pandas, PySpark, PySpark SQL
 - Quick Model feature to train a model with some less no of data and get result
@@ -1391,6 +1389,7 @@ contributedTo, AssociatedWith, DerivedFrom, Produced, SameAs
 - it will give output to A SM Processing, A SM Pipeline, A SM Feature Store
 - mainly it will create python code for all ETL job for data - jupyter notebook output it will give
 - so it will produce code that will go into pipeline
+- SM processing job or autopilot job can be called automatically for implementing ETL job
 
 
 ### TroubleShoot
@@ -1416,6 +1415,17 @@ contributedTo, AssociatedWith, DerivedFrom, Produced, SameAs
 - dimensionality reduction technique
 - update dimension 
 - so relevant features from dataset is gone 
+
+### Training Mode
+
+1. file mode : all the data will be stored in file at once and then pass to training from s3
+2. pipe mode : data as per model setting will be taken from s3 and then put in training as needed - pipe is more efficient than file
+- if training taking too much time we can use pipe mode not file mode
+
+@@@ Log Loss/ Cross Entropy
+LogLoss – Log loss, also known as cross-entropy loss, is a metric used to evaluate the quality of the probability outputs, rather than the outputs themselves.
+-it measures the difference between the discovered probability distribution of a classification model and the predicted values.
+
 
 
 "Action": [
