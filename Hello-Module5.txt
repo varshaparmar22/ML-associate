@@ -22,6 +22,7 @@ Amazon Services - AI/ML
 - Personnel Information identification and redaction
 - Targeted sentiment identification(for specific entity)
 - can create your own data 
+- insurance claim can be identify too
 
 ### Entities
 
@@ -163,7 +164,7 @@ Automatic content redaction
 
 - Speech Synthesis Markup Language
 - along with plain text it gives you some more control
-- like over emphasis, pronunciation, breathing, whispering, speech-rate, pitch, pause
+- like over emphasis, pronunciation, breathing, whispering, speech-rate, pitch, pause,  newscaster speaking style
 - by this you can make resultant sound more lot natural
 
 * Speech Mark
