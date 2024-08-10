@@ -392,3 +392,36 @@ It is used to verify the correctness of backpropagation implementation by compar
 - SGD algorithm required the least training time and produced the best results
 
 all  above algo use to minimize loss while training and optimize training efficiency.
+
+@@@ Cross Validation
+- to identify overfitting or generalization of model
+types
+
+hold out
+- train-test split
+- high vaiance
+- high bias
+- no clue which data go where, its random, inexpensive
+
+
+leave one out
+- LOOCV - high variance, low bias
+- as we are averaging the output of n-models which are fitted on an almost identical set of observations, and their outputs are highly positively correlated with each other. 
+- very expensive -  n no of training jobs
+- Leave One Out Method gives unbiased estimates - almost has all population
+
+
+Stratified k-fold
+- make sure data for training represent the all class population 
+- not bias data 
+
+Time series
+- used for time-series data
+
+k-fold
+- k set of data - each set has equal no of data points
+- k no of models will be tested for getting validate
+- for each model AUC will be cacluated 
+- low variance than LOOCV
+- expensive
+
