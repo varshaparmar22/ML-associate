@@ -391,3 +391,19 @@ on same endpoint
 
 3. create https endpoint
 - SM will use 2 and 1 step info and deploy model/s
+
+
+@@@ Run Your Own Inference Code
+
+- docker run image serve
+serve will override CMD
+
+- all container run with root level user access
+
+- To obtain inferences, the client application sends a POST request to the SageMaker endpoint.
+
+- To receive inference requests, the container must have a web server listening on port 8080 and must accept POST requests to the /invocations and /ping endpoints.
+
+- A customer's model containers must accept socket connection requests within 250 ms.
+
+- A customer's model containers must respond to requests within 60 seconds. 
