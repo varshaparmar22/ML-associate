@@ -213,7 +213,24 @@ QS Visual Types
 	data over map in form of dot default, size of circle specify value for that location
 - Donut chart : comparing values items for dimensions => items takes portion from whole dimension(percentage val) - precision value is not importaznt - percentage of total amount will be shown by this chart
 - Gauge Chart : like dashboard of your car - 270 degree circle - how much thing will u measure like fuel in tank
-- Word cloud : word cloud specify - diff words/phrases appears in you dataset and size shows density of appeareance
+- Word cloud : word cloud specify - diff words/phrases appears in you dataset and size shows density of appearance
+
+@@@ More about graph
+
+# scatter plot 
+“A scatter chart shows multiple distributions, i.e., two or three measures for a dimension.”
+
+# Histogram
+“A histogram is an accurate representation of the distribution of numerical data. It is an estimate of the probability distribution of a continuous variable.”
+
+# Line Chart
+“Use line charts to compare changes in measured values over a period of time.” 
+
+# Box Plot - whisker plot
+“Is a way to show the spread and centers of a data set. Measures of spread include the interquartile range and the mean of the data set. Measures of the center include the mean or average and median (the middle of a data set).” A Box Plot shows the distribution of multiple dimensions of the data.
+
+# Bubble Chart
+“A bubble chart is a type of chart that displays three dimensions of data. Each entity with its triplet (v1, v2, v3) of associated data is plotted as a disk that expresses two of the vi values through the disk's xy location and the third through its size.”
 
 
 $$$$$$$ EMR- Elastic Map Reduce
@@ -604,3 +621,4 @@ large variance
 
 
 Variance measure the diff between fit in training data set and test data set
+- in cross fold k- validation , increase k will reduce variance
