@@ -23,6 +23,26 @@ Date :  04/06/2024
 -> amazon transcribe -> amazon comprehend
 
 
+@@@@@@@@@@@@@@@@@@@ Algo Content Type @@@@@@@@@@@@@@@@
+
+ContentType============>Algorithm
+application/x-imag============>Object Detection Algorithm, Semantic Segmentation
+application/x-recordio============>Object Detection Algorithm
+
+application/x-recordio-protobuf============>Factorization Machines, K-Means, k-NN, LDA, Linear Learner, NTM, PCA, RCF, Sequence-to-Sequence
+
+application/jsonlines============>BlazingText, DeepAR
+
+image/jpeg============>Object Detection Algorithm, Semantic Segmentation
+
+image/png============>Object Detection Algorithm, Semantic Segmentation
+
+text/csv============>IP Insights, K-Means, k-NN, Latent Dirichlet Allocation, Linear Learner, NTM, PCA, RCF, XGBoost
+
+text/libsvm============>XGBoost
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 @@@@@@@@@@@@ model implementing @@@@@@@@@@@2
 
 accuracy => accuracy on training data
@@ -76,3 +96,51 @@ val_acc => accuracy on unseen data <- to check overfitting check this it should 
 - blazing text can handle n-gram technique so it break word in subword and handle OOV by aggregating subword vector so good performance on morphologically rich language.
 
 - access to s3 in sagemaker handled by IAM roles & policy not by bucket access control list(ACL) - role based access control 
+
+- To protect your data in transit within the AWS Cloud, Amazon Redshift uses hardware accelerated SSL to communicate with S3 or DynamoDB for COPY, UNLOAD, backup, and restore operations.
+
+-Trusted Advisor checks security groups for rules that allow unrestricted access to a resource. Unrestricted access increases opportunities for malicious activity, such as hacking, denial-of-service attacks, or loss of data. 
+
+- while transferring data from firehose to destination, data transformation will be happen in lambda function
+
+- The lambda timeout value default is 3 seconds.
+
+- Firehose supports Amazon S3 server-side encryption with AWS Key Management Service (SSE-KMS)
+
+- AWS auto scaling lets you scale other resources &services like ECS, dynamodb tables, aurora replicas etc just like EC2 instance scaling(add more as need)
+
+- The AWS Glue Data Catalog is an Apache Hive metastore-compatible catalog
+
+- to attach kinesis video stream to sagemaker direct amazon kinesis video stream inference template(KIT) is used.
+
+- Glue classifier send certainty string either 1.0=> all schema are 100% sure or Unknown or 0.0 => all schema are not classified from given data
+
+- Reckognition can fail to identify face if it is trained on single image per person - it need to train on multiple image of same person with different aspects like beard, glasses etc
+
+- random forest(Supervised algo-multiple dT classification & regression) prevent overfitting just like bagging technique
+
+- Entropy uses the probability of a certain outcome in order to make a decision on how the node should branch. Unlike the Gini index, it is more mathematical intensive due to the logarithmic function used in calculating it.
+
+- AWS Security Token Service (AWS STS) is a web service that enables you to request temporary credentials for use in your code, CLI, or third-party tools
+
+- Access Advisor to check when service or resource last accessed and by whom
+
+- AWS Systems Manager Parameter Store - to store parameters like credential, licence key or configuration parameters
+
+- AWS Secrets Manager - helps you manage, retrieve, and rotate database credentials, application credentials, OAuth tokens, API keys, and other secrets throughout their lifecycles. - built-in integration for MySQL, PostgreSQL, and Amazon Aurora on Amazon RDS
+
+- Hinge loss is related to support vector classifier, and it not specify probability
+
+- Heuristic approach is problem-solving methods(mathematical) that are based on practical experience and knowledge, when you are not applying ML approach
+
+- recorIO => 4 bytes representation
+
+- the macro average F1-measure is used to evaluate the predictive success of a multiclass classifier. 
+
+- model quantization reduce model size and inference time for edge device with little loss of accuracy.
+
+- for edge device cloud based inference will introduce latency
+
+- knowledge distillation is creating new model having smaller size, but need to train it and optimize for edge device
+
+- image down-sampling will risk loosing smaller details
