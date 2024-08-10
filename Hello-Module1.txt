@@ -5,7 +5,8 @@ s3
 - objects(files) stored in buckets(directory)
 - objects have key which is full path of file 
 - max ob size 5TB
-- object tag(key=> val pair) for security and lifecycle
+- object tag(key=> val pair) useful for security(access permission) and lifecycle - each object can have upto 10 tag
+- tag based trail, watch metrics from cloud
 - support any file format
 - data partitioning : to query data more faster by putting in diff day, moth, year or product id folder
 - aws glue will partition data for us
@@ -244,8 +245,11 @@ Kinesis Data Firehose
 - data conversion(csv/json to parquet/orc)/ transformation by aws lambda csv=> json
 - support compression for s3 destination
 - pay for only data go through it
-- json => parquet
-- csv => parquet
+- destination for your stream, such as Amazon S3, Amazon OpenSearch Service, Amazon Redshift, Splunk, Snowflake, or a custom HTTP endpoint.
+- json => parquet/orc
+- csv => parquet/orc
+- while transferring data from firehose to destination, data transformation will be happen in lambda function
+- Firehose supports Amazon S3 server-side encryption with AWS Key Management Service (SSE-KMS)
 
 
 Kinesis Data Stream Vs Firehose
@@ -620,9 +624,9 @@ AWS PrivateLink provides private connectivity between virtual private clouds (VP
 @@@ NAT Gateways
 A NAT gateway is a Network Address Translation (NAT) service. You can use a NAT gateway so that instances in a private subnet can connect to services outside your VPC but external services cannot initiate a connection with those instances. outbound - allowed, inbound - not allowed
 
-@@@ Parquet = columnar text data.
+@@@ Parquet = columnar format.
 
-@@@ ORC = tabular data.
+@@@ ORC = optimized row and columnar format. Parquet and OR used in Hadoop system
 
 @@@ Set EnableSageMakerMetricsTimeSeries to false to minimize monitoring cost
 
@@ -653,8 +657,29 @@ made of two deep neural networks
 - where one generate data <=Generator and the other predict data is fake/real <=discriminator.
 
 
-@@@ Amazon Cognito - platform, server, directory to authenticate, authorize user
-Amazon Cognito is an identity platform for web and mobile apps. It’s a user directory, an authentication server, and an authorization service for OAuth 2.0 access tokens and AWS credentials. With Amazon Cognito, you can authenticate and authorize users from the built-in user directory, from your enterprise directory, and from consumer identity providers like Google and Facebook.
+@@@ Amazon Cognito - platform, server, directory to authenticate, authorize user  identity provider
+Amazon Cognito is an identity platform for web and mobile apps. It’s a user directory, an authentication server, and an authorization service for OAuth 2.0 access tokens and AWS credentials. With Amazon Cognito, you can authenticate and authorize users from the built-in user directory, from your enterprise directory, and from consumer identity providers like Google and Facebook. Can connect to outside identity provider like SAML, MAD
 
 @@@ Amazon Timestream
 Amazon Timestream offers powerful capabilities for time-series data analysis. Data will be stored in time-stream db - which has storage cost too
+
+@@@ HyperVisor
+A hypervisor is a software that you can use to run multiple virtual machines on a single physical machine. Every virtual machine has its own operating system and applications. The hypervisor allocates the underlying physical computing resources such as CPU and memory to individual virtual machines as required.
+
+@@@ Amazon Elastic Transcode
+- convert video files format into another format so they can play on smart phones, camera etc
+
+@@@ Naive Bayes Classifiers
+it is a family of classification algorithms. Based on - every pair of features being classified is independent of each other. highly used in text classification. It is fast and easy making prediction with high dimensional data like text. Naive - easy/simple
+
+
+@@@ AWS Trusted Advisor 
+Service that provides a real-time review of your AWS account and offers guidance on how to optimize your resources to reduce cost, increase performance, expand reliability, and improve security.
+
+@@@ git secret
+- not let you commit any sensitive credential to git repository
+
+@@@ You can use AWS CloudHSM or HashiCorp Vault to store the keys. By using CloudHSM you can configure a CloudHSM cluster to store your custom keys and authorize AWS KMS to use it as a dedicated key store.
+
+@@@ Lake Formation
+- gives you granualar access control on db, with 1. metadata access control(Metadata based table) 2. underlying data access control(s3 location based data)
