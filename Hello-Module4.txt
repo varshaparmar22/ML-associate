@@ -161,16 +161,25 @@ eXtreme Gradient Boost
 
 ### Hyper Parameters
 
-*Subsample - prevent overfitting- increase  for that - more samples on each tree, so tree will generalize on overall more data
-*Eta - step size shrinkage for preventing overfitting- increase it for overfitting
-*Gamma - minimum loss reduction for creating new partition for tree-increase for overfitting
-Increasing 'gamma' makes the model more conservative by controlling the formation of new nodes, which can help reduce overfitting by penalizing complex models.
 *Alpha - L1 Regularazation - larger value - more secure model
 *Lambda - L2 Regularazation - larger value - more secure model
-*eval_metric - on which you are caring about more like rmse(accuracy), AUC(when you care about false positive rate more - ROC means true positive rate(recall) vs false positive rate), error
+*num_round-no of training round & num_class - num of class=> when multiclass classification is there = multi:softmax or multi:softprob. - required params
+*base_score- initial prediction score, global bias
+*booster- gbtree, dart (for tree model), gblinear(linear function)
+*colsample_bylevel/_bytree/_bynode - subsample ratio of column by level,tree,node
+*Eta - step size shrinkage for preventing overfitting- increase it for overfitting - shrink the weight of features
+*eval_metric - rmse: for regression, error: for classification, map: for ranking
+*Gamma - minimum loss reduction for creating new partition for tree-increase for overfitting
+*max_depth - 0 means no limit,default is 6, more deep value lead to overfitting of model
+*tree methods - auto, exact, approx, hist, or gpu_hist.
+*Subsample - prevent overfitting- increase  for that - more samples on each tree, so tree will generalize on overall more data
 *scale_pos_weight - when unbalanced pos/neg cases you can set balance between that, can be set to sum(neg)/sum(pos)
-*max_depth - max depth of tree, default is 6, more deep value lead to overfitting of model
-*tree methods - approx, hist and gpu_hist
+
+
+Increasing 'gamma' makes the model more conservative by controlling the formation of new nodes, which can help reduce overfitting by penalizing complex models.
+
+
+
 
 #### Instance Type
 - its memory bound not compute bound
@@ -1017,6 +1026,33 @@ HP Tunning
 - use logarithmic scale for HP values you want to explore like if HP's value like 0.0001 to 0.1 then log will be more faster
 - don't run too many training job concurrently as AMT learn from those job and if they are so many in parallel it cant learn properly. You can use 1-2 training job concurrently run
 - make sure if training running on multiple instance at the end they should report correct object metric to optimize for
+
+$$$ types of HyperParameter Tunning Job
+
+1. Grid Search
+- work on categorical parameters only
+- don't specify no of tunning job its automatic based on no of categorical parameters
+
+2. Random Search
+- random combination of params
+- not depends on previous job result - so concurrent - fast
+- train on as much combination as you want
+
+3. Bayesian Optimization- regression based
+- treat hyperparameter tunning like regression problem
+- specify metric to tune on
+- next set will be chosen based on current tunning model evaluation
+- it is used in SM hyperparameter tunning 
+
+4. HyperBand & HyperBand with early stopping
+- it dynamically re-allocate resource after each epoch run in training job based on performance
+- automatically stop training which is underperform while tunning params set
+- work for image classification which publishes accuracy metrics after every epoch.
+
+- with early stopping advanced mechanism with hyperband
+- TrainingJobEarlyStoppingType = OFF <= default, when using HyperBand with EarlyStopping
+
+- Bayesian will take more time than random
 
 
 20. Apache Spark & SageMaker
