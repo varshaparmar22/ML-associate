@@ -683,3 +683,4 @@ Service that provides a real-time review of your AWS account and offers guidance
 
 @@@ Lake Formation
 - gives you granualar access control on db, with 1. metadata access control(Metadata based table) 2. underlying data access control(s3 location based data)
+  sdfjksdfjsdkjkdssdsdsdfsdf
