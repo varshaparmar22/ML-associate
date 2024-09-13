@@ -1,4 +1,4 @@
-29,40,49,58 question revise
+ vv ,zzxz29,40,49,58 question revise
 
 Date :  04/06/2024
 
@@ -26,7 +26,7 @@ Date :  04/06/2024
 @@@@@@@@@@@@@@@@@@@ Algo Content Type @@@@@@@@@@@@@@@@
 
 ContentType============>Algorithm
-application/x-imag============>Object Detection Algorithm, Semantic Segmentation
+application/x-image============>Object Detection Algorithm, Semantic Segmentation
 application/x-recordio============>Object Detection Algorithm
 
 application/x-recordio-protobuf============>Factorization Machines, K-Means, k-NN, LDA, Linear Learner, NTM, PCA, RCF, Sequence-to-Sequence
@@ -91,11 +91,11 @@ val_acc => accuracy on unseen data <- to check overfitting check this it should 
 
 - labeling by ground truth incorporates both precision and speed as it provide automatic labeling by self learning algo and human reviewing
 
-- Reckognition in asw if custom logo or character you need to identify, fir train recoknition with labeled dataset(even a small one). final model will be created and trained and you will get api for that model to use for your specific use case - you need labeled dataset for custom reckognition
+- Reckognition in aws if custom logo or character you need to identify, for train reckognition with labeled dataset(even a small one). final model will be created and trained and you will get api for that model to use for your specific use case - you need labeled dataset for custom reckognition
 
 - blazing text can handle n-gram technique so it break word in subword and handle OOV by aggregating subword vector so good performance on morphologically rich language.
 
-- access to s3 in sagemaker handled by IAM roles & policy not by bucket access control list(ACL) - role based access control 
+- access to s3 in sagemaker handled by IAM roles & policy not by bucket access control list(ACL) - resource based access control 
 
 - To protect your data in transit within the AWS Cloud, Amazon Redshift uses hardware accelerated SSL to communicate with S3 or DynamoDB for COPY, UNLOAD, backup, and restore operations.
 
@@ -144,3 +144,8 @@ val_acc => accuracy on unseen data <- to check overfitting check this it should 
 - knowledge distillation is creating new model having smaller size, but need to train it and optimize for edge device
 
 - image down-sampling will risk loosing smaller details
+
+- logarithmic, robust standardization transformation will remove effect of outliers
+
+- CloudWatch will show matrices at 1 minute frequency 
+
