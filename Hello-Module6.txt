@@ -103,7 +103,7 @@ val_acc => accuracy on unseen data <- to check overfitting check this it should 
 
 - while transferring data from firehose to destination, data transformation will be happen in lambda function
 
-- The lambda timeout value default is 3 seconds.
+- The lambda timeout value default is 3 seconds - very less to do some transformation of data sometimes.
 
 - Firehose supports Amazon S3 server-side encryption with AWS Key Management Service (SSE-KMS)
 
@@ -149,3 +149,197 @@ val_acc => accuracy on unseen data <- to check overfitting check this it should 
 
 - CloudWatch will show matrices at 1 minute frequency 
 
+- comprehend can work on different languages like Arabic, Chinese (simplified), Chinese (traditional), English, French, German, Hindi, Italian, Japanese, Korean, Portuguese, and Spanish
+
+- review residual for regression problem
+
+- residual = true target - predicted target
+
+- resource based policy are only inline, identity based policy are inline and managed 
+
+- resource level permission is associated with ARN
+
+- AWS organisation service control policy will limit permission of root user
+
+- connect to SM api/runtime by interface endpoint only(it is Elastic Network Interface - powered by aws PrivateLink) from VPC - you don't need any gateway, direct connect, public internet, VPN connection for this. it assign private IP address to your VPC for accessing directly. connect aws service and VPC
+
+- Unload command is used to write result of query from redshift to some textfiles
+
+- Kinesis data stream application = consumer of streaming data
+
+- Lex is useful for creating conversational interface by using text and voice
+
+- Ip insight generate the score for anomalous pattern of given event/observation.
+
+- tanH activation function is used mainly for classification between two classes, return  : -1, 1
+
+- image classification algo is multi-label classification algorithm
+
+- for image classification/other algo If want to use GPU, include CUDA toolkit in container, not import NVIDIA driver in docker image, your container should  be NVIDIA-docker compatible 
+
+- aws batch is work with EC2/spot/fargate/farget spot instance ans assign compute resources
+
+- AWS glue generate python/scala code automatically - it is visual/code based interface for etl job
+
+- validation data set associated with development state of model. evaluate model performance at development stage
+
+- in framework developer can do more customization like custom training code can be created/use diff validation technique like k-fold... like TF, MXN kind of framework, while in built in algorithm it is not possible
+
+- drop feature if it has LOW variance(how the value of feature spread around means) - if it is so nearer from each-other, model will not learn pattern well
+
+- redshift spectrum will query data from directly S3 without loading data into redshift, the spectrum layer will do all processing and aws provide all resources for that so like this multiple redshift cluster can access s3 data concurrently-it is fast too because of parallelism
+
+- for KNN feature_dim, k are required parameters
+
+- For kinesis firehose delivery stream take 2000 transaction, 5000 records or 5MB data - by PutRecordBatch or PutRecord api operation
+
+- CloudWatch monitor/log/event work and help you to monitor aws services, along with cloudtrail log(which log api calls)
+  monitor => monitor and set alarm
+  log => you can monitor, store, access log from ce2, cloudtrail and aws services
+  event => deliver the stream of system events show aws resource changes
+
+- Amazon Inspector : security assessment service
+
+- AWS Config : manage aws resource inventory, configuration history, configuration changes notification useful for security and governance. How resource was configured at given point of time.
+
+- Lambda will not handle ETL
+
+- Data Pipeline will do data processing and data movement by schedule, it has BUIL-In capability of moving data between s3 and RDS, running query on s3 log data
+
+- Specify all containers and order of them to run on related EC2 instances in inference pipeline as http request, for normal only one PrimaryContainer has to be specified
+
+- Inference Pipeline is immutable, but UpdateEndpoint will help to deploy new endpoint to update IP for experiment
+
+- Direct data stream can not be captured by kinesis analytics, it takes data from kinesis data stream or Amazon MKS(Kafka)'
+
+- Glue Crawler can accept exclude and include pattern folder name to crawl through
+
+- when SM training start by api SM will replicate entire data set on ML compute instance, to replicate subset of data on each compute instance s3datadistributiontype = shardedbys3key
+
+- SM debugger will track value of parameters if they are getting too large or small while training
+
+- your docker container image path will be specified in CreateTrainingJob api call
+
+- levenstein distance is Minimum number of single character edit in one word to convert it into another word. Distance between two words
+
+- for model do 1. assessment(at least once in 6month), 2. retrain(after checking if performance below threshold), 3. rebuild(performance not getting better)
+
+- HP tuned against validation DS as it helps in learning process, parameters are derived from training like weight and bias.
+
+- No inter-node communication for batch processing(getting inference)
+
+- everything is encrypted 'at rest' and 'in transit'
+
+- command-control communication in between service control panel&training job instances, communication between nodes in distributed training & processing job. <= NOT  Encrypted
+
+- if MEDIAN value of objective metrics of current running job is bad than previous one at same epoch than stop training
+
+- data from /SageMaker folder will persist(stay) between start-stop of notebook instance session.
+
+- hold-out set is 20-30% of training data - to evaluate model while training and getting HP
+
+- model.tar.gz => model_algo-1 = serialized Apache MXNet object
+
+- auc-roc score will predict higher score for positive example rather than negative example
+
+- if you want to identify cyclic pattern based on date feature, convert it into hd, dw, wm, wy, dm, my place them on circle with x, y coordinate with sin, cos transformation.
+
+- one-hot encoding useful for categorical data transformation, label encoding is useful converting label into incremental integer format.
+
+- bivariate - 2 attributes, multi-variate- more than 1 attribute anaysed, check their pattern, distribution, relation with each other.
+
+- without SM - if network isolation then container can not perform inbound/outbound connection to even to amazon service like s3.
+- with SM - with help of execution role download and upload operation is possible in s3
+- in distributed training - in/out bound traffic are enabled for related training/ inference containers
+
+- Amazon personnelize will create custom model api by using your data and create model train, deploy and create api for it for your recommandation system, just give data you will have api for recommandation, it identify features and train model by itself and create custom model api.
+
+- LDA is a BOW model, in it specify the probability of topic distribution over the word - its generative probability model, not discriminative(logical) model(which specify how output map to input), so it will not give semantic meaning of word
+
+- if Glue is available in given region  than glue data catalog will be useful for querying data from s3, or athena has its own data catalog to access for querying data from s3 if glue is not available in given region.
+
+- do categorical encoding if it is ordinal - according to order like size s,m,l,xl etc
+
+- VPC can be enabled for training/inference by specifying VpcConfig params in createTrainingJob, createHyperparametersTunningJob, CreateModel api call
+
+- Network Isolation can be enabled for training/inference by specifying EnableNetworkIsolation params in createTrainingJob, createHyperparametersTunningJob, CreateModel api call
+
+- in model from Aws MarketPlace network isolation and VPC required
+
+- chainer & reinforcement learning not support network Isolation
+
+- KPL library simplify creation of producer application development
+  for large complicated data writing it manage all logic, batching, threading, de-aggregation - so give high performance
+  on customer side if KCL integrated the KPL integrate without much effort, if KCL not integrated(api-getrecord  is used) even though KPL can be used to get per user record
+  KPL emits throughput, error, other metrics to cloudwatch
+  Asynchronous architecture : it create batches and not expect the receiver should be ready all the time to receive, it create intermediary object that receive the data and continue getting new record. whenever requester is ready to receive it will same behaviour as asynch client in aws SDK 
+  RecordMaxBufferedTime is param for specify delay that app can handle, if app cant handle this delay use aws SDK
+
+- EFS is for Linux(and for heterogeneous app) not require any management, FSx is for windows - require management - both can handle multiple LAMBDA
+
+- if you want to use EMR spark for your SM - you can use SM spark library/livy/sparkmagic - where EMR is there already
+
+- oRC -tabular data(row column formate), parquet - columnar text data storage
+
+- test million of sample rapidly called throughput if need to improve IOPS than change throughput, throughput is associate with EFS
+  two throughput mode associate with EFS 1. Busrting throughput mode  2. Provisioned throughput mode
+  1. bursting TP mode :  if IO limit reach 100% then increase storage size automatically
+  2. Provisioned TP mode : adjust provisioned throughputmode setting to expand max IO limit
+
+- max I/o performance aggregate throughput which is related to multiple connection to EFS system , it can introduce latency for file operation
+
+- AWS Client VPN useful for getting secure connection between client device to aws services/resource over public internet
+
+- Establishing a NAT Gateway enables outbound internet connectivity for resources within private subnets, without restricting public internet access. Contrary to the objective of securing SageMaker notebooks by mitigating public internet exposure, a NAT Gateway permits instances in private subnets to initiate connections to external services, while preventing any inbound attempts, thus maintaining a balance between connectivity and security. NAT Gateway will not do any data encryption.
+
+- AWS PrivateLink use only aws private network only by creating VPC endpoints, not public internet
+
+- SM support FastFile mode as input mode too, same code as file mode no code changes, it directly access data from s3 now so it is very fast. if data downloaded local or streaming from s3 it can work with in both, no additional charges, convienent access of local file and performance of s3 data access both feature provided by FastFile mode. It use EBS storage so cost associated with it.
+
+- if normal file mode is used data will be downloaded in encrypted format in amazon EBS volume whole than can be accessible.
+
+- EnableSageMakerMetricsTimeSeries  associated with monitoring - data for cloudwatch
+
+- choosing KNN, Linear regression for imputing missing value - if features have linear relationship specified than we can use LR, otherwise most probably KNN will be better approach, KNN can handle complex relationship if dataset have.
+
+- Lex can handle speech-to-text and conversational logic
+
+- Shuffling will avoid bias and improve generalization,However, in time-series or sequential learning tasks, preserving the order of data is important.
+
+- in blazingtext skip-gram technique extend to n-gram technique too which break large word into subword and create vector of it and aggregate those sub-word vector for handling OOV, morphologically rich language issue
+
+- by default SM role attach to sm notebook give access to those bucket which has 'sagemaker' word inside their name. 
+
+- skip gram can understand sematic relationship between words 
+
+- ssl/TSL is data encryption technique for in transit.Encryption needs to be implemented at the application layer (such as SSL/TLS) or by using AWS services designed for encryption. Not on network connection rules.
+
+- skewness can be handled by quantile binning as all bin will have same no of data points in it.
+
+- Quick Sight has outlier/anomaly detection, forecasting feature, impute missing values, auto narratives to create graph kind of built in ML features
+
+- 8080 port is often used for web applications, including custom inference containers in SageMaker.
+
+-  big batch_size will lead to bad generalization as it make GD path smoother and prevent model explore loss effectively
+
+- Run command will work when you build process of docker image start not container start
+
+- set ENV variable if you want to set entrypoint for container execution
+
+- RBF kernel in SVM is used to do non linear classification
+
+- SVM can  not work with sequential data
+
+- RNN is for sequential data like speech, text while CNN is for image, video data where spatial hierarchies it can capture.
+
+- max 30 hP can be given to tune in HP tunning in SM
+
+- if cost of being positive is very high we can not mis classify it as negative , we can not afford FN, take care more for it.
+
+- Precision tuning in SageMaker can be set up using hyperparameter optimization jobs targeting the precision metric.
+
+- Kinesis analytics provide on the fly transformation by using sql on streaming data
+
+- variability of negative class if poorly presented in data set then data augmentation technique can be useful
+
+- sci-kit process as single node (instance) process for data pre-processing or training. not distributed on multiple instances - so not useful for vast data reprocessing
