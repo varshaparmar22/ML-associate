@@ -189,7 +189,7 @@ val_acc => accuracy on unseen data <- to check overfitting check this it should 
 
 - redshift spectrum will query data from directly S3 without loading data into redshift, the spectrum layer will do all processing and aws provide all resources for that so like this multiple redshift cluster can access s3 data concurrently-it is fast too because of parallelism
 
-- for KNN feature_dim, k are required parameters
+- for KNN feature_dim- no of features, k-no of neighbour, predictor_type, sample_size are required parameters
 
 - For kinesis firehose delivery stream take 2000 transaction, 5000 records or 5MB data - by PutRecordBatch or PutRecord api operation
 
