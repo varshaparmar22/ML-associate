@@ -134,7 +134,7 @@ DataSource
 - Aurora/RDS
 - Athena
 - EC2 hosted db
-- file based - excel, csv, tsv, log format
+- file based - json, excel, csv, tsv, log format
 - data/column transformation can be done before applying quicksight
 - aws IoT analytics can be done on QS
 - little ETL for data preparation
