@@ -1,0 +1,12 @@
+https://tutorialsdojo.com/aws-cheat-sheets/
+https://tutorialsdojo.com/amazon-redshift/
+https://tutorialsdojo.com/amazon-sagemaker/
+https://tutorialsdojo.com/amazon-polly/
+https://tutorialsdojo.com/amazon-cloudwatch/
+https://tutorialsdojo.com/aws-certified-machine-learning-specialty-exam-study-path/
+https://tutorialsdojo.com/amazon-athena/
+https://tutorialsdojo.com/amazon-kinesis/
+https://tutorialsdojo.com/amazon-comprehend/
+https://tutorialsdojo.com/aws-database-migration-service/
+https://tutorialsdojo.com/amazon-kinesis/
+https://tutorialsdojo.com/aws-glue/
