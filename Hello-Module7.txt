@@ -191,8 +191,9 @@ diff CloudTrail and cloudWatch : Trail for auditing trail/log of the activity an
 - here you can do network isolation but still you need access to s3
 - NAT gateway support outbound traffic to aws services & outside internet too, not in-bound
 - for NAT gateway you need device(router) for translating network address
-- PrivateLink will be formed between peered VPC(multi region), on-premise access
+- AWS PrivateLink provides private connectivity between virtual private clouds (VPCs), supported AWS services, and your on-premises networks without exposing your traffic to the public internet.
 - Transit Gateway - use to interconnect your virtual private clouds (VPCs) and on-premises networks
+- PrivateLink Establish connectivity between VPCs and AWS services without exposing data to the internet
 
 
 ## SM + IAM roles
