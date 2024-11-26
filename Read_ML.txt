@@ -1,0 +1,100 @@
+ML & DL diff - Ml - select model to train, manual feature extraction, DL - select architecture of model, feature extraction is automatic
+
+- data warehouse - apply data analytics, schema on import, database - apply transaction on DATA, data lake - structure & unstructured data(artifact, ml output, analytics output, stream data)
+
+- RedShift - columnar storage and data compression
+
+- S3 two level security, plain text key do encryption and then plain text key will be encrypted by master key and stored in S3 too
+
+- AWS macie - find sensitive information from data in s3 and alert user for that, or bucket because public and about to accessed
+
+- in kinesis - at rest KMS encryption is used
+
+- use kinesis sdk api for faster access of data rather than KPL, KCL
+
+- Kinesis analytics available for SQL and JAVA developers
+
+- in time-series along with trends, seasonality, noise, level = average of time data ===== components
+
+- Glue support format conversion into csv, json, avro, parquet, orc(apache hive optimized row columnar) , xml
+
+- athena execute query in parallel, so its fast
+
+- analytics ability helpful in ML
+
+- EMRFS ==> s3://, HDFS  ==> hdfs://    <=== prefix for file in EMR
+
+- EMRFS has read after write consistency, checked by dynamodb(ddb check metadata and identify whole data is complete)
+
+- Athena and redshift spectrum are query service which use glue data catalog
+
+- Normalisation --- 0-1
+Min will map to 0 and max will map to 1, so no - minus values 
+Called min max scaler like
+Nm =x - min(x)/max(x)-min(x)
+
+- Standardization -- means will be 0, so values will be dispersed around mean, having - minus values, mean n std deviation calculated n used
+S = x - mean(x)/std(x)
+
+- Deep learning will use knn or regression for imputation of missing value 
+
+- Deepar can be used for imputing missing value 
+
+- Binning n encoding can be combined 
+
+- Log transform apply on positive values n handle skewed data n outlier 
+
+- SMOTE -- use knn
+
+- Bigram, trigram having unigram n bigram together respectively 
+
+- OSB- set window of 4 n do 4 words sentences n make pair of two words by removing middle words in reputation mode, first word will stay there of sentence (different for each 4 words sentences), add _ like
+
+The_quick, The_brown, The__fox
+
+- Cartesian product means mix two or more features and form one feature - interaction between features - attach features with _
+
+- ReLu used in hidden layers
+
+- tanH prefred over sigmoid, tanH suffer from vanish gradient
+
+- regularization will introduce additional error term on loss function so weight and bias will be updated more differently 
+
+- Regularization will increase bias and improve variance
+
+- (Ridge - square of slope, Lasso - slope) + alpha <===== new error term
+
+- in cnn relu AF is used  ---- cnn work good on image size 32X32
+
+- FP is type 1 error, FN is type 2 error
+
+- accuracy = (TP+TN)/(TP+TN+FP+FN)
+
+- error rate = (FP+FN)/(TP+TN+FP+FN)
+
+- RMSE - unit matches the unit of output - means it do square of output and reverse it with root so preferred over MSE
+
+- Decision tree are supervised- minimize entropy which provide optimum split
+
+- EMR supports GPU and Apache MXNet instances
+
+- XGBoost can be used for fraud detection algorithm
+
+- in seq2seq => encoder will have LSTM or GRU , decoder will have RNN & LSTM, it work based on seq2seq
+
+- DeepAR can work well for cold start problem and data having seasonality factor, inference on cpu instance only
+
+- CBOW - predict one word from given sentence, skip-gram - predict sentence from given word
+
+- Amazon Forecast needs user to move s3 data to amazon forecast, data in forecast - AF will give data encryption by customer managed key, and IAM access to data for security
+
+- AWS Greengrass enable edge devices to communicate to aws cloud - edge devices can communicate with each other too by IG
+
+- AWS Greengrass core handle communication between device and cloud, & execution of Lambda
+
+- endpoints are encrypted with KMS
+
+- cloudwatch can be used to detect anomalies
+
+- cloudtrail can work in many region
+cloudtrail log data are encrypted by server side encryption technique in s3
