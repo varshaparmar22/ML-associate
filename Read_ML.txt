@@ -98,3 +98,332 @@ The_quick, The_brown, The__fox
 
 - cloudtrail can work in many region
 cloudtrail log data are encrypted by server side encryption technique in s3
+
+##################################################################################################################
+
+- aws storage gateway - use to store backup of on-premise data in aws s3 by using aws storage gateway configuration - NFS(network file storage) distributed file system to store data in aws
+
+- s3 intelligent tiering has small monthly monitoring and tiering fees
+- s3 outpost storage will have 48TB to 96Tb and 100 buckets storage in outpost
+
+- increase n-gram size if model underfit vice-versa in overfitting
+
+- True Positive Rate === TP  /  TP + FN
+
+- True Negative Rate === TN  /  TN + FP
+
+- False Positive Rate === FP  /  FP  + TN
+
+- False Negative Rate === FN  /  FN  + TP
+
+- remember TPR & TNR  if FPR or FNR asked just replace T=>F, F=>T
+
+- you can launch EC2 instance in deep learning AMI
+
+- Amazon SageMaker can train from Amazon Elastic File System (EFS) with FSx, lustre along with s3
+
+- XGBoost requires numeric features. It automatically handles numeric features of different scales and categorical numeric features.
+
+- if target leakage is there(or just for normal data) don't do feature engineering on all data. First do train-test split and apply feature engineering on train data only
+	- Using future information in training
+	- Applying transformations blindly- on all train, test data 
+	- Randomly splitting data - for timeseries data
+
+- client request cached by endpoint - one endpoint can have multiple instances, multiple production variants
+
+- to handle client request python sdk, boto3, lambda, (api gateway + lambda) can be useful in notebook
+
+- SageMakerVariantInvocationsPerInstance = average no of request per minute per instance = max req per sec * safety factor * 60
+  beyond above value instance scaling will be applied
+
+- in production variant feature variant weight & target variant are parameter to send % traffic and request to particular variant
+
+- each variant need separate instance and separate serving container
+
+- in multi-modal - same container will be used to host diff models(using same algo) with same instance
+
+- multi-modal with multi-container - same endpoint, same instance but diff containers having diff models like containers are in inference pipeline
+
+- AWS IoT Greengrass, you can run Lambda functions, docker containers, execute predictions on machine learning models in your edge device even when not connected to the internet.
+
+- neo compiled executable model artifact will be placed in s3
+- greengrass will download that executable & lambda runtime and host on your edge device computer and generate inference
+
+
+- endpoint configurations are read-only. So no update or modification apply.
+- Create a new endpoint configuration to use the new instance type and apply it to the endpoint. SageMaker implements this change with no downtime. The existing endpoint configurations are read-only. So, you would need to create a new endpoint configuration
+
+- Spot instances are currently supported for model training and hyperparameter tuning jobs.
+
+- Single-model endpoint provides complete isolation as each instance has one serving container with a single model artifact. 
+- A multi-model endpoint uses a shared serving container to host all the models in the instance. 
+- The multi-container endpoint has different containers and models in the same instance - it can be used for inference pipeline
+
+- With a multi-model endpoint, the engineer can release new models without any changes to the endpoint. The engineer needs to store the model artifacts to the S3 location (specified when setting up a multi-model endpoint). The serving container will automatically download the new model artifacts from S3 when an inference request is received for the new model
+
+- Data Wrangler is a popular topic in the ML Specialty Exam. DW is more under SM canvas platform, so we will need domain for it
+- DW show high warning about duplicate values in dataset, data leakage, anomalous data 
+- SageMaker Data Wrangler helps reduce the time and effort spent on preparing data for machine learning, making it easier to clean, explore, and transform data at scale
+
+- Amazon SageMaker AutoPilot --- provide all features like Data Analysis and Preprocessing, Model Selection, Hyperparameter Optimization, Model Training and Evaluation, Model Deployment like automatic endpoint generation
+
+- SM debugger can identify overfitting of model too
+
+- If you write a custom algorithm, AWS recommends that you use SageMaker Distributed Data Parallel
+library and SageMaker Distributed Model Parallel library --- for distributed training
+- You can approach distributed training in two ways: Data Parallel and Model Parallel 
+- break-up data/model to run on distributed cpus or gpus
+
+- prediction score === low score on negative samples, high score on positive samples, like (0.1, 0.8) but if 0.4 which is in middle so model can not identify it is either it is pos/neg this score can be low confidence score to check by A2I
+
+- bias can be checked while pretraining, training, after deployment of model by using clarify
+
+- SageMaker Experiments automatically tracks the inputs, parameters, configurations, and results of your iteration as trials. You can compare active experiments with past experiments to identify opportunities for further incremental improvements
+
+- Clarify can help explain how models make predictions. It uses a model-agnostic feature-attribution approach to explain how a model arrived at a particular prediction
+
+- SageMaker Studio share notebook in a few different ways to user by using AWS Single Sign-On (SSO). 
+
+- if training take too much - AWS recommends that you try a larger instance before trying to increase the number of instances.
+
+- identity based policy will be directly attached to user so principal component will not be specified in policy.
+- groups are not supported as principal in any policy, still group can have policy
+- policy are inline & managed. Inline attach to user/resource & can't be re-usable, user/resource destroy policy will be destroy
+- managed policy has versioning feature to revert-back if needed
+- arn - uniquely identify resource/principal in aws
+- no-action, not-resource, not-principal are tag can be used in policy to define
+- request context in policy will help with requestedRegion, principaltag, secureTransport, sourceIP, sourceVPce, sourceVPC, currentTime --- global environment data
+
+- two type policy 
+1. Role based policy - when a new resource will be aaded policy need to updated <= drawback
+2. attribute(tag) based policy - tag can be attached to user, role, resource 
+
+implicit - suggested, explicit - pressured
+
+
+application access to aws resource
+- access key are long term credential 
+- IAM roles are used by ec2 instance to create temporary credential to access aws service/resource - this credential valid for few hours
+- STS - security token service is used to create temporary credential
+- app can access service/resource by IAM role
+- on-premise app can access service/resource by access key that will ask for IAM role to aws to get access
+- resource based policy can be useful for cross account resource 
+- if service not support resource based policy then STS can be useful to assume role and get temporary credential
+- Group is not considered identity, and you cannot grant access to a group in a resource-based policy. With Resource-based policy, you can grant access to users, roles and other accounts
+- Credentials must not be shared. Each employee must have their own user and credentials. As a best practice, MFA must be enabled for administrative actions.  
+- AWS IAM Federation - user can sign in aws with their existing corporate credential
+- AWS cognito - users are mapped to IAM role and they get temporary credential to access services by that role
+- for cross account access of resource aws organization is best choice to create to manage users account
+- with AWS Organizations, you centrally enforce the policies using Service Control Policy. strict access/not access
+- tag(attribute) based policy is least privilege policy 
+- check Chandra lingam section 12 for more
+
+- PAC can work on numeric data only, data should be normalized first
+- work on large dimensional data very well
+- RCF can work on time series data to impute missing values and forecasting
+- RCF assign anomaly score, low score means normal data points, high score means anomaly data points
+
+- ORC - columnar
+- Avro - row format data
+- parquet, orc, avro are binary format
+- Glue ETL job script run on EMR
+- DF convert data in parquet/orc - in built conversion &  backup into s3(original one)
+
+- CRR - cross region replication - replicate bucket in another region - automatic & continuous replication
+
+- Durability – S3 replicates data across multiple availability zones and multiple devices in each availability zone. 
+- Cross-Region Replication is used for disaster recovery by keeping a copy of your bucket in another region. 
+- Versioning protects from accidental and malicious deletes. 
+- Server-Side encryption is used for storing the data encrypted at rest.
+
+AWS Glue(ETL)
+
+transform - merge, data type change, missing/incorrect value, organize data
+- glue ETL job run on serverless apache spark environtment
+
+Glue ETL DataFrame 
+- use python / R
+- store in computer memory
+- it is for small/medium dataset
+- single machine use
+- data will be moved where code is - on server
+apache spark dataframe
+- distributed across cluster of server
+- ETL code is moved to server where data is
+- for large dataset, enable for in memory caching
+- distributed structure
+Glue DynamicFrame
+- same as spark dataframe
+- glue catalog integration
+- easy integration to aws data source & destin
+- can handle diff datatypes
+handling datatype inconsistency[string, float]
+- cast to single type
+- make separate column for each
+- have transformation context : persist state for operation if specified,  if not => state can't be tracked    <== for bookmark
+
+Glue Job Types
+- Ray - new framework for ML
+- python shell job - ETL that not require apache spark
+- streaming etl - for streaming data from kinesis and kafka
+- spark job - run pn spark cluster for batch processing
+- check 205 lecture in chandra lingam course
+
+-Stochastic adjust weight on each example, other are mini batch and batch, mini batch is very popular in deep learning as it work in parallel
+
+- Weights are adjusted based on error observed in a mini-batch. The training set is divided into mini-batches and when you increase the number of examples in a mini-batch, you have fewer mini-batches. And this would result in less-frequent weight adjustment
+- The sigmoid activation function is used for binary classifiers as it outputs a value between 0 and 1. This output is used as the positive class probability
+- For regression, if the model predicts any arbitrary value as output, you should not use an activation function. However, if regression predicts values in 0 to 1 range, then you can use a sigmoid activation
+
+conversion
+GDFrame ===> spark dataframe   @@@@@by toDF
+GDFrame <=== spark dataframe   @@@@@by fromDF
+
+Glue ETL Boomark
+- track processed data
+- bookmark = persistant state between job run
+- for s3 = last modified time of object
+- for jdbc = primary key of table as bookmark key
+
+- so if ETL job is skipping data disable bookmark as it start processing data from last bookmark process(new data not processed).
+
+- framework like sklearn, pytorch etc you can create your algo(write script) or use pre-built algo for those framework and train model. Local mode training & hosting are available by this framework container
+- custome container images are hard to create
+- SM_HOSTS, SM_CURRENT_HOSTS are related to containers for training
+
+- instance store - if reboot happen on same host then data persist, data lost( if hardware fail, instance stop/terminate) in pay instance
+- EBS volumes are outside of host computer of ec2 instance, separate pay than instance, long term use, snapshot backup, AMI can be created from snapshot to launch EC2 instance, it is AZ based , automatic replicate in AZ for disaster
+
+Snapshot - incremental backup
+- asynch, work in background
+- flush cache first for consistency
+
+EFS
+- share between server
+- private space for all user in organization 
+- widely used by on-premise app
+- EFS = Linux ec2
+- FSx for windows = window ec2
+- FSx for lustre = high performance computing for Linux ec2 with s3 use as file share(put data in s3) look like storage gateway
+- standard, infrequent access storage tiers, life cycle policy like s3
+
+- EBS volume support KMS & CMK encryption
+
+- Cassandra, dynamodb, documentdb are NoSQL db
+
+- failover - when primary db instance crash standby becomes primary it is called - DNS is used for assigning primary to standby
+
+- aurora serverless - decouple storage from data processing, request come proxy fleet will start connection  for processing, aurora warm pool to make process faster
+
+
+https://d1.awsstatic.com/whitepapers/augmented-ai-the-power-of-human-and-machine.pdf
+https://docs.aws.amazon.com/wellarchitected/latest/machine-learning-lens/welcome.html
+https://aws.amazon.com/sagemaker/faqs/?ml=sec&sec=prep
+https://aws.amazon.com/rekognition/faqs/?ml=sec&sec=prep
+https://aws.amazon.com/transcribe/faqs/?ml=sec&sec=prep
+https://aws.amazon.com/comprehend/faqs/?ml=sec&sec=prep
+https://aws.amazon.com/augmented-ai/faqs/?ml=sec&sec=prep
+
+SageMaker stores code in ML storage volumes, secured by security groups and optionally encrypted at rest.
+
+Bias can be measured before training (as part of data preparation), after training (using Amazon SageMaker Experiments), and during inference for a deployed model (with Amazon SageMaker Model Monitor) by clarify = 20 bias
+
+Amazon SageMaker Model Cards => model information = model documentation , SageMaker Model Cards auto-populates training details
+You can define minimum permissions in minutes with SageMaker Role Manager.
+SageMaker Role Manager will then generate the IAM policy automatically. 
+
+- Lineage ===> code lineage, data lineage, model lineage
+
+code & data lineage has been handle by versioning already
+model lineage:
+all components in creation of model
+many data preprocessing, training and post processing steps are involved
+
+studio
+feature store
+lineage tracking - steps of machine learning workflow
+pipelines
+experiments : track, compare, evaluate models
+ECR
+s3
+and more
+
+Amazon DevOps Guru
+- improve app availability by using ml powered cloud operation
+
+amazon helthlake
+- store healthcare unstructured data also apply dimensionality reduction
+
+amazon lookout metrics
+- can send alert if found anomaly in data using metrics
+
+monitron
+- install monitron sensors and gateway by app
+
+
+- for linear models : feature and target should linear relationship, but features should not have multi-colinearlity(means they should not have linear relationship with each other - otherwise model can not understand relationship of feature with target proprly)
+
+- gradient decent algo - optimization strategy
+move towards right set of parameters
+- learning rate 
+step size - big or small step to update parameter
+
+The ROC AUC score is a single number that summarizes how well a classifier can distinguish between positive and negative classes.
+
+- in classification DT - gini index/entropy will be used as loss function to identify variable the minimize loss
+
+entropy = measure of randomness in dataset
+information gain = difference between parent and child
+
+- SVM - statical approach
+- logistic regression(classification) - probability based approach
+
+- support vector : data points which are near to hyperplane
+maximum distance between support vector and hyperplane is good  in svm
+
+bagging classifier : bootstrap+aggregation
+
+- adaboost : weightage of rows will be used to update model
+- gradient boost : check residual of model and perform fit on residual - add more nodes until residual becomes small
+
+- inertia in K-means: distance between each data point and centroid.
+good model inertia low, k low. But actually k increase, inertia decrease
+The silhouette in k-means : measures the similarity of a data point within its cluster (cohesion) compared to other clusters (separation).
+
+- DBScan(density based can do anomaly point clusters too) & Hierarchial(bottom to up tree) are clustering technique
+
+- in regression model output layer don't have activation function
+- for each epochs parameters will be changed , epoch : whole forward and backward pass of NN with all data
+- batch size : no of data rows used to complete one forward and backward pass
+- iteration : one forward pass + one backward pass
+
+100 rows
+5 batch size
+100/5 = 20 iteration for each epoch
+
+epoch can be any you choose 
+total iteration = epoch * iteration
+
+optimizer HPs
+LR : speed at which parameters are updated
+batch size : choose that max value which can fit in your memory
+epoch : can be any early stopping will help with problem
+
+model HPs
+no of hidden layers
+activation function : start with Relu
+Relu solve vanish gradient problem
+dead neuron => leaky Relu
+Relu used in Hidden layer only
+sigmoid, tanH introduce vanish g p
+
+- FF NN features are processed independently - so no relation track so RNN required
+
+transfer learning in nlp
+1. pretraining : large data, dummy task- predict next word  say this lang modeling
+2. domain adaption:  fit on domain data
+3. fine tunning : add classification layer, task on hand
+
+
+ordinal data ===> LabelEncoding(0 & n-1 conversion of val)
+nominal data ===> One Hot encoder
