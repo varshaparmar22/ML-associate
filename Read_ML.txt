@@ -427,3 +427,63 @@ transfer learning in nlp
 
 ordinal data ===> LabelEncoding(0 & n-1 conversion of val)
 nominal data ===> One Hot encoder
+
+employee attrition === leaving job
+categorical val == countplot
+numeric val == bar plot
+
+pca useful for feature extraction - apply scaling first before pca --- important
+
+
+LDA - linear discriminate analysis ==== supervised learning(label is there) to reduce dimesion. classes should be as much possible as separate from each other.
+
+s3 glacier deep archieve - digital preservation of data long term
+s3 glacier - s3 managed data
+- You can use Amazon S3 Inventory to help manage your storage. For example, you can use it to audit and report on the replication and encryption status of your objects for business, compliance, and regulatory needs. not help with api request to your bucket
+'
+aws batch
+- batch computing jobs as well as gpu based training job can be run on batch- scalable, containerized,
+batch has priority based job scheduling, gpu scheduling, work with different workflow engine too
+support tightly coupled workflow too, like multiple EC2 instances are required then they can be used here too. also support distributed training
+- you can specify your reserved instances, spot instance(ec2) ect to work with batch to save cost 
+
+aws step
+- serverless orchestration engine, cor-ordinate micro-service and distributed apps\\
+- 2 types
+1 standard : one run workflow, execution extends upto 1 year - long running, auditing n visual debugging provided
+2 express : one or more than one time run workflow, extends execution upto 5 mins like streaming data processing or IoT stream ingestion workflow <=== high event rate workflow
+- provide parallel processing
+- state transition == step execution
+
+
+- for cost management(operational expence)  - instance(resource) scaling is imp, not load balancing
+- load balancing is for optimizing performance
+- UpdateEndpointWeightsAndCapacities operation to modify the DesiredWeightsAndCapacity for the new model version - This approach enables precise control over the traffic distribution between different model versions
+
+- AMT uses the algorithm and ranges of hyperparameters that you specify. It then chooses the hyperparameter values that creates a model that performs the best, as measured by a metric that you choose.
+
+- training job configurations : algorithm, data sources, output destinations, and initial hyperparameter values
+- SageMaker notebook instances offer the flexibility to modify the instance type directly, after halting it
+
+- K-means clustering is more commonly used for grouping data points based on similarity, rather than specifically targeting age groups for product alignment.
+
+- Configuring security groups is more suitable for managing network access to AWS resources, such as EC2 instances, rather than regulating access to AWS Glue Data Catalog resources. Security groups control inbound and outbound traffic at the instance level, not resource-level access control.
+
+- IAM resource-based policies - allows for granular control over access to these resources like  AWS Glue Data Catalog resources. 
+
+- security groups is more suitable for managing network access to AWS resources, such as EC2 instances
+
+-  K-means clustering is typically used for unsupervised learning tasks to identify natural groupings in data, not focusing on particular age group or kind of grouping/partitioning(binning can be useful for age mainly)
+
+- Amazon Redshift is a data warehousing service optimized for analytics workloads, not for storing vast amounts of raw training data. Redshift data are once processed data for specific task.
+- Redshift organizes data in a columnar format. Each column contains data of a specific type, such as integers, text, or dates.
+
+- if age distribution fall in small group like elder people above 65 age will have missing data then use mean/median value to imputation
+
+- In machine learning, optimization is the process of improving a model's accuracy and effectiveness
+
+-Scaling out === add more instances and scaling in === reduce the number of instances
+- augmentation === increment
+
+- Amazon Kinesis Firehose is more suited for loading data into data lakes or data stores, rather than real-time data analysis. While it can deliver data to destinations like Amazon S3 or Redshift,
+- KDS=== collect, process, and analyze large streams of data in real time, enabling the rapid ingestion and analysis
