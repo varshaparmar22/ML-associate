@@ -619,7 +619,7 @@ s3://bucket_name
 ### how it is used
 
 - it create forest of trees
-- if you add datapoints in DT and DT will form whole bunch of branches from that single datapoint then it can be said that datapoint is anomaly
+- if you add datapoints in DT and that data point stays closer to root and would not form other node/dt from it than its anomaly
 - data sampled randomly on DT
 - available from stream of data in kinesis data analytics
 - it takes series of data and check if it is anomaly or not
