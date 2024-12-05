@@ -259,7 +259,9 @@ val_acc => accuracy on unseen data <- to check overfitting check this it should 
 - if Glue is available in given region  than glue data catalog will be useful for querying data from s3, or athena has its own data catalog to access for querying data from s3 if glue is not available in given region.
 
 - do categorical encoding if it is ordinal - according to order like size s,m,l,xl etc
-
+- categorical encoding === assign numerical value to category, 1,2,3...
+- label encoding === assign numeric label to category like "1","2","3" or it can be 1,2,3
+- target encoding === calculate numeric val -- based on relationship between categorical feature and target value, assign that to feature
 - VPC can be enabled for training/inference by specifying VpcConfig params in createTrainingJob, createHyperparametersTunningJob, CreateModel api call
 
 - Network Isolation can be enabled for training/inference by specifying EnableNetworkIsolation params in createTrainingJob, createHyperparametersTunningJob, CreateModel api call
