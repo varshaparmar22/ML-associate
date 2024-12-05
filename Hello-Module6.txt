@@ -129,7 +129,7 @@ val_acc => accuracy on unseen data <- to check overfitting check this it should 
 
 - AWS Secrets Manager - helps you manage, retrieve, and rotate database credentials, application credentials, OAuth tokens, API keys, and other secrets throughout their lifecycles. - built-in integration for MySQL, PostgreSQL, and Amazon Aurora on Amazon RDS
 
-- Hinge loss is related to support vector classifier, and it not specify probability
+- Hinge loss is related to support vector classifier, and it not specify probability - Hinge loss is also known as max-margin loss. 
 
 - Heuristic approach is problem-solving methods(mathematical) that are based on practical experience and knowledge, when you are not applying ML approach
 
