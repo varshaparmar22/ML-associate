@@ -59,7 +59,7 @@ S = x - mean(x)/std(x)
 
 - OSB- set window of 4 n do 4 words sentences n make pair of two words by removing middle words in reputation mode, first word will stay there of sentence (different for each 4 words sentences), add _ like
 
-The_quick, The_brown, The__fox
+The_quick, The__brown, The___fox
 
 - Cartesian product means mix two or more features and form one feature - interaction between features - attach features with _
 
@@ -110,7 +110,7 @@ cloudtrail log data are encrypted by server side encryption technique in s3
 
 ##################################################################################################################
 
-- aws storage gateway - use to store backup of on-premise data in aws s3 by using aws storage gateway configuration - NFS(network file storage) distributed file system to store data in aws
+- aws storage gateway - use to store backup of on-premise data in aws s3/FSx/EBS by using aws storage gateway configuration - NFS(network file storage) distributed file system to store data in aws, Encrypts data by default at rest using S3-SSE, or you can use your own encryption keys
 
 - s3 intelligent tiering has small monthly monitoring and tiering fees
 - s3 outpost storage will have 48TB to 96Tb and 100 buckets storage in outpost
@@ -207,7 +207,7 @@ library and SageMaker Distributed Model Parallel library --- for distributed tra
 1. Role based policy - when a new resource will be aaded policy need to updated <= drawback
 2. attribute(tag) based policy - tag can be attached to user, role, resource 
 
-implicit - suggested, explicit - pressured
+implicit - suggested, explicit - pressurised
 
 
 application access to aws resource
