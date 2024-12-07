@@ -637,6 +637,14 @@ extends the capabilities of CloudWatch Events by enabling customers to connect d
 
 - We want to produce forecasts for a time series with little or no existing historical data - deepAR - can handle cold start problem
 
+Apache Kafka is an open-source platform that allows users to: 
+Collect, process, and store streaming data 
+Build real-time data pipelines and applications 
+Handle large volumes of data in real time 
+Publish, subscribe to, and store streams of records 
+
+Kafka is designed to handle data streams from multiple sources and deliver them to multiple consumers. It's an alternative to traditional enterprise messaging systems. 
+
 - Apache HBase is just a non-relational distributed database 
 
 - The content-based filtering algorithm ==> predictions based on the product's attributes.
