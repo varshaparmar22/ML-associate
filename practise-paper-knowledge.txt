@@ -12,7 +12,7 @@
 
 - we can do periodic update in weight of model based on recent data - maybe useful in fraud transaction
 
-- ROC AUC score  =  equally care = TP, TN
+- ROC AUC score  =  equally care = positive & negative class ===> FPR, TPR
 
 - reg:linear, reg:logistic are XGBoost HP
 
