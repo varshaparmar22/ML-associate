@@ -345,3 +345,7 @@ val_acc => accuracy on unseen data <- to check overfitting check this it should 
 - variability of negative class if poorly presented in data set then data augmentation technique can be useful
 
 - sci-kit process as single node (instance) process for data pre-processing or training. not distributed on multiple instances - so not useful for vast data reprocessing
+
+- KDS & KDA can not directly send data to s3
+
+- firehose and lambda can send data to s3
