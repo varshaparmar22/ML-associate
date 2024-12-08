@@ -869,7 +869,7 @@ two type to use
 - pair-wise (2nd order) interactions between features.
 - In regression mode, - RMSE. - LIKE movie rating- rate value
 - In binary classification mode - Binary Cross Entropy (Log Loss), Accuracy and F1 Score.
-
+- it is not multi-class model
 ### inputs
 
 - RecordIO-Protobuf with float32
