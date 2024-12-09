@@ -371,3 +371,30 @@ both in Preview.
 
 
 - Athena to run extract, transform, and load (ETL) jobs
+- we were able to process data from DynamoDB, convert that data to Parquet, apply Snappy compression, create the correct partitions in our AWS Glue Data Catalog, and ingest data to Amazon S3 by using AthenA
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
