@@ -411,7 +411,10 @@ Amazon Elastic Block Store volumes of your training instances.
  API Gateway à Lambda à SageMaker Endpoint is another
 
 
-
+SageMaker instance profiles, e.g. to grant permissions to S3
+ SageMaker doesn’t support resource-based policies e.g. an S3 bucket policy
+ From Notebooks, we can see S3 buckets, and files, but we can’t copy them by
+default
 
 
 
