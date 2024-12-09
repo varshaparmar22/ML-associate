@@ -383,6 +383,24 @@ Amazon Elastic Block Store volumes of your training instances.
 
 - LDA work based on count of words similar in all documents
 
+- Local run of SageMaker (when no internet)
+ pre-built TensorFlow and MXNet containers
+ latest version of the SageMaker Python SDK with pip install -U sagemaker
+ CPU (single and multi-instance) and GPU (single instance)
+ it uses Docker compose and NVIDIA Docker.
+ pull the Amazon SageMaker TensorFlow or MXNet containers from Amazon ECS with public Amazon ECR repository in local
+
+- increasing the learning rate with an increase in mini-batch size has been shown to reduce the impact of having a large mini-batch on model quality.
+
+- GAN (Generative Adversial Networks) - oversampling - best
+
+- add more data to reduce overfitting, ensembling technique is also for remiving overfitting.... noice will be in both over & under fitting   ======= overfitting --- sprinkle some noice,   underfitting --- remove noice
+
+- Vault Lock for enforcing policies --- write once read many policy - for long term enforcing lock on data - compilance cotnrol vault lock is on policy not on bucket - immutable policy
+
+- IAM is global resource - like all roles, users, group, policy you create they are available across all region which you want to access(cloudwatch, sagemaker, s3 are region specific to get to work with)
+
+- XGBoost dont require scaling, normalization, one hot encoding, if requried for binary value  give 0,1(label encoding) for categorical values do label encoding.
 
 
 
