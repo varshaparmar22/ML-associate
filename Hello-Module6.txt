@@ -361,3 +361,7 @@ Security - use SM without optming up Internet
 train and host yourmodel
 - Modify your instance’s security group to allow outbound connections training
 and hosting.
+
+- Security - control access to SageMaker notebooks to specific IAM groups
+=> Attach tags to the groups of SM resources to be kept private to specific groups,
+and use ResourceTag conditions in IAM policies.
