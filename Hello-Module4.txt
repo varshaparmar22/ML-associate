@@ -197,7 +197,7 @@ Increasing 'gamma' makes the model more conservative by controlling the formatio
 3. Seq2Seq 
 
 - input/output = seq/seq
-- for machine transalation, text summarization, speech to text
+- for machine transalation, text summarization, speech to text, Video captioning
 - implemented with attension by using rnn and cnn
 
 ### input data
