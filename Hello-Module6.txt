@@ -404,8 +404,11 @@ Amazon Elastic Block Store volumes of your training instances.
 
 - Glue ETL: ETL Jobs as Spark programs, run on a serverless Spark Cluster
 
+- Accuracy metric are published into Cloudwatch
 
-
+ Accessing SageMaker Endpoints from an App
+ AWS api/sdk à SageMaker Endpoint is one way
+ API Gateway à Lambda à SageMaker Endpoint is another
 
 
 
