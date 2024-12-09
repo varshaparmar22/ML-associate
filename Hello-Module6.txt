@@ -402,7 +402,7 @@ Amazon Elastic Block Store volumes of your training instances.
 
 - XGBoost dont require scaling, normalization, one hot encoding, if requried for binary value  give 0,1(label encoding) for categorical values do label encoding.
 
-
+- Glue ETL: ETL Jobs as Spark programs, run on a serverless Spark Cluster
 
 
 
