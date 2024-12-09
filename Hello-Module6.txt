@@ -381,7 +381,7 @@ all objects are given. The task is to group objects together ====k-means
 - By streaming in your data directly from Amazon S3 in Pipe mode, you reduce the size of
 Amazon Elastic Block Store volumes of your training instances.
 
-
+- LDA work based on count of words similar in all documents
 
 
 
