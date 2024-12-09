@@ -351,3 +351,6 @@ val_acc => accuracy on unseen data <- to check overfitting check this it should 
 - firehose and lambda can send data to s3
 
 - InvokeEndpoint can not capture by CloudTrail
+
+- If a random variable is a continuous variable, its probability distribution is called a
+continuous probability distribution.
