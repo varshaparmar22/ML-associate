@@ -365,3 +365,8 @@ and hosting.
 - Security - control access to SageMaker notebooks to specific IAM groups
 => Attach tags to the groups of SM resources to be kept private to specific groups,
 and use ResourceTag conditions in IAM policies.
+
+- Amazon Athena recently added support for federated queries and user-defined functions (UDFs),
+both in Preview.
+
+
