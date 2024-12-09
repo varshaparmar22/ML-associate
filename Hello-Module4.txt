@@ -131,7 +131,7 @@ $ Validation
 LL => handwriting recognition problem (classification) work line NN
 
 
-2. XGBoost
+2. XGBoost  ---- SSSSS
 
 eXtreme Gradient Boost
 
