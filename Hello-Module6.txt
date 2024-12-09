@@ -373,7 +373,10 @@ both in Preview.
 - Athena to run extract, transform, and load (ETL) jobs
 - we were able to process data from DynamoDB, convert that data to Parquet, apply Snappy compression, create the correct partitions in our AWS Glue Data Catalog, and ingest data to Amazon S3 by using AthenA
 
-
+- In collaborative filtering, we are given partial information, and the task is to fill up the
+missing entries (e.g. Netflix problem). ===== KNN is collaborative
+In clustering, typically entire information is made available. In other words, features and for
+all objects are given. The task is to group objects together ====k-means
 
 
 
