@@ -378,7 +378,8 @@ missing entries (e.g. Netflix problem). ===== KNN is collaborative
 In clustering, typically entire information is made available. In other words, features and for
 all objects are given. The task is to group objects together ====k-means
 
-
+- By streaming in your data directly from Amazon S3 in Pipe mode, you reduce the size of
+Amazon Elastic Block Store volumes of your training instances.
 
 
 
