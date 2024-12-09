@@ -354,3 +354,10 @@ val_acc => accuracy on unseen data <- to check overfitting check this it should 
 
 - If a random variable is a continuous variable, its probability distribution is called a
 continuous probability distribution.
+
+Security - use SM without optming up Internet
+- Disable internet access when specifying VPC for your network
+- Use VPC interface endpoint (Private Link) to allow connections needed to
+train and host yourmodel
+- Modify your instance’s security group to allow outbound connections training
+and hosting.
