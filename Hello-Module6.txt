@@ -416,12 +416,22 @@ SageMaker instance profiles, e.g. to grant permissions to S3
  From Notebooks, we can see S3 buckets, and files, but we can’t copy them by
 default
 
+EMAIL
+- The main protocols are SMTP for sending emails, and POP3 and IMAP for receiving emails. 
+SMTP handles email transmission between servers, while 
+POP3 downloads emails to a device and 
+IMAP synchronizes emails across multiple devices.
 
+- Data standardization when model require scaling (imp) like SVM , KNN
+- Normalization negative value will not come - log, one hot encoding, min max scaler, can handle skewed dataset
+- standadization std deviation will be used, subtract mean devide std deviation so -1,0,1 range mostly 
+- Standardization can help to reduce the impact of outliers
+- logistic regression require numeric input
 
-
-
-
-
+- GLue is the giant which can be useful for all type of transformation of data
+- for NLP tasks
+  tokenization provide by amazon comprehend inbuilt
+  all other techniques like lemmetization, BOW, n-gram, stop word, word embedding(word2vec) need to implement by ski-kit or other tools
 
 
 
