@@ -1359,7 +1359,7 @@ Metrics are below - specify some bias in data and which needs to address
 
 @ Stream Data
 - streaming data source like kinesis, apache kafka, spark, data wrangler 
-- PutRecordAPI & GetRecordAPI to write and read data in SM FS
+- PutRecord API & GetRecord API to write and read data in SM FS
 - its a online store - streaming store
 - It is online repository for features
 @ Batch Data
@@ -1485,3 +1485,8 @@ SageMaker does not support specifying resource ARNs in a policy.
 
 Using Temporary Credentials with SageMaker
 - temporary security credential with aws sts api operation - AssumeRole, GetFederationToken
+
+- keras, gluon are API for tensorflow & maxnet respectively ==== to create ML models
+- pytorch is dynamic graph = creat model
+- tensorflow is static graph  = create model
+- scikit-learn === ML library - algorithm Library
