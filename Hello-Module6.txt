@@ -433,6 +433,6 @@ IMAP synchronizes emails across multiple devices.
   tokenization provide by amazon comprehend inbuilt
   all other techniques like lemmetization, BOW, n-gram, stop word, word embedding(word2vec) need to implement by ski-kit or other tools
 
-
+Optimization: Gradient Descent   ===== Objective: Find the minima of the “sum of squares” error
 
 
