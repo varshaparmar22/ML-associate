@@ -187,12 +187,13 @@ Increasing 'gamma' makes the model more conservative by controlling the formatio
 - but in xgboost 1.2 => single gpu(p2,p3 type) training available, you have to set tree_method to gpu_hist, trains more quick and cost effective
 - in xgboost 1.2-2 => P2,P3, G4dn,G5
 - in xgboost 1.5+ => distributed training is also available(cluster of many G5), for that set some params like
+	with dask 
 	=> tree_method=gpu_hist
 	=> use_dask_gpu_training = true
-	=> distribution = fully_replicated(to distribute training data on cluster) <= with Dask, otherwise shardedbyS3Key
-        => only supports for csv and parquet input	
-	=> with dask supports only pipe mode
-
+	=> distribution = fully_replicated
+        => only csv and parquet(in column name string) == must 	
+	=> supports only file mode
+- cpu distributed training- shardedbyS3Key
 
 3. Seq2Seq
 
