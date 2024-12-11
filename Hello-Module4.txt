@@ -194,7 +194,7 @@ Increasing 'gamma' makes the model more conservative by controlling the formatio
 	=> with dask supports only pipe mode
 
 
-3. Seq2Seq 
+3. Seq2Seq
 
 - input/output = seq/seq
 - for machine transalation, text summarization, speech to text, Video captioning
@@ -227,7 +227,7 @@ Increasing 'gamma' makes the model more conservative by controlling the formatio
 - deep learning algo so only GPU
 - only single machine but can have multiple gpu on single machine
 
-4.DeepAR 
+4.DeepAR
 - S
 - for forecasting one dimensional time series data
 - RNN
@@ -343,7 +343,7 @@ model artifact for inference
 - model.bin
 - send sentences and get label with prediction score
 
-6. Object2Vec
+6. Object2Vec  
 
 - it is an embedding layer 
 - create low dimension embedding of high dimensional object
