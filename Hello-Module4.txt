@@ -205,7 +205,7 @@ Increasing 'gamma' makes the model more conservative by controlling the formatio
 - implemented with attension by using rnn and cnn
 
 ### input data
-- only support recordIO-protobuf 
+- only support recordIO-protobuf with 32 bit integer
 - tokens must be in integer
 - sample code provided in SM to convert word tokens in integer in recordio-protobuf format.
 - need train, validation and vocab channel to work otherwise error
@@ -286,6 +286,7 @@ jsonlines
 - for text classification - predict label for given sentence - supervised learning technique(labels should be pass along) - useful for web search, information retrieval, ranking, and document classification. work for only sentence not for entire document
 - generate word2vec - create vector representation of word- nearby vector for similar kind of word - work on word only- downstream NLP tasks, such as sentiment analysis, named entity recognition, machine translation, etc - find similar kind of words
 - word2vec will find relationship between word in a sentence.  word embeddings capture the semantic relationships between words.
+- & word distributions 
 - The BlazingText algorithm is not parallelizable.
 
 
@@ -294,7 +295,7 @@ jsonlines
 for supervised mode in text classification 
 - one sentence per line, that sentence will have __label__[label_value] followed by sentence which space separated tokens in lower case
 - also support augmented manifest text format - means text format created by SM which specify details about sentence. like json format
-{"source": "Linux ready for prime time", "laranking, and document classification.bel":1}
+{"source": "Linux ready for prime time", "label":1 or [1, 3]}
 
 for word2vec mode
 - it takes text file which has one sentence per line
@@ -303,9 +304,9 @@ for word2vec mode
 ### How to use
 
 * Word2Vec's modes
- - CBow - word order not matter
- - Skip-Gram
- - batch Skip gram : distributed computation over many cpu - gram technique order metters
+ - CBow - word order not matter - 1 gpu/cpu
+ - Skip-Gram - 1 gpu/cpu
+ - batch Skip gram : distributed computation over many cpu - gram technique order metters - 1/many CPU
  - only train channel supported 
 
 ### HyperParameters
@@ -370,6 +371,11 @@ model artifact for inference
 	=> customer-customer
 	=> user-item
 find relationship between them and train model
+
+The input label for each pair can be one of the following:
+	A categorical label that expresses the relationship between the objects in the pair
+	A score that expresses the strength of the similarity between the two objects
+
 
 ### how is it used
 
@@ -465,7 +471,7 @@ for inference
 8. Image Classification - S
 
 - image classification tell you stuff is in the image or not - like its a cat/not
-
+- multi-label classification
 ### how to use
 
 MXNet
@@ -480,7 +486,7 @@ MXNet
 - validation and train .lst file will be needed for training as only three tab separated column in it
 - 1. image index, 2. category label index, 3. image file path
 
-for augmented manifest file format for pipe mode - no need to convert in recordio format
+for augmented manifest file format for pipe mode training - no need to convert in recordio format
 {"source-ref":"s3://image/filename1.jpg", "class":"0"}
 {"source-ref":"s3://image/filename2.jpg", "class":"1", "class-metadata": {"class-name": "cat", "type" : "groundtruth/image-classification"}}
 for multi-class 
@@ -648,6 +654,8 @@ s3://bucket_name
 - unsupervised technique so not assigning topic but just organize in one group 
 - algo called neural variational inference
 - can parallelized training across multiple GPU instance
+- The topics from documents that NTM learns are characterized as a latent representation because the topics are inferred from the observed word distributions in the corpus. 
+- The semantics of topics are usually inferred by examining the top ranking words they contain. 
 
 ### input type
 
@@ -692,6 +700,8 @@ for training
 - not deep learning
 - not using neural network
 - unsupervised - so no labeled data
+- BOW model
+- The topics are learned as a probability distribution over the words that occur in each document.
 - it used more commonly for topic modeling but it can be used for other things rather than words like grouping of customer based on their purchase, harmonic analysis of music
 - it is more general purpose for grouping thing based on some common features they shows
 - it use perplexity (inability to understand) and topic coherence to put document in particular topic
