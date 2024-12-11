@@ -186,6 +186,7 @@ Increasing 'gamma' makes the model more conservative by controlling the formatio
 - so no gpu, you can use m5 for memory optimization
 - but in xgboost 1.2 => single gpu(p2,p3 type) training available, you have to set tree_method to gpu_hist, trains more quick and cost effective
 - in xgboost 1.2-2 => P2,P3, G4dn,G5
+- in xgboost 1.7-1 => P3, G4dn,G5
 - in xgboost 1.5+ => distributed training is also available(cluster of many G5), for that set some params like
 	with dask 
 	=> tree_method=gpu_hist
