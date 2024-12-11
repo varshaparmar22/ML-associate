@@ -144,7 +144,8 @@ eXtreme Gradient Boost
 - Its robust handling of a variety of data types, relationships, distributions.
 - The variety of hyperparameters that you can fine-tune.
 - You can use XGBoost for regression, classification (binary and multiclass), and ranking problems.
-- you can use XGBoost as a built-in algorithm or framework. 
+- you can use XGBoost as a built-in algorithm or framework.
+- gradient boosting because it uses a gradient descent algorithm to minimize the loss when adding new models.
 
 ### data formats for training and inference:
 -text/libsvm (default) : after label column, features the zero-based index value pairs. format:<label> <index0>:<value0> <index1>:<value1>
@@ -157,6 +158,7 @@ eXtreme Gradient Boost
 - in python we can serialize/deserialize xgboost model by pickle <= old version
 - in SM notebook it is available by sagemaker.xgboost
 - it can be used as in-built SM algo -so you can use xgboost docker image elastic registry container and deploy it to your training host for larger training job
+- by framwork we can test it on local
 - For increased performance - use File mode
 
 ### Hyper Parameters
