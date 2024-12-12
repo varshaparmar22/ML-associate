@@ -335,7 +335,7 @@ Two Modes it can run
 - Spark ML can be used with glue or EMR and serialized on Mleap format
 - it can handle real-time or batch inference
 - invoked as http request to call first container for inference
-
+- lower latency as it use same EC2 instances to host all containers
 
 @@@ Mlops with SM and Kubernetes @@@
 
