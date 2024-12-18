@@ -1,0 +1,346 @@
+https://docs.aws.amazon.com/sagemaker/latest/dg/  ==== developer guide
+
+A golden image is a template for a virtual machine, server, hard disk drive, or virtual desktop. It's created by setting up a computing environment with the desired specifications and then saving the disk image
+
+A kernel =component of an os == interface between a computer's hardware and the processes running on it
+Manages applications, security,  hardware resources, Prevents conflicts, Manages memory, Schedules processes
+
+LLM
+use for 
+code/text generation, copywrite, text classification, knowledge based answering
+Amazon Nova foundation models include(LLM):
+
+Amazon Nova Micro: text only model with the lowest latency responses at very low cost 
+Amazon Nova Lite: very low-cost multimodal model for lightning fast processing of image, video, and text inputs
+Amazon Nova Pro: highly capable multimodal model with the best combination of accuracy, speed, and cost 
+Amazon Nova Canvas: state-of-the-art image generation
+Amazon Nova Reel: state-of-the-art video generation model
+
+Amazon S3 Express One Zone
+Amazon S3 Express One Zone is new storage class that provides single-digit millisecond access for the most latency-sensitive applications
+
+SM HyperPod == always-on machine learning environment on resilient clusters for LLM & diffusion model, FM ==== EKS , SLURM support is there in hyperpod
+
+SLURM, or Simple Linux Utility for Resource Management, is an open-source job scheduling and resource management system for Linux clusters
+
+SageMaker smart sifting === training time and cost reduce == efficient training dataset
+
+SageMaker geospatial capabilities = models with geospatial data\
+
+AutoML step == Create an AutoML job to automatically train a model in Pipelines.
+
+SageMaker Model Dashboard == Model Monitor, transform jobs, endpoints, lineage tracking, and CloudWatch
+
+SageMaker Model Registry
+Versioning, artifact and lineage tracking, approval workflow, and cross account support for deployment of your machine learning models.
+ 
+
+SageMaker Role Manager =  3 role persona predefined = data scientist, MLops, SM AI compute = persona === least privilege permission 
+
+SM domain == VPC configuration, auth user list, EFS volume, security, policy. 1 acc can hv multiple domains
+
+Hide --- ml tools, apps , instance type, images   ===  on domain level, user level
+
+AutoPilot
+tabular, csv, parquet format data
+visual interface/api to get access autopilot
+image/text classification, timeseries forecasting, regression/binary/multi classification
+fine tunning LLM for text generation
+
+SM geo-spatial capabilities are currently in US-west-oregon region only
+- earth observation, vector enrichment(lat-long to address), map etc ---- earth based apps
+
+Labeling Job
+image, text, video, video frames, 3D point cloud, label verification-adjustment, 
+
+Annotation consolidation helps to improve the accuracy of your data object labels. It combines the results of multiple workers' annotation tasks into one high-fidelity label.
+BB = 5, all other will have 3 workers for annotation - text, image, ss, ner
+Automated data labeling -- by ML - image, text classify, od(bb), ss - not support streaming labeling(this kind of job can stay idle for 10 days)
+- cloning & chaining labeling job
+cloning == copy the setup of previous labeling job
+chaining == use setup and result of previous labeling job
+CORS configuration(associate to rotation of images disply in browser) in s3 bucket is required for image labeling job otherwise job will fail
+
+A2I === [Recokgnition, textract - bulitin], [comprehend, transcribe, translate, tabular data(use ML), SM ML(realtime)- custom]
+
+snowflake is not aws service so connection to it will require public internet access
+
+VPC peering (2 vpc), routing table(each VPC has it- based on private subnet too), security group(resource level network access firewall) will be there - to allow traffic between 
+Security group will be master level to allow out/in bound connection of VPC
+
+Don't understand ==== A NAT gateway must be used to allow instances in private subnets of multiple VPCs to share a single public IP address provided by the internet gateway when accessing the internet.
+
+Data Preparation 
+by SQL in Jupyter notebook
+by EMR
+by Glue
+by data wrangler
+
+Data Processing job
+with apache spark
+with sci-kit learn
+with framework processers == huggingface, mxnet, pytorch, tensorflow, xgboost
+with custom code
+
+feature group format === AWS Glue (Default), Apache Iceberg
+FG has feature data and metadata
+feature processing(processor) == 
+sources - raw data apply transformation on, and 
+sinks- write computed feature values
+creating, scheduling, monitoring feature processor pipeline
+Feature Processing relies on ML lineage tracking
+Time to live (TTL) duration for online FS(hard deleted from online store and added to OFLS)
+if online store(in memory & standard type) than sharing of FS resources will be by ResourceAccessManager(RAM) in policy
+if offline store(Glue, Iceberg table format) than sharing will be by AmazonSageMakerFeatureStoreAccess 
+Throughput modes == on demand & provisioned
+list, set, vector ===  are collection type in SM FS for data
+Create a dataset from your feature groups by SM python sdk or athena
+
+SM provide = create training plan feature to create training plan with reserved instances it can work for hyperpod and SM training job
+
+sm clarify will be on pre-training, post training stage of model too
+
+
+
+No Parallelizable Algos(B-L-OK-SSS)
+
+BlazingText,k-means,LDA,Obj2Vec,SS,Seq2seq,
+tabTransformer, Catboost, AutoGluon-Tabular
+
+Only CPU
+FM, LDA, RCF, catBoost, LightGBM
+
+Only CSV 
+AutoGluon-Tabular, CatBoost, LightGBM, TabTransformer, Text Classification - TensorFlow, IP Insights
+
+only record-io-protobuf 
+seq2seq
+
+only json line
+obj2vec
+
+jsonlines+parquet
+deepAR
+
+only text file
+Blazing Text
+
+(train channel = shardedByS3Key, test = fullyreplicated) ===== K-means, RCF
+for distributed (train channel = fullyreplicated) ===== Image classification
+
+
+common format for inference request (ContentType): text/csv, application/json, application/x-recordio-protobuf, text/libsvm, application/JSONLINES, application/x-image, image/*
+
+for training/hosting
+m5,c5,p3 recommended by aws
+many other gpu based p2,p3,g4dn,g5 can be used
+
+cloudwatch log to check trainingjob, if job failed log wont be there
+logged things of training job
+-arguments of, error, accuracy, timing of TJ
+
+error reason
+invalid HP, Hp value, wrong recordio protobuf file format
+
+AutoGluon-Tabular -- ensembling multiple models and stacking them in multiple layers.-S
+CatBoost, LightGBM  are Gradient Boosting Decision Tree (GBDT) algorithm. --S 
+TabTransformer architecture is built on self-attention-based Transformers.-- S
+all =  Training & inference on CSV
+
+objective function to optimize during model training
+eval_metric to use to evaluate model performance during validation
+
+RecordIO & pipe mode will work only for MxNet vision algos, Not for Tf vision alogs
+
+
+MLflow == track, organize, view, analyze, and compare ML experimentation == tracking server
+MLflow UI, keep track of your best models in the MLflow Model Registry, automatically register them as a SageMaker AI model, and deploy registered models to SageMaker AI endpoints.
+Automate the model review and deployment lifecycle using MLflow events captured by Amazon EventBridge. 
+cloudtrail capture api call to MLFlow - training metrics
+it track compute intstance, metadata and artifact of model, work by IAM
+
+1. AMT tunning setting
+Warm starting and early stopping in AMT job when single algorithm is used
+2 AMT training require
+algorithm name, objective metric, range of HP values
+channels for data inputs, data output locations, and any checkpoint storage locations
+resources to deploy for each training job, including instance types and counts, managed spot training, and stopping conditions.
+3. AMT tunning job 
+max concurrent training job = max 10
+max training job = max 500
+
+cloning & tagging is available for AMT
+warm start tunning job will take more time as it launch parent tunning job params
+for large tunning job use HyperBand as it has early stopping
+for small random or Bayesian will work
+random can also work for large number of parallel jobs.
+grid will use all Hp params so explore space better than any one 
+
+$$$ best practice 
+Using a random seed to reproduce hyperparameter configurations
+Running training jobs on multiple instances
+Choosing the best number of parallel training job
+Using the correct scales for hyperparameter
+Choosing hyperparameter ranges
+Choosing the number of hyperparameters
+Choosing a tuning strategy
+
+Smart sifting = remove data which are less informative to model - supported only pytorch
+
+model convergence issues = model parameters, activations, and gradients computed during optimization processes.
+2 methods - model debugging
+1. Amazon SageMaker AI with TensorBoard - visualization tool - data scientist & administrator can use it and very deep you can go for model issue - PT,TF, HugFace Transformer support
+2. Amazon SageMaker Debugger -  detecting model convergence issues, such as overfitting, saturated activation functions, vanishing gradients
+
+set rules with Amazon CloudWatch Events and AWS Lambda for taking automated actions against detected issues, and set up Amazon SNS to receive email or text notifications.
+
+debugger will save system metrics & framework metrics to s3 for training job like
+accuracy and loss, and matrices (weights, gradients, input layers, and output layers)
+
+Amazon SageMaker Profiler : track all activities on CPUs and GPUs - compute resources provisioned, check CPU and GPU utilizations, kernel runs on GPUs, kernel launches on CPUs, sync operations, memory operations across CPUs and GPUs - offers UI for visualization
+
+Distributed training 
+frameworks - PyTorch DistributedDataParallel (DDP), torchrun, MPI (mpirun), and parameter 
+server.
+Cluster Size = no. of GPUs * no. of instances(ml.p3.8xlarge)
+
+
+Distributed Training Solution
+
+1. Data parallelism
+each GPu will hav model replica => Gpu has multiple instances => all gpu get global batch size data(partition of data) => calculate weight and bias => share with other instances  before going for another batch & epoch  
+2. Model Parallelism
+model having large no of layers will be partitioned across the multiple GPUs
+3. pipeline execution Scheduling
+true parallelism as it overcome loss reduction which happens in above 2 techniques where dataset processed in simultaneous manner
+
+aws deep leraning containers have sm training compiler in built =compile and optimize training jobs on GPU instances with minimal changes to your code. = graph-level optimizations, dataflow-level optimizations, and backend optimizations- accelerate the training job by more efficiently using the GPU memory and fitting a larger batch size per iteration
+
+training setup
+File Mode : s3 prefix, manifest file, augmented manifest file --- by files will be downloaded to instance before training
+Fast File Mode : mix pipe mode(s3 access) + file mode operation  -- s3 prefix supports only
+Pipe mode : Amazon EBS volumes used to store only model artifact - can do sharding and shuffling of data.- can be replaced by fast file mode if compatible
+Amazon S3 Express One Zone - low latency data transfer for training and application- it has directory bucket for data can be used by any file, fast file or pipe mode 
+Amazon FSx for Lustre : SageMaker mount FSx for Lustre file system to the training instance,  then starts your training script. - VPC is required
+Amazon EFS : SageMaker AI mounts the specified Amazon EFS file system to the training instance, then starts your training script.  - VPC is required
+===  Use attribute-based access control (ABAC) for multi-tenancy training : same IAM role for training, but AWS STS - create diff session based credential for all tenant. tenants are tagged. By that tag(attribute) they get access to training job
+
+heterogeneous cluster feature for training - diff cpu, gpu instance can be used for training
+
+Warm Pool - for training
+use previous infrastructure of training job which run previously if parameters setting of training job matched. It take less time to load infra experimentation or concurrent job running
+
+training job matrices will be available on cloudwatch by 1 sec resolution and 3 hours life-span. if you want faster than this use SM debugger to get metrics
+
+To include metadata with your dataset in a training job, use an augmented manifest file
+
+Checkpoints are snapshots of the model and can be configured by the callback functions of ML frameworks. 
+
+SM will rebooting the instance or resetting the GPU, or change GPU if training job on it fail because of GPU
+
+### Model Deployment
+1. jumpstart
+2. pythn SDK
+3. boto3 / cloudformation
+
+- cost optimization
+SageMaker Neo can be useful to optimize model so it can run on inferential chip
+autoscaling to dynamically adjust the compute resources for your endpoints
+
+if edge devices
+1. camera, robot, PC, mobile ===> SM edge manager can deploy model to edge device
+2. framework based model with run on processor like arm, intel, nvidia etc ==> Neo work
+
+Inf1 instances provide higher throughput and lower cost per inference than GPU-based instances. = use neo to compile model and deploy it on inferential instance
+
+inference optimization Techniques
+1. Compilation : compile for GPU, trainium, inferentia instances
+2.Quantization : reduce specific hardware requirement so less expensive, more avil gpu can be used. But final model will be less accurate than before
+3. Speculative Decoding : speed up decoding process of LLM, optimize decoder, fast inference from LLM, this model called draft model
+4. Fast Model Loading : prepare LLM model such that it can fast load on endpoint
+
+Evaluation of model based on - throughput, latency, price on endpoint
+offline testing  == on alpha endpoint
+online testing with live data by a/b testing production variant
+holdout set === 20-30% of total data
+k-fold = k no of model, k training job, divide data in k part
+for each run(model) use k part as holdout , k-1 for training set
+
+inference recommendation job is done then that recommender can recommend auto scaling policy based on metrics created from recommendation 
+
+model will be loaded on EBS volume in multi model endpoint
+model will be downloaded into containers memory from the artifact
+inference pipeline is low latency because the containers are co-located on the same EC2 instances
+
+Automatic scaling
+1. target scaling : use cloudwatch & target value scale based on that
+2. step scaling : based on condition scaling will be done from 0 to specified - how many instances to deploy under what conditions.
+Matric & target values are important in auto scaling
+Default scaling in/out period is 300 sec
+auto scaling required service linked role
+
+Invocation = request
+auto scaling is related to instance,
+if model change only than auto scaling is okay!!
+if update-endpoint is changing instance type of any model than auto scaling will fail
+
+you can also use Provisioned Concurrency with Serverless Inference.
+
+before finishing first request handling another request is called concurrent request handling - gpu, model monitor, inference pipelines, network isolation, vpc config, multi-modal endpoint etc not supported by serverless inference
+
+Asynchronous Inference enables you to save on costs by autoscaling the instance count to zero when there are no requests to process
+SNS topic can also give inference result.to receive notification set sns:Publish must
+
+if model is LLM then deploy uncompressed model on endpoint as it will not take much time to uncompress it(as normally tar.gz compressed model is deployed if small)
+
+Deploy large models LLM for inference with TorchServe
+
+if cloudwatch alarm are not set for baking period(set evalution period) aut roll back will not work
+The baking period is a set amount of time to monitor the green fleet before proceeding to the next deployment stage
+canary is two step n linear is n step traffic shifting between endpoint
+
+2 types of deployment
+.==> 1....blue/green deployment
+===> 2....rolling deployment - shift traffic gradually
+
+exclusion for  1 dep
+1. marketplace containers
+2. inferentia based instances
+
+exclusion for  2 dep
+1. serverless inference endpoint
+2. multi-variant inference endpoint
+
+model servers, such as TorchServe, DJL Serving, and Triton Inference Server, to deploy your models on SageMaker
+
+Amazon SageMaker Edge Manager provides model management for edge devices like camera, robot, personnel computer, mobile devices
+SageMaker Edge Manager, you can sample model input and output data from edge devices and send it to the cloud for monitoring and analysis, and view a dashboard that tracks and visually reports, SM model monitor and ground truth are also available with it  - SEM  is intermediary between edge device and cloud --- SEM not available with AWS console
+
+SageMaker Neo supports compilation and deployment for two main platforms: cloud instances (including Inferentia) and edge devices.
+
+When you send requests to an Amazon SageMaker AI inference endpoint, you can choose to route the requests to a stateful session. During a stateful session, you send multiple inference requests to the same ML instance, and the instance facilitates the session.
+
+best practices
+You can reduce the latency for real-time inferences with SageMaker AI using an AWS PrivateLink deployment.  ========
+It keeps all inference traffic within your VPC.
+It keeps invocation traffic in the same AZ as the client that originated it when using SageMaker Runtime. This avoids the “hops” between AZs reducing the overhead latency.
+as atleast 2 az are there for mL deployment
+Enable DNS name -- required
+
+AWS Graviton is a series of ARM-based processors designed by AWS.
+check best practices for ---- Deploy models for inference in developer guide
+
+
+to create workflow ==
+apache airflow workflow 
+step functions = python
+
+A Kubernetes operator is an application controller managing applications on behalf of a Kubernetes user
+Kubeflow Pipelines (KFP) is a platform for building and deploying portable, scalable machine learning (ML) workflows based on Docker containers. 
+
+we can schedule notebook job too
+Tracking entities maintain a representation of all the elements of your end-to-end machine learning workflow.
+Lineage – Metadata that tracks the relationships between various entities in your ML workflows.
+QueryLineage – The action to inspect your lineage and discover relationships between entities.
+Lineage entities – The metadata elements of which your lineage is composed.
+action involves at least one input artifact or output artifact. 

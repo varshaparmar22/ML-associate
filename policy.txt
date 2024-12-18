@@ -1,0 +1,22 @@
+AmazonS3FullAccess
+AmazonSageMakerFeatureStoreAccess
+AmazonEventBridgeSchedulerFullAccess
+AWSRAMPermissionSageMakerCatalogResourceSearch here RAM====Resource Access Manager
+AWSRAMPermissionFeatureGroupReadOnly/ReadWrite/Admin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
