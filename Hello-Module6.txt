@@ -436,3 +436,5 @@ IMAP synchronizes emails across multiple devices.
 Optimization: Gradient Descent   ===== Objective: Find the minima of the “sum of squares” error
 
 overhead == It's the resources required to set up an operation. It might seem unrelated, but necessary.how much "extra stuff" you need to do in order to get something.
+
+- Remove feature which has low co-relation with target variable
