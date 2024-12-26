@@ -437,4 +437,19 @@ Optimization: Gradient Descent   ===== Objective: Find the minima of the “sum 
 
 overhead == It's the resources required to set up an operation. It might seem unrelated, but necessary.how much "extra stuff" you need to do in order to get something.
 
-- Remove feature which has low co-relation with target variable
+- Remove feature which has low co-relation with target variable in multi-variable linear regression
+
+Range: The difference between the maximum and minimum values in the dataset 
+
+Variance: The average of the squared differences from the mean 
+
+Standard deviation: The square root of the variance, which is expressed in the same units as the data 
+
+Interquartile range (IQR): The range of the middle 50% of the data points 
+
+Mitigate Statistical dispersion varies among features Problem =====
+Dividing the dataset into training, validation, and test sets 
+=> applying feature scaling to the training set can help mitigate the impact of varying statistical dispersion among features.
+=> replicating the scaling parameters on the validation and test sets, the model can make more accurate predictions on unseen data
+
+- if  imbalance is there then stratified cross validation will be best approach
