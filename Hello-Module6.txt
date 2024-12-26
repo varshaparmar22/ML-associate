@@ -445,6 +445,8 @@ Variance: The average of the squared differences from the mean
 
 Standard deviation: The square root of the variance, which is expressed in the same units as the data 
 
+- AWS Batch supports GPU instance with some exception like G5g, G4ad
+
 Interquartile range (IQR): The range of the middle 50% of the data points 
 
 Mitigate Statistical dispersion varies among features Problem =====
