@@ -455,3 +455,23 @@ Dividing the dataset into training, validation, and test sets
 => replicating the scaling parameters on the validation and test sets, the model can make more accurate predictions on unseen data
 
 - if  imbalance is there then stratified cross validation will be best approach
+
+- for DNN workload use AWS deep learning container not AWS ECS
+- best cost effectiveness if spot instance
+
+- Naive Bayesian assumes conditional dependency between feature, while full allow statical dependency between features.
+
+- TFRecord can be supported by SM directly, no need to change format
+
+- SM script mode = no need to manage & create containers, done by script
+
+- Restrict the access to particular instance by ENI security group(restrict instance access)  - essential too along with endpoint gateway policy(which can restrict the user) - for securing SM service api call
+- security group ====> resource level(EC2 instance), ACL ====> subnet level
+
+- to tansfer data daily dont use DMS - instead GLue can be used with VPN site-site transfer is available in option
+
+- Enabling PerformAutoML and PerformHPO can significantly enhance the model's predictive accuracy === Amazon Forecast
+
+- can use lifecycle configuration script to ensure pre-install requried s/w package needed on notebook instance to word
+
+- if ques is related to word frequency then most probably ans will be tf-idf related
