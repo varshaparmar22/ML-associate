@@ -474,4 +474,40 @@ Dividing the dataset into training, validation, and test sets
 
 - can use lifecycle configuration script to ensure pre-install requried s/w package needed on notebook instance to word
 
-- if ques is related to word frequency then most probably ans will be tf-idf related
+- if ques is related to word frequency then most probably ans will be tf-idf related - work on  frequency and rarity in the corpus of word
+- PCA is dimensionality reduction and finding out co-relation between features
+
+- SM role is attached to s3 bucket & KMS keys' policy ===> for ensure security of data access and decryption by key  == role IMP
+- L1, Recursive Feature Elimination will remove less imp features from data, so no feature transformation even give good performance
+
+- for custom algorithm you are creating in SM then ECR & S3 are important, if containerized app then ECS will be imp
+
+- if two features are linearly dependent on each-other then they can cause singular matrix in optimization step
+
+- deploying any model in SM - containerization - (ECR step) is must- register and upload image to ECR
+
+- dataset size is important for optimization before considering HP optimization to correct result
+
+- LSTM, GRU ==> model are not considering word embedding - so if issue is not capturing meaning of data then go for word-embedding opt
+
+- LSTM = more params, take more train time, for small dataset
+- GRU = less params, take less train time, for large dataset
+result will be significantly same
+
+- Amazon CloudWatch for real-time monitoring of SageMaker endpoints, including GPU and CPU utilization, and capturing error metrics for invoked endpoints.
+- AWS CloudTrail for monitoring API calls, including model deployments and endpoint invocations, providing an audit trail 
+- AWS Trusted Advisor  optimizing AWS infrastructure and cost management
+- AWS Config for configuration management and compliance auditing of AWS resources
+
+egress === leakage
+
+- 1. VPC interface endpoints with AWS PrivateLink 2.network isolation for SageMaker jobs 3. restricting notebook access to specific IPs ====== safeguarding financial data within Amazon SageMaker. 
+
+- to increase ingestion rate in S3 ===
+  increase no of shard in kinesis data stream
+  so they do parallel processing of shard
+  so data can go fast in s3
+
+- Bounding box annotations are commonly used in medical imaging for precise object localization
+
+- for fradualnt transaction we need to consider TPR - recall & PR auc curve
