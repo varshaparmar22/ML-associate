@@ -359,6 +359,7 @@ Glue ETL
 
 - code in python scala, pyspark script or spark
 - target will be GDC/redshift/s3/RDS
+- It can be used for on-premise database too with connectivity of JDBC/ODBC
 - cost effective, pay for resources used
 - if you have spark job, they can run on spark paltform - all process managed by Glue ETL
 - glue schedular and glue trigger will handle schedule and event trigger to do etl job
