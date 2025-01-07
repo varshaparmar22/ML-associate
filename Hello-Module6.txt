@@ -511,3 +511,14 @@ egress === leakage
 - Bounding box annotations are commonly used in medical imaging for precise object localization
 
 - for fradualnt transaction we need to consider TPR - recall & PR auc curve
+#############################################################################################################
+
+integration EMR cluster + Sagemaker
+1. Spark application jar + requisite dependencies
+2. aws-sagemaker-spark-sdk === create pipeline to execute SM ML app <= which is spark app here
+
+nomralize and standardize is also thing in NLP
+
+train error -high, test error  - low <==== bug in algo implementation or data quality  
+
+The AWS - IAM : PassRole == action is a permission that allows IAM entities to give permissions to AWS services access
