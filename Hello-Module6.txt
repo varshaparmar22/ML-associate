@@ -522,3 +522,17 @@ nomralize and standardize is also thing in NLP
 train error -high, test error  - low <==== bug in algo implementation or data quality  
 
 The AWS - IAM : PassRole == action is a permission that allows IAM entities to give permissions to AWS services access
+
+- ACLs === resources, such as buckets, objects, and subnets
+- New role for each user for their designated notebook instance
+
+- KPL - for encryption of data before transmission
+- KCL - for decryption of data upon receipt
+by this data cabe secure at rest n in transit ------ ofcourse usimg KMS
+while kinesis analytics provide encryption of data but that data already in aws then only can be encrypted
+
+glue based
+asymmetric key === for secure communication between and data exchange
+symmetric key === for encryption of data at rest
+for data confidentiality === cloudwatch log, s3 & job bookmark encryption is imp
+sse-s3, sse-kms is also encrypt data in glue job
