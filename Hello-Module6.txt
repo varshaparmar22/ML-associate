@@ -546,3 +546,7 @@ sse-s3, sse-kms is also encrypt data in glue job
 - iam:PassRole permission = need to pass role to aws service like to create model === when user has multiple roles(logic)
 
 - more features, more training data, more training time, more complex model === to handle underfitting === remove noice
+
+- Upload the custom library as a zip file to S3 and reference it in the ETL job as a script library and job parameter == for Glue
+
+- The IAM role associated with the Notebook instance must have permissions to decrypt using the specified KMS key.
