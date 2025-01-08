@@ -531,8 +531,18 @@ The AWS - IAM : PassRole == action is a permission that allows IAM entities to g
 by this data cabe secure at rest n in transit ------ ofcourse usimg KMS
 while kinesis analytics provide encryption of data but that data already in aws then only can be encrypted
 
-glue based
+glue based - transforming sensitive data
 asymmetric key === for secure communication between and data exchange
 symmetric key === for encryption of data at rest
 for data confidentiality === cloudwatch log, s3 & job bookmark encryption is imp
 sse-s3, sse-kms is also encrypt data in glue job
+
+- AWS Glue automatically configures elastic network interfaces to establish secure connections to DB
+- VPC peering between 2 VPC'
+
+- Kinesis agent to sent app log data to firehose and then in s3 = minimal code
+- upon createEndpoint api === inference container created
+
+- iam:PassRole permission = need to pass role to aws service like to create model === when user has multiple roles(logic)
+
+- more features, more training data, more training time, more complex model === to handle underfitting === remove noice
