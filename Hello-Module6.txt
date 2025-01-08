@@ -550,3 +550,16 @@ sse-s3, sse-kms is also encrypt data in glue job
 - Upload the custom library as a zip file to S3 and reference it in the ETL job as a script library and job parameter == for Glue
 
 - The IAM role associated with the Notebook instance must have permissions to decrypt using the specified KMS key.
+
+- for RDS jdbc connection required by Glue for data transformation, for s3 IAM role
+
+- specify KMS key for notebook instance and training job creation - for secret data
+
+- exlude atypical records(even they r valid) so they wont skewed dataset for DE
+
+- Interface Endpoints private connections = VPC and SageMaker, not transit over the public internet
+
+- By Firehose - convert json data to parquet
+1. use deserializer to read json data
+2. use AWS glue to infer schema of data
+3. use serializer to convert those infered data to parquet
