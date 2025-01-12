@@ -563,3 +563,36 @@ sse-s3, sse-kms is also encrypt data in glue job
 1. use deserializer to read json data
 2. use AWS glue to infer schema of data
 3. use serializer to convert those infered data to parquet
+
+- ML developer will no have any control over inference dataset, but he needs to ensure about training dataset having diversity for model's prediction requirement]
+
+- customer managed KMS key need to utilize while creating notebook instance to encrypt data, assigning to notebook only will not work = for at rest
+
+- Presto's distributed SQL query engine is designed to perform fast analytics on petabyte-scale data
+
+- Tokenizing the corpus data, counting the occurrence of each token, and constructing bag-of-words vectors = training NTM = latent representation is important in NTM. most of NLP task bag-of-word is must to create as preparatory step
+
+- for network isolation all will be in same VPC, otherwise can be put in VPC only will work => notebook, s3, SM endpoint
+
+- getting pre-trained word embeddings model will be best choice for any NLP based task
+
+- RecordIO is designed for sequential data access
+
+- for built-in algo HP json array is not indespensible - we can leave it on algo
+- SM execution role is incorporate with sagemakerfullaccess policy 
+
+- storage, retrival, query => parquet, training = record io
+
+- employ proxy server to capture video feed from RTSP camera/ deeplence enabled camera to send streaming data to kinesis = choose wisely like if camera already there proxy server will be good choice
+
+- least infra change and increase in data, finally want training on them then go for distributed training option
+
+- if TB data then possible go for EMR
+- FOR QUICKSIGHT data should be in db -either jdbc connection or any data taken from file/db
+
+- built-in algo = can be used to create model/use exisitng model for hosting or training no need to do configuration setup - useful for migration
+- pre-trained models can be used for increamental training, transfer learning like fine-tunning
+
+- AWS Glue ETL scripts are written in Python or Scala
+
+- Glue & firehose both can do data formate conversion but firehose add extra step as inbuilt it use glue, firect glue can be used here KDS is first capture data then do firehose/glue transformation
