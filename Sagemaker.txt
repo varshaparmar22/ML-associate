@@ -345,4 +345,4 @@ QueryLineage – The action to inspect your lineage and discover relationships b
 Lineage entities – The metadata elements of which your lineage is composed.
 action involves at least one input artifact or output artifact. 
 
-amazon athena is ETL tool- schedule insert query so extract, transform and load the data in destination by using other services(like pipeline - send data to s3 from rds, dynamodb)
+amazo athena is ETL tool- schedule insert query so extract, transform and load the data in destination by using other services(like pipeline - send data to s3 from rds, dynamodb)

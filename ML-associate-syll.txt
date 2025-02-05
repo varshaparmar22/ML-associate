@@ -1,3 +1,42 @@
+structured data
+- Oracle, redshift, MySQL PostgreSQL.- DB
+- CSV 
+- Excel
+
+Unstructured data
+- text
+- video
+- audio
+- image
+- email, word doc
+
+Semi structured data
+- xml, json
+- email header/body
+- log files
+
+
+VVV
+- volume : size
+- velocity : speed at which data generated, collected, processed
+- variety : type, source, structure
+
+
+
+Data Lakehouse : hybrid of data warehouse and datalake - best features of both, schema on read-write both, analytics and ML use - s3 & redshift spectrum(lake formation)
+
+
+Data Mesh : data management paradigm not technology or architecture
+
+Avro is a binary format, and this stores both the data and its schema
+
+parquet : columnar storage, amazon RS spectrum
+
+- no directory concept in s3, only prefix & object name make key = s3://my-bucket/fold1/text.csv  ==> prefix =s3://my-bucket/fold1/,    ob name = text.csv
+
+
+s3 = more 5gb then multi-part upload, max obj 5tb
+
 - application load balancer : supported and work with all - like ECS 
 - network load balancer : when high throughput and high performance you need or while using aws private link
 - classic load balancer : no fargate or advance feature 
