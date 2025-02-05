@@ -1,0 +1,823 @@
+- application load balancer : supported and work with all - like ECS 
+- network load balancer : when high throughput and high performance you need or while using aws private link
+- classic load balancer : no fargate or advance feature 
+
+- CloudFormation is going to be used, when we have infrastructure as code, when we need to repeat an architecture,  different environments, different regions, or even different AWS accounts. - it generate diagram from templates too, yalm lang it use
+
+- AWS CodeDeploy : upgrade both your EC2 instances, applications, and your On-Premises Servers applications from version one to version two, automatically from a single interface.
+
+CodeBuild : get code from codeCommit and build code and create ready-to-deploy artifact  - CB is serverless
+
+CDK - cloud development kit: define cloud infrastructure in code by lang like javascript, typescript, python, .net, java... define construct and create VPC, AZ, ALB
+
+SAM - serverless application management : serverless, cloudformation, json & yalm lang
+
+AWS CodeDeploy : deploy app by ec2 instance or on-premises server, hybrid service. CodeDeploy agent is one who do this - CD to upgrade from one to another version
+
+codebuild : compile code, run test, create package(artifact) for code
+
+CodePipeline : connect codeCommit, codebuild, codeDeploy, on beanstalk, or cloudFormation, GitHub. can work with custom plugins, third party services etc
+
+- step function : map - state will take each item from dataset
+ and apply all steps on it in parallel, mainly useful for data engineering in ML by SF 
+-- parallel in SF is doing stuff(run task) in parallel
+
+Aws managed workflow for apache airflow :: batch oriented, develop, monitor, schedule workflow - python code - directed acyclic graph, usge : prepare ml data, etl, complex workflow - put python code(DAG)
+
+- Lake Formation : built on top of Glue : setup datalake ==== loading data, monitoring data, setting partition, encryption, transformation and monitoring them, access control, auditing --- cross account lake formation permission - receipt should be set as administrator, not support manifest in athena and redshift query, governed table(relational db table) on s3 supports ACID transactions, it can handle streaming data and query with athena, column and row level security for database provided by LF
+by Data Filter : column, row, cell level security - CreateDataCellsFilter api
+
+Access Analyzer : will automatically generate least privilege policies based on the actual observed access activity.
+
+IAM user are global resources no need to select region
+permission are inherited via group - same group users will have same permission
+
+inline policy directly can attach to user, resource etc no need to assign in group
+
+on behalf : roles == ec2 instance can have IAM role to do perform action
+
+kMS :2 keys 
+1. symmetric : one key for encryption and decryption - AES 256 - used by API, not direct key access to user
+2. asymmetric : one key for encryption and another key for decryption, public and private key, public is for encryption and can be downloadable(useful for encryption outside aws, without api call
+
+WAF :  protect web app over layer 7(http), layer 4(TCP/UDP)
+can be deploy on : ALB, api gateway, cloudfront, appsync GraphQL api, cognito user pool
+define web access control list, rate based rule(count - ocurance of event - DDos protect, W ACL are regional except CloudFront
+
+Network Load Balancer : work on layer 4, WAF work on layer 7
+WAF -can not be used with NLB as it dont work with fixed IP, we can use global accelerator for fixed IP use and WAF on ALB
+
+In AWS, a Network Load Balancer (NLB) operates at the network layer (Layer 4) and focuses on distributing traffic based on IP addresses and ports, while an Application Load Balancer (ALB) operates at the application layer (Layer 7) and can manipulate traffic based on HTTP headers, allowing for more advanced routing and features for web applications; essentially, NLB is better for high-performance, low-latency workloads like gaming or high-frequency trading, while ALB is better for complex web applications requiring fine-grained traffic management. 
+
+AWS Shield : standard : protect against layer 3 & 4 attack, advanced : against more sphisticated DDoS attacks onAmazon EC2, Elastic Load Balancing, Amazon CloudFront,
+the Global Accelerator and Route 53, protect against layer 7 attack
+
+Route tables : define access to the internet and - between subnet\
+
+VPC can expand to different AZ in one region
+public subnet = access to internet gateway to talk to internet
+
+NAT gateway stays in public subnet and -  connect the private subnet and internet 
+
+NACL - network level, happen with IP address only - subnet level, allow/deny rules
+security group : ENI/EC2 instance related, only allow rules, ip add and other SG rules
+
+VPC flow log : info about all traffic flow through vpc - log info
+subnet flow log, elastic network interface flow log  --- trouble shoot VPC connectivity issues
+
+VPC endpoint gateway : specifically for s3 and DynamoDB
+VPC endpoint interface : all other aws services - it can use transit gateway, vpc peering, on premise network
+VPN goes over public internet - fast to establish
+DIrect connect : private connection, takes month to establish
+
+connect one service from VPC to another app in another VPC --- use AWS PrivateLink
+to create PrivateLink - need to create Network load balancer on one VPC and on other consumer VPC create ENI(elastic network interface) ==== which create private link between two
+
+An Elastic Network Interface (ENI) in Amazon Web Services (AWS) is a virtual network interface that connects EC2 instances to other resources.
+
+
+if bucket is encrypted with kms n cross account access is required then s3 bucket policy wont be sufficient for secure access, you will need other accounts IAM role in kms key policy
+
+30 dimension of CW metrics, custom CW metric like to extract memory usage of ec2 instance
+
+CW log : store your app logs in aws,  to query CW log - CW log insights - analyze log data and find patterns in it
+sources for log : sdk, cw log agent, elastic beanstalk, ECS, lambda, vpc flow log, api gateway, cloudtrail, route53 all will send related log to it
+CW log Subscriptions filter can stream logs to other AWS services, including S3, in real-time.
+CW agents : get logs from EC2 instance, use IAM permission and on-premise log can be sent too by this
+2 types : cw log agent, unified agent
+cw log agent is old, unified is [newer can log metrics(CPU metrics, disc met, NetStat, Swap Space, RAM, processes, for ec2(disk, cpu, network)) and log too, can be configured by SSM parameter store]
+
+CW alarm : 3 actions
+1. EC2 instance = stop, terminate, reboot or recover
+2. EC2 auto scaling = trigger it
+3. Amazon sns = call lambda fun and do whatever
+
+CW log encryption to encrypt log data with specific KMS key.. by default they are already encrypted
+
+CW log metrics filters are there to trigger the alarm
+3 states for alarm : 1. ok, 2. insufficient data, 3. alarm
+composit alarm : AND, OR conditional checking and triggering alarm
+
+CLI - set-alarm-state === can be used to trigger alarm even if it is not breached yet.
+
+
+X-ray : visually analyse all request made to ec2 instance - useful for troubledshooting, identify users are impacted and more 
+code in java, .net, node.js, python, go
+application sdk will capture calls for http, database, aws service, sqs
+compatible with : lambda, beanstalk, ecs, elb, api gateway, ec2 instance or application server on premise
+to start it run aws x-ray deamon, or enable x-ray aws integration
+
+CT is global service
+CT events : 
+1. Management events : operation which are performed on resources in aws account - default - normally logged by cloudtrail
+2. Data events : s3 object level activity, getObject, DeleteObject, putObject etc, lambda function execution activity - InvokeAPI
+both has read & write events.
+
+3. CloudTrail insight events : it analyze all CT event and detect unusual activity in your account - continuously analyze write event and detect unusual patterns
+
+all events are retens in CT for 90 days for more days storage move it to s3 bucket
+
+AWS config : record/monitor configuration and changes over the time, auditing and recording/monitoring compliance, per region service - aggregated across region and account, aws configuration has rules which can be evaluated or triggered for each config change or at regular interval, give full pic of compliance, configuration, CT api call for resource over the time
+automate remediation of non-compliant resource by using aws managed doc or custom doc(invoke lambda function) created by you, aws config can use event bridge and trigger the notification, sns, sqs, lambda can also work with aws config
+- You can create rules to enforce specific instance types by config.
+- A resource is compliant if it complies with all of the AWS Config rules that evaluate it, so rules are the key to do compliances
+
+Best practises##########
+
+responsible AI is there - to check tools
+1. bedrock - model evaluation, 2. SM clarify, 3. SM monitor, 4. Augmented AI, 5. SM role manager, model card(info about model n its risks), model dashboard
+
+explainability == clarify
+glue databrew = PII obfuscation/data encryption/data masking
+
+
+AWS Fargate is a serverless compute engine that allows users to run containers without managing servers.
+
+scikit-not deep learning its only ML
+
+efficient silicon : 
+gaviton3 to CPU inference, inferentia inf2, trainium trn1
+
+OpenSearch : used for real-time application monitoring, log analytics, and website search.
+
+SageMaker Pipelines allows for the automation of ML workflows, including retraining based on data drift detected by SageMaker Model Monitor.
+
+Step function will not handle ML workload
+
+- cost is calculated when model need inference]
+
+- when worried about everything then f1 score
+
+- if need exact communication style then finetune LLM with companies data, RAG will be used when need augmented response not exact copy communication
+
+F1 Score in balancing precision and recall, which is critical in scenarios where both false negatives and false positives must be carefully managed.
+
+Blue/Green Deployment involves deploying the new model version in a separate environment and switching all traffic to the new model once it has been tested.
+
+Canary Deployment is the most suitable strategy for this scenario. It allows the company to initially direct a small percentage of traffic to the new model version while monitoring its performance.
+
+structured data : rds data, quarriable, csv, excel sheet
+unstructured data : text, image, video, audio
+semi-structured data : email(having header which is structured), json, xml
+
+Data mesh :  data management on domain based
+
+avro : binary format data, that store data and schema, apache n Hadoop system
+parquet :columnar storage format, optimized for analytics, compression n encoding allowed by it, apache, Hadoop n redshift spectrum
+
+
+s3 has key n value, key is full path to object. n value is object. in s3 no directory concept. key = prefix + object name
+ 
+s3 event notification : SQS, SNS, lambda fun event pass and handled by/ event bridge 
+
+event bridge : archive/replay/deliver events
+
+s3 multipart upload => for file more 5gb, can be parallelized
+s3 transfer acceleration => use edge location
+specific part or byte range can be uploaded or downloaded
+s3 access points having dns name - internet/vpc origion - by using interface/gateway endpoint
+
+ebs vol= az bound, virtual network drive, little latency issue, delete on termination attribute it has, default it will erased when ec2 instance is deleted
+
+efs vol = use for latency sensitive app, max i/o, high latency, high throughput, high parallel, Linux based
+
+fsx for luster = Linux + cluster == parallel, ml, high computing, s3 data can be read seamlessly, on-premise server connection via VPN or direct connect'
+
+kinesis data stream producer === 500, 503 error -- implement retry mechanism
+
+kmsaf == for sql application === flink means analytics
+
+kakfa ==  for streaming data = alternative to kinesis = broker nodes and zookeeper, workers are there too.. nodes are there, cluster can be created, default message size is 1 mb but 10mb message can be sent by custom configuration , MSK is serverless, here kafka topics are there with partition.
+
+EMR -- serverless new feature = iam user, execution role, aws cli to start
+choose emr realese and runtime(spark, hive, presto)
+submit queries/script via job run request
+you can define starting resources/capacity
+EMR can work on EKS = emr create package n run on eks
+
+Apache Hive is a data warehouse system that uses SQL to process large amounts of data on the Apache Hadoop platform.
+
+asymmetric shapley value = for time series data
+AWS GLue Data quality - we can set rules for data quality
+
+databrew can be used for PII info transformation
+
+avro & parquet are splittable so can be accessed in parallel
+athena  can query staging data 
+athena workgroup enable user or group of users to work on workload
+change data location, formate by using athena query by using create table
+less no but large files perform better in athena
+partition(msck repair table can be used to partition) & columnar formate are better too
+ACID transaction, Iceberg table support, time travel op(get deleted records), governed table feature
+
+cross account access to s3 by bucket policy
+
+PII redaction in transcribe available
+custom vocab, custom lang model for context in transcribe
+toxicity detection(how toxic the word is)
+
+poly
+long, generative, nueral, standard engine
+
+Recognition 
+use content moderation api to generate images -- api = DetectModerationLabels api
+
+EC2 configuration
+OS, CPU, RAM, storage(EFS, EBS, instance store), public IP, security group, EC2 user data
+
+Fraud Detector
+rule based
+api or s3 data ingest
+SM integration
+auto model creation based on data and train and learn over time
+find fraud like account takeover, online payment, trial abuse, new account
+
+Q business
+- business related all task can be done by using business db(40+)
+- built on many bedrock models, we cant choose LLM from built
+- custom plugins like jira can be used to do business related task
+- IAM identity center and active directory integration
+- admin controls === guardrail to restrict words, topic related response only, no external knowledge response etc..
+
+Q Apps
+- create app with NLP without code
+
+Q Developer(software development related all task)
+- question-answer system related to AWS documentation
+- usage of resource, service
+- billing, troubleshooting, resolve error
+- use CLI to make changes to your account
+- give syntex to change timeout setting in lambda func
+- like GitHub Copilot
+- implement feature, generate documentation, bootstrap new project, security scan, code suggestion etc
+- supports java, python, c#, javascript, typescript
+
+
+- CNN : feature location invariant means cnn can find where features are as they dont have specific spot
+
+RMSE - care about right and wrong answers
+
+R^2  === square of co-relation co-efficient between actual & predicted outcome(for regression problem)
+Error = RMSE/MAE
+
+HP Tunning
+
+- early stopping
+- warm start : start using from previous job result, type : IDENTICAL_DATA_AND_ALGORITHM, TRANSFER_LEARNING
+- resource limit : limit no of parallel tunning job, no of hp etc
+
+- HyperBand is faster then all other, parallel, dynamic resource allocation, early stopping
+
+- Debugger API = in GitHub => CreateTrainingJob, DescribeTrainingJob APIs
+- SageMaker Debugger provides insights into resource utilization and potential bottlenecks.
+
+
+SM Model Registry
+- catalog model, manage model versions
+- model metadata
+- manage approval status of model
+- deploy model  in production
+- automate CI/CD
+- share models
+- integration of model card- just a page of model info
+
+- TensorBoard - visualization toolkit for tensorflow or pythorch
+visualize - loss, accuracy, model graph, weight, bias, embedding, profiling
+integration to SM console or URL
+
+Training
+warm pool
+- hold on to hardware for training a bit more time - for repeated trainnig
+- KeepAlivePeriodInSeconds Parameter set
+- use cache data for repeated training to reduce cost
+
+training Checkpoints means snapshot
+- to restart training at that point, troubleshooting n have sync with s3
+When using GPU instance for training
+- cluster health check and automatic restart happens
+- internally it check everything if SM service error then auto restart of training job
+- also check NVidia library is working, replace faulty instances
+
+Distributed Training
+- ml.p4d.24xlarge will give 8 GPU
+- so use big instance first then go for more instances - called maxout
+- in training computation of gradient will be done
+- DT has 2 components
+- AllReduce : distribute computation of gradient to/from GPU - as per data parallelism library
+- AllGather : manage communication between nodes to improve performance, give that responsibility to cpu so gpu is freeup
+- Other distributed libraries:
+1. Paytorch DistributedDataParallel
+2. torchrun
+3. mpirun
+4. DeepSpeed - for pytorch by MS
+5. Horovod
+
+SM Model Parallelism Library
+- distribute model on multiple GPUs or use multiple GPU to increase batch size
+- SM interveaved pipeline is for tensorflow and pytorch for SM MP
+- MPL for pytorch only
+type to achieve MP
+optimization state sharding : features's weight will be sharded by stateful optimizer - adam & fp16
+activation checkpointing : reduce memory usage by clearning activation layer & recompoute when needed
+activation offloading : swaping activation layer work on to/from GPU
+
+Sharded Data Parallelism - combine parallel data and model
+shard the trainable parameters & gradients
+- implemented in SM Model Parallelism Library
+
+EFA - Elastic Fabric Adapter 
+- to accelerate training
+- Network device - do better use of network bandwidth
+- attached to SM instance
+- give high computing performance on cloud
+- use with Nvidia collective communication library - ofcourse GPU use with NVidia
+- how to use
+NCCL lib, EFA device, AWS OFI NCCL plugin in container & set parameters like FI_PROVIDER = 'efa'
+
+MiCS - minimize communication scale - like sharded data parallelism - combine everything above
+- if Largest Model - with trillion of parameters
+- minimize communication overhead
+- use bigger instance so no need to do communication between instances for training
+
+A low learning rate can cause very slow convergence, leading to slow loss reduction.
+
+- Fast file mode can access data randomly while pipe mode can not
+- pipe mode can do access data only sequentially so replaced by fast file mode
+- exress one zone : work with file, fast file and pipe mode
+- FSx for luster : high throughput, million IOPS, low laency, one AZ, require VPC
+- EFS : VPC require
+
+LightGBM
+- Ensamble technique, do classification, regression and mapping
+- num_leave = max leave per tree, feature_fraction = features per tree, bagging_fraction = randomly sampled, bagging_freq = how often bagging is done, max_depth, max_depth, min_data_in_leaf(for overfitting)
+
+- memory bound = m5
+
+
+
+$$$ Bedrock - its available under SM canvas
+
+
+API endpoint
+bedrock - manage, deploy, train
+bedrock runtime - getting inference - execute prompts, generate embedding ---- comverse, converseStream, InvokeModel, InvokeModelWithResponseStream
+bedrock agent - mange, deploy, train LLM agent and knowledge base - agents are tool by which we can do stuff with LLM like getting weather check etc
+bedroack agent runtime- get inference from agent n knowledge base --- invokeagent, retrieve, retreiveand generate
+
+Contibue pre-training with unlabeled data to make model familiar with new data - like adding input in prompt (feeding data)
+
+- RAG = knowledge base = kind of fine tunning - its db - update it and model get updated no training needed - in prompt feed the data - tokens will be added to prompt
+- take advantage of vector db(semantic search)\
+- prevent hallucination
+- results will be re-phrashed
+- if you want exact result as you feed in use custom model trains with your data
+- graphDB, OpenSearch, Elasticsearch can be used with RAG, more commonly vector DB is used
+- example of vector db : OpenS, ElasticS, Neptune, MongoDB, Cassndra, SQL, Redis, MemoryDB
+
+- In bedrock - RAG is Knowledge Base which can be s3 db, json data etc
+
+- AWS Cohere offers a comprehensive suite of generative and embedding models through SageMaker on a range of hardware options
+
+- Amazon Titan models are created by AWS and pretrained on large datasets
+- Agentic RAG is also a thing creating some functionality
+- for vector db - chunking in knowledge base type
+1. Semantic, 2. Hierarchical(child from big word-parent), 3. Lambda(custom)
+
+Bedrock GaurdRail - work on text models - word/topic filter, profanity, PII remove, contexual ground check/relevence with what asked - prevent hallucianation
+
+LLM Agent --- tools to your LLM
+- agent has memory
+- plan module -- to answer question and use tool to do so
+- prompts for tools guide how to use tool
+- tools are lambda function to do something
+
+LLM agent - get request for something
+decompose it & check if it has to go for action groups (made up of tools means lamdba fun) or go to knowledge base to give answer.
+agent can write code to answer question or product chart
+
+- Deploying Bedrock Agent 
+create alias(endpoint of agent) - create deployed snapshot
+provisioned & On-demand throughput
+Bedrock Runtime Endpoint  ===> InvokeAgent by alias ID of Agent
+
+in Bedrock features
+- we can import model from s3 or SM
+- model evaluation : accuracy, toxicity, robustness, BERTScore, F1-- test by your prompt or built in prompt db, bring human(your/aws) 
+- provisioned throughput
+- watermark detection in image model
+- bedrock studio : no need of aws account create web app workspace, Single sign on with IAM and identity provider, user can share projects & components
+
+- for common inference C5 instance will work,  for not nueral training M5 can work
+
+- AWS::SageMaker::Model == create model at endpoint to host in cloudformation
+
+- Model Monitor Data Capture : log input/output of inference endpoint data, available for BOTO, & python SDK, realtime & batch data support, useful for training, debugging, monitoring, inference data can be encrypted
+
+- dockers Vs. Virtual Machine
+Docker : can share networking and data with each other (no of docker containers) - many containers can run
+VM : using Hypervisor each app will be standalone and separate from each other - not sharing resources, separate so less no than docker 
+
+
+Docker:
+- write docker file
+- build docker image
+- push it on repository(dockerhub, ECR)
+
+
+Docker container management
+ECS,EKS,FARGATE,ECR
+
+$ ECS Cluster => have EC2 instances(multiple) (EC2 launch type)
+	=> each EC2 instance will have ECS agent to register in ECS
+	=> new docker container will come to run it will be placed on EC2 instance and 	provide required configuration types(CPU, GPU, RAM, Framework etc)
+	=> we need to manage EC2 instances here '
+	=> ECS agent will do all api call to ECS service, ECR(pull image), send log to 	CW, get sensitive data from secret manager or Parameter store
+	=> Each task has ECS task role, so in one ec2 instance many ECS task can run which has diff task role. But EC2 instance has EC2 instance profile role
+
+	=> Fargate Launch Type
+	no need to manage EC2 instances, serverless
+
+	=> Load Balancer 
+	1. Application Load Balancer
+	2. Network Load Balancer : when need high throughput/performance or with 	privateLink
+	3. Classic Load Balancer : not recommended as no advance feature of fargate 	support
+	
+	=> ECS with EFS : EFS can be mounted(use) for ECS tasks
+	s3 cannot be mounted as FS
+
+
+$ ECR : store and manage docker images, public & Private repository, 
+	=> Image related features like vulnerability, 	scanning, versioning, tag, lifecycle, 
+	=> access control by IAM role
+
+$ EKS  : launch Kubernetes cluster on AWS, open source, same as ECS diff api
+	=> supports EC2 and Fargate launch type
+	=> can be used in any cloud like azure, google
+	=> EKS has worker Nodes(Nodes are EC2 instances)
+	=> one EKS node has many EKS pods running EKS task
+	=> types of Node : 1. managed(created and managed by EKS) 
+			   2. self managed(you can create AMI for nodes)
+		 	   3. Fargate serverless
+
+			1 & 2 supports on demand and spot instances		
+	=> specify storage class on EKS cluster
+	=> CSI - container storage interface compliant driver support	
+	=> EBS, EFS(only with fargate), FSx for luster, FSx for NetApp ONTAP
+
+$ CloudFormation : Infrastructure as Code. ---- YAML lang
+		=> create deploying environment specify by code
+		=> like Security group, Ec2 instances, s3 bucket, ELB whatever you need
+		=> change in infra by code too
+		=> estimate cost by CF template, and save money by deleting and 		recreating resources as per need
+		=> all aws resources are supported & custom too
+
+# AWS Cloud Development Kit(CDK) : Infrastructure as code too
+	=> define infra in familiar programming lang	
+	=> javascript, typescript, python, java, .net
+	=> application & infra code both can run together
+	=> good for lambda func, docker containers
+	=> create code in your lang, synthesis it to cloudformation template and do CF
+
+$ Diff between SAM(serverless application manager) & CDK
+	SAM : serverless, start with lambda, use CF, lang - json/yalm	
+	CDK : lang : as above, use CF, support all AWS service
+$ combine CDK & SAM - check CDK on SAM local
+	=> CDK app(lambda func) run on cdk synth
+	=> which generate CF template
+	=> SAM CLI will be used to do local invoke using CF template
+
+$ AWS CodeDeploy : deploy your application
+		=> work with EC2 instances and on-premise serve - hybrid service
+		=> server/instance must be provisioned & configured before with 		CodeDeploy agent
+		=> can upgrade EC2 instances and on-premise servers too 
+		=> from version 1 to version 2
+
+$ AWS CodeBuild : Build Code in cloud
+		=> get code from CodeCommit 
+		=> compile it, run test on it, package it (to deploy)
+		=> serverless, secure
+
+$ AWS CodePipeline : code related orchestration service(useful for CI/CD)
+		   => Code => Build => Test => Provision => Deploy
+		   => supports CodeCommit, CodeBuild, CodeDeploly, Elastic Beanstalk, 		   CloudFormation, GitHub, custom plugins
+
+$Git  :  
+	=> git init : initialize new repo
+	=> git config :  config var like email, pwd etc
+	=> git clone <repo>:  clone/download repo
+	=> git status : status of changes in WD - working directory
+	=> git add <flname> : add file/changes in file to staging area
+	=> git commit -m : commit with message
+	=> git log : view log commits
+
+	$$$ => branches : working on things in parallel
+	=> git branch : list all branch
+	=> git checkout <bname> : go to specific branch
+	=> git merge <bname> : merge b to current one
+	=> git branch -d <bname> : delete b
+
+
+	$$$ => remote repo
+	=> git remote : list all remote repo
+	=> git remote add <nm> <url>: add remote repo
+	=> git push <remote> <branch> : push branch to remote
+	=> git pull <remote> <branch> : pull branch(or changes in branch) from remote
+
+	=> git reset : reset staging area with recent commit - not effect working dir
+	=> git reset --hard: reset staging area and working dir with recent commit
+	=> git revert <commit>: undo previous commit
+
+	=> git stash : save changes which are not ready for commit, stash pop:restore
+	=> git rebase <branch> : apply changes from one branch to another
+	=> git cherry-pick <commit> : get changes from specific commit to current branch
+
+	=> git blame : blame(show) on who made changes
+	=> git diff : changes between commits and WD
+	=> git fetch : fetch changes from remote repo - no merging
+	=> git fsck : check db for error
+	=> git gc : garbage collection - clean up local repo
+	=> git reflog : for recovering lost commit, record ref in local
+
+$ GitFlow : 
+Branches - 
+	Main/master : current release
+	Develop : changes by develop 
+	Feature : for new feature
+	Release : merge current with develop
+	Hotfix : urgent fix from main
+
+$ GitHub Flow :
+- when you can deploy changes to production immediately
+- 2 branches are there main, feature
+- automate test and deploy
+- release multiple time'
+
+$ Amazon EventBridge(CloudWatch Event)
+- schedule cron job
+- event pattern - react
+- trigger lamda, sns/sqs call
+- it has json doc about event specification
+- it has eventbus as well as partner eventbus(like Zendesk, datadog, saas partner) & custom eventbus to send event from your app to aws
+- eventbus can be accessed by resource based policy
+- archieve the events all/filterd - ability to replay - for debug & troubleshoot
+- schema registery : analyse event infer schema, schema are versioned
+
+$ aws stepfunction : mainly use for ml
+the workflow is state machine
+each step is state
+types of state:
+1.task -like lambda do something 
+2.choice - conditional logic - yes/no kind
+3. Wait - delay
+4. parallel - add many branch for execution
+5. map - parallelly run(set of steps)on each item of dataset - Data engineering related, work with json, csv, s3
+6 pass, succeed, fail
+
+$ MWAA - Managed Workflow for Apache Airflow by amazon
+- batch oriented workflow
+- develop, schedule & monitor workflow
+- by python code which create DAG directed acyclic graph
+- complex workflow, etl co ordination, ml data preparation
+- upload python code to s3 & MWAA will get it and initialize it
+- VPC required in atleast 2 AZ
+- if not vpc then standalone public/private endpoint to access airflow web server -IAM need
+- automatic scaling
+
+$ Lake Formation : create data lake in secure manner in days
+- loading, monitoring
+- partitioning
+- encryption, manage keys
+- transformation job define, monitor
+- access control
+- auditing
+- build on Glue - all glue can do LF can do like crawling, etl, security, acl, transformation, cleaning
+- data can go to EMR too, athena , rs are already there
+troubleshoot
+1. cross account access by setting receipt as admin, by RAM - resource access manager, by IAM permission
+2. not support manifest in athena and redshift query
+3. IAM permission to create encryption key, blueprints, workflow
+
+- ACID support by using governed table(new table type of s3) 
+set this type of table not reversible
+work with streaming data 
+query with athena
+storage optimization and compaction
+- access control by row & column level security in s3
+	
+- Grant Permission on Data in Lake Formation
+by using IAM role/SAML/extranal aws account
+add policy tag on db, table,columns - best practise
+add specific permission on table or column
+so you can implement column level security by LF
+
+- Data Filters in LF
+column/row/cell level security by using this - when select permission is there on table
+column level = all row + specific column
+row level = all column + specific row
+cell level = specific row + specific column -can be done by console or CreateDataCellsFilter API
+
+
+- IAM access analyzer to generate lerast privilege policy
+- masking pii data available in glue databrew & redshift(masking policy creation feature)
+- user/group can be assigned policies
+- MFA device = virtual(google authenticator/authy by amazon), physical(Ubikey/fob mfa / SurePassID-for U.S)
+- IAM role - do action on your behalf
+- EC2 instance will have IAM role to access aws services, lambda function role, CF role
+- encryption : 
+1. TLS certificate require to encrypt data before sending and decrypt after receiving 
+2. Client side : data encrypt(by client) before sending to server(stay encrypted) and decrypt on other client who need it
+3. server side : data pass by https in server encrypted and stored and decrypted and then send by https
+- encrypt PII data by KMS api call
+- type of KMS key :
+1. symmetric key : one key for encryption and decryption, use api call to access
+2. asymmetric key :  public key(for encryption), private key(for decryption), use encryption outside aws if you want to do - no need api call
+KMS key policy are required to access that KMS key : 
+1. Default : allow everybody(in aws account) 
+2. Custom : define user, role, cross account access to KMS key
+KMS keys alias are like aws/ebs, aws/dynamodb etc keys related to service
+key rotation is also available for MKS keys
+
+- Macie use ML and pattern matching to protect sensitive data in aws n notify by eventbridge
+
+- AWS Secret Manager 
+rotation of secret every x days
+automatic generation of secrets by lambda fun
+integration with RDS(MySQL, PostgreSQL, arora)
+encrypted by KMS
+mostly meant for RDS
+replicate secrets across multiple region - usage : multi region app/db, disaster recovery
+
+- AWS WAF
+protect against web exploits at layer 7(http layer)
+can be deployed on ALB, API Gateway, CloudFront, COgnito userpool, AppSync GraphQL API
+define Web ACL rule
+- for IP address, http header/body/uri string/sql injection/cross site scripting
+- for size constrain, geo match(block countries)
+- rate based rule - count occurance of event - DDoS attack
+
+Web ACL are regional except CloudFront
+WAF not support Network Load Balancer as it work on layer 4(NLB)
+WAF need fixed IP, ALB not provide fixed IP so Global accelerator will be used to get fixed IP to work WAF with ALB
+
+
+- AWS Shield
+protect against DDoS attack : multiple requests
+2 types
+1. Shield Standard : free, protect against UDP flood, reflection attack, layer 3/4 attack
+2. Shield Advance : paid, attack on EC2 instances, ELB, CloudFront, Global Accelerator,  Route 53, protect against fees while DDoS attack, create WAF rule for layer 7 attack
+
+- VPC
+private network in cloud, VPC has IP ranges allowed in VPC, one VPC in each region you choose
+subnet : public, private 
+route tables : define rule to access internet and access between subnets
+private subnet cannot access internet gateways to get internet so NAT gateways will be helpful there, still they remains private
+
+NACL 
+- firewall
+- allow/deny rules
+- subnet level
+- include only IP add
+- stateless
+
+Security Groups
+- firewall
+- allow rule
+- resource level like ENI/EC2 instances
+- IP add & other Security group
+- statefull
+
+VPC Flow Log
+- network issue(between subnet-internet) check flow logs
+- VPC/Subnet/ENI flow log
+- get network info from ELB, Elasticache, RDS, Aurora etc
+
+VPC Peering
+- Connect two VPCs
+- must not overlap IP add range of that two
+- its end-to-end
+
+VPC Endpoint
+- connect to aws service by private network, not public network
+- security, lower latency
+- 2 types
+1. endpoint gateway : for s3 and dynamodb only
+2. endpoint interface : for all other
+
+AWS PrivateLink
+- require Network Load Balancer & Elastic Network Interface to establish Privatelink between VPCs
+- VPC peering is option for it but it is not scalable and secure for large no of connection
+
+CW metrics : 30 dimentions, get metrics from everywhere in AWS, we can create custom metrics like RAM usage to log in CW
+
+CW log :
+- store app log in aws
+log groups : any name like app name
+log stream : instances of log in app/container/file
+define expiration policies 1 day to 10 years
+send log to s3/kds/kdf/lambda/opensearch
+log are encrypted default
+KMS based encryption can be implemented by our key
+sources : SDK, cw log agent, cw unified agent, elastic beanstalk, ECS, lambda, VPC flow log, api gateway, cloudtrail, route53
+cw log insight : query the cw log
+- export log to s3 by CreateExportTask api call - it is for historical log
+- to export real time log use logs subscription
+- log subscription : to process or analyze realtime log, send log to KDS,KDF,lambda, choose filter to filter log to send
+- by log subscription filter we can send log from diff region/accnt to KDS=>KDF=>S3 === called log aggregation
+
+- CW log agent 
+normally EC2 instance wont send any log to CW, we need cw agent for that
+agent can send log from on premise server to cw
+CW log agent & unified agent
+cw log agent is old only send log 
+CW unified agent will send metrics(CPU,RAM,Disk,Process,Swap space, Netstate) & log too
+for EC2 disk,cpu,network metrics
+
+- CW alarm
+states : ok, insufficient data, alarm
+period : 10,30,60 sec
+targets :
+1. EC2 instance - stop, terminate, reboot, recover
+2. auto scaling 
+3. send notification SNS 
+- CW alarm run on only single metric
+- we can use many alarms work on diff metrics called composite alarm - with AND/OR condition
+- EC2 -system check, instance check, ebs check and set recovery or other
+- by CLI we can test alarm without breach
+- cw log metrics filter we can trigger alarm 
+
+$ X-Ray : Debugging in production
+- give visual analysis of your app in production
+- it trace requests made in app(all of it)
+- IAM & KMS enabled init
+advantages:
+-troubleshooting
+- dependencies of microservice, which one is throttling app
+- review request behavior
+- find error, exception,
+- which users are impacted
+compatible:
+- lambda, ecs, elb, api gateway, ec2, on premise server, elastic beanstalk
+How to enable it:
+1. By your code - lang : java, python, Go, Node.js, .net - import AWS x-ray SDK
+	little code modification need
+	trace all call like aws service, http/s, db, sqs
+2. install x-ray daemon or enable x-ray aws integration 
+	daemon should be installed on Linux/window/mac server(EC2 instance)
+	lambda & all other aws service are daemon enabled
+	app should have IAM rights to write on x-ray
+
+1 & 2 both steps are required to enable x-ray for your machine
+
+App + x-ray SDK ==>(send traces)==> x-ray daemon ==> send data to x-ray(every 1 second)
+
+- troubleshoot if not working
+# EC2 instance should has IAM role & daemon installed
+# Lambda - IAM role, policy(x-raywriteonlyaccess), x-ray imported in code, enable lambda x-ray active tracing  
+
+$ CloudTrail
+- CLI,console,sdk, IAM role user activity log
+- Events : 
+1. management event(logged default) : change in resource in you aws account read/write event of resource
+2. Data event (not logged default): s3 object level actrivity(put/delete/get obj), lambda execution activity\
+3. CloudTrail Insight events - detect unusual activity in your account, set baseline by managed event, keep eye on it, CT console visualize anomalies in trail
+events stays for 90 days default and then send it to s3 for long term retention
+
+
+$ Config
+- auditing and compliance of resources based on config rules
+- record config changes overtime for auditing
+- we can send SNS if any changes
+- per region service
+- can be stored in s3
+- custom rules can be make too
+- rules can be triggered/evaluated on config change or at regular interval
+- config rule will not prevent any action to happen
+- we can view compliance & configuration & cloudtrail api call for resources over the time
+- we can take remediation steps for non-compliant resources by using SSM automation doc/custom automation doc which invoke lambda func, apply retries if still not compliant
+- eventBridge can be used to call Lamda/sns/sqs when resource not compliant
+- direct ability to send sns notification if resource are not compliant
+
+$ AWS Budget
+- create budget, send alarm when cost exceeds
+- 4 types of budget : cost, usage, saving plans, reservation
+- 5 sns notification per budget
+
+$ Cost Explorer
+- visualize, understand and manage your aws cost over time
+- create custom reports for cost
+- analyse the cost, choose saving plan based on that - suggest SP inplace of reserved instnaces
+- forecast usage upto 12 months based on previous usage
+- monthly, hourly & resource level cost 
+
+$ Trusted Adviser
+- account assessment service
+- business & enterprise plans are there
+- analyze in 6 categories
+1. cost optimization
+2. Performance
+3. Security
+4. Service Limits
+5. Fault Tolerance
+6. operational excellence
+
+- Graviton3 chip is useful for CPU based training like inferencia, trainium chip
