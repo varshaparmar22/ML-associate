@@ -69,7 +69,7 @@ by Data Filter : column, row, cell level security - CreateDataCellsFilter api
 Access Analyzer : will automatically generate least privilege policies based on the actual observed access activity.
 
 IAM user are global resources no need to select region
-permission are inherited via group - same group users will have same permission
+permission are inherited via group - same group users will have same permiss'on
 
 inline policy directly can attach to user, resource etc no need to assign in group
 
@@ -79,11 +79,11 @@ kMS :2 keys
 1. symmetric : one key for encryption and decryption - AES 256 - used by API, not direct key access to user
 2. asymmetric : one key for encryption and another key for decryption, public and private key, public is for encryption and can be downloadable(useful for encryption outside aws, without api call
 
-WAF :  protect web app over layer 7(http), layer 4(TCP/UDP)
+WAF :  protect web app over layer 7(http/application layer -- ), application protocol = http, filter content based on http
 can be deploy on : ALB, api gateway, cloudfront, appsync GraphQL api, cognito user pool
 define web access control list, rate based rule(count - ocurance of event - DDos protect, W ACL are regional except CloudFront
 
-Network Load Balancer : work on layer 4, WAF work on layer 7
+Network Load Balancer : work on layer 4(TCP/UDP) - layer 4 = network level info like IP add, port no
 WAF -can not be used with NLB as it dont work with fixed IP, we can use global accelerator for fixed IP use and WAF on ALB
 
 In AWS, a Network Load Balancer (NLB) operates at the network layer (Layer 4) and focuses on distributing traffic based on IP addresses and ports, while an Application Load Balancer (ALB) operates at the application layer (Layer 7) and can manipulate traffic based on HTTP headers, allowing for more advanced routing and features for web applications; essentially, NLB is better for high-performance, low-latency workloads like gaming or high-frequency trading, while ALB is better for complex web applications requiring fine-grained traffic management. 
