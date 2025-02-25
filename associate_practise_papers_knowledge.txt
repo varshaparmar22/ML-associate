@@ -1,0 +1,309 @@
+revisit == 7
+
+- SageMaker Data Wrangler’s corrupt image transformation to get realworld kind images having blurriness, noise, resolution changes(create corrupt images)
+
+- SageMaker Data Wrangler - such as missing values, duplicate rows, and data types) and helps detect anomalies (such as outliers, class imbalance - balanced data feature(random oversample, random undersample, SMOTEs), and data leakage) in your data. - 300 prebuilt PySpark transformations - vectorize text, featurize datetime, encoding, balancing data, or image augmentation are covered. It can write query by using sql to get data from variety of sources, it is data visualization tool too, can handle any data formate
+
+- Apply Extreme Gradient Boosting (XGBoost) - handle imbalanced datasets effectively through regularization, weighted classes, and optimized computational efficiency
+
+- adaboost - adaptive-self corrective algo every iteration give more weightage to wrongly predicted data points and correct itself
+- gradient boosting - work based on loss function and correct it on next model - sequential
+- extreme gradient boosting - parallel so more speed, computation is distributed & cache optimization - it is extension  of GB
+
+- IAM group can not attach with any resource(like notebook instances)
+- IAM group have members
+- policy can be attached to group/role/individual user
+
+- To grant permissions to any resources like SageMaker notebook instances, you must use IAM roles or directly attach policies to individual IAM users. 
+
+-  DW == does not have built-in capabilities for detecting or grouping duplicate records, especially those requiring fuzzy matching. Data Wrangler is better suited for cleaning, visualizing, and transforming datasets before training machine learning models, but it lacks the machine learning-powered deduplication features provided by AWS Glue FindMatches.
+
+
+- R2 is co-efficient of deteremination = correlation co-efficient = for regression, value -1 to 1, -1=bad model, 0=not that good, 1=better model, explained variability of dependent var(target)
+
+- balancedaccuracy gives better measure of accuracy when imbalanced dataset like spam email
+
+- inferencelatency available only in ensembling mode
+
+- logloss = crossentropy loss = quality of probability output rather than actual output, for classification problems, 0 is better
+
+- s3 express one zone = directory bucket = support file mode, fast file mode and pipe mode 
+
+- FSx for luster and EFS both will be mounted on training instance first
+
+- FastFile mode will work with only s3 data files without them downloading in training instance - works well with many small files
+
+- scale_pos_weight in xgboost helps to handle class imbalance\
+
+- when IOT sensor send abnormal reading - RCF will use - anomaly detection - identifying unusual patterns that precede failures.
+- classify image by image classification, detect people/object from image by object detection algo
+
+- Amazon SageMaker’s multi-model endpoint allows you to deploy multiple models on a single instance. little latency issue it has. for choosing correct model for getting inferenc
+
+- Bedrock does not support fine-tuning the base model within its interface. You need to create your own private copy of the base Foundation Model and then fine-tune this copy with your custom dataset.
+
+- Fine-tuning trains a pretrained model on a new dataset without training from scratch. This process, also known as transfer learning, can produce accurate models with smaller datasets and less training time.
+
+- savings plan - commitment of 1-3 years and 72% SAVING ON on-demand instances
+- on-demand instances - spikey, short term, unpredictable workload, no upfront cost, commitment
+
+Prunning(feature selection) : identify most impactful features and eliminates the irrelevant one
+
+- Stacking involves training a meta-model on the predictions of several base models. This approach can significantly improve performance because the meta-model learns to leverage the strengths of each base model while compensating for their weaknesses. Random forest mainly used as meta model - can capture the relationships between the predictions of models - capturing relationship between model is important - combining models
+- simple voting will not capture that relationship between models
+- bagging and boosting use to correct same kind of models prediction by correcting errors or using diff datasets
+
+- Random search works well when a relatively small number of the hyperparameters, for large no of HP - Bayesian
+
+- SM ML Lineage tracking will store info of ML workflow steps... with that info we can recreate ML workflow
+it will keep track of all metadata of ml model training to deployment
+- SM lineage tracking is main feature for auditing and compliance and experiment is entity of lineage tracking
+- Keep running history of ML model for auditing and compilance
+
+- SM pipeline - built-in versioning, lineage tracking, and support for continuous integration and delivery (CI/CD), visualize by DAG.
+
+- Glue Databrew store result back in s3
+
+- provisioned concurrency available in serverless inference, so when you have predictable burst in traffic, keep endpoint warm and resources ready for work
+
+- Use AWS CloudFormation with nested stacks to automate the provisioning of SageMaker, EC2, and RDS resources, and configure outputs from one stack as inputs to anotherto enable communication between them
+In cf all components can be treated as stack and create its template and reference it whenever needed, like LB stack template call it everytime whenever you create any ec2 instances... this feature is in CF... if want inter-stack communication then go for CF. = output of one stack will be input of another stack.
+- CDK, Beanstalk does not have inter-stack communication facility - they are for deploying app but lack of this feature
+
+- Create a Docker container with the required environment, push the container image to Amazon ECR (Elastic Container Registry), and use SageMaker’s Script Mode to execute the training script within the container
+- Script mode enables you to write custom training and inference code & execute it while still utilizing common ML framework containers maintained by AWS.
+- SageMaker supports most of the popular ML frameworks through pre-built containers, and has taken the extra step to optimize them to work especially well on AWS compute and network infrastructure in order to achieve near-linear scaling efficiency. These pre-built containers also provide some additional Python packages, such as Pandas and NumPy, so you can write your own code for training an algorithm. These frameworks also allow you to install any Python package hosted on PyPi by including a requirements.txt file with your training code or to include your own code directories.
+- script mode is inevitable approach to write custom container with your requirements and dependencies -Bring your own container - BYOC
+
+- SageMaker Model Registry to register, track, and manage different versions of models, capturing all relevant metadata, including data sources, hyperparameters, and training code, Manage the approval status of a model, model card
+
+- if SM pipeline is there then callback step is important to check previous step is completed and new one about to start now - By using a callback step, the SageMaker pipeline waits until the one step is complete. like finish aws glue operation in sm pipeline than do next step
+
+- multiple layers of security measures is best in every situation security for gen ai apps
+
+- Data drift occurs when the distribution of the input data changes over time, while model drift happens when the model’s underlying assumptions or parameters become outdated. To address data drift, you should use SageMaker Model Monitor to track changes in input data distribution. For model drift, you should periodically retrain the model using the latest data
+
+- Amazon SageMaker Model Registry also integrates with AWS Resource Access Manager (AWS RAM), making it easier to securely share and discover machine learning (ML) models across your AWS accounts, group can be created for model group too which has resource arn n we can attach policy to group 
+- SageMaker Model Registry enables centralized management of ML models, including organizing models into model groups, tracking versions, and enforcing governance policies. By using a resource-based policy, the company can grant cross-account access. A resource-based policy is attached directly to the SageMaker Model Registry resource to define access permissions for specific AWS accounts or organizational units (OUs). This approach ensures secure cross-account access without additional setup of resource shares. It also provides granular permission control for actions like registering, accessing, and deploying models.
+
+
+- Use Amazon CloudWatch to monitor the API call metrics for the SageMaker endpoint and create an alarm to send notifications through Amazon SNS when the call count breaches the threshold
+Amazon CloudWatch is the most suitable solution for this scenario because it provides:
+Metrics for API call counts - CloudWatch automatically collects invocation metrics for SageMaker endpoints, including Invocations, InvocationErrors, and Latency.
+Alarms - Alarms can be created to monitor thresholds for metrics, such as the number of API calls.
+Notifications - When a threshold is breached, the alarm can send notifications through Amazon Simple Notification Service (SNS).
+
+- Use Amazon SageMaker Debugger to debug and improve model performance by addressing underlying problems such as overfitting, saturated activation functions, and vanishing gradients, GPU underutilization.
+
+- If Gen AI model - use EKS as it has high scalability, can provide tens of thousands of active containers for gen ai application  workload demand, give complex orchestration feature and full control over deployment
+
+- Implement a tree-based model like XGBoost with early stopping and hyperparameter tuning, balancing accuracy with reduced training time and computational cost with large dataset
+- SVMs with nonlinear kernels can be very accurate but are computationally intensive, particularly with large datasets, for fraud detection.
+
+- if data size limited take more care of data augmentation  --- for overfitting it will work too
+- Ensembling is also a technique to reduce overfitting --- may can be one option without much specification of requirement of it
+- pruning - feature selection... select relevant features more and less relevant feature will be eliminated - for overfitting it will work too
+
+- to aggregate data from on premise database, cloud based db(rs,dynamodb), s3 in centralize location in s3 lake formation is useful , permission and security also established
+
+- data wrangler can get data from aws cloud & databrick/saas - which can be connected by jdbc... for on premise PostgreSQL or other relational db it wont work
+
+- The oscillating pattern of the loss values during training and validation suggests that the learning rate is too high- overshoot the optimal solution
+
+- SageMaker Pipelines with conditional steps to implement manual approval workflows for model deployment - approved models are specified in sm model registry..  SM pipeline has integration with sm model registry - approval by human or registry logic --- Supports manual approval workflows within automated pipelines.
+Integrates seamlessly with SageMaker Model Registry to manage approved models.
+Reduces operational overhead by automating model deployment with built-in approval checks.
+'- lineage tracking is valuable for auditing and reproducibility, it does not include built-in mechanisms for validating or approving models for deployment.
+
+- target scaling use cw metric to check - avg val of invocationperinstance/cpu utilization , and target value like invocationperInstance
+- step scaling - under condition scaling
+
+- Amazon Comprehend ImportModel API operation to import model from one to another account, no need to download data inanother account, set resource based policy in first account, account should be in same region
+
+- Shapley values : assigning each feature a contribution score to the each prediction
+- Partial Dependence Plots (PDP) : help understand the overall relationship(marginal effect) between a feature and the model output across the entire dataset, holding all other features constant. - PDP is a global method, while Shapley values provide local explanations.
+
+- model registery has Model registry collection --- while ML pipeline run all the models(based on version) run inside it will be placed under group of models, and put that group under registry
+- Model Registry ===> Model Registry Collection ===> Model Group ====> v1,v2,v3... Model with diff versions(based oneach Ml pipeline run) were to train and solve to given problem
+
+$$$$ ==== Amazon SageMaker Model Registry: 
+
+Catalog models for production.
+Manage model versions.
+Associate metadata, such as training metrics, with a model.
+View information from Amazon SageMaker Model Cards in your registered models.
+View model lineage for traceability and reproducibility.
+Define a staging construct that models can progress through for your model lifecycle.
+Manage the approval status of a model.
+Deploy models to production.
+Automate model deployment with CI/CD.
+Share models with other users.
+
+Model registry collections like ----fraud detection models, customer segmentation models etc
+
+- Athena => query on s3 data by date - create table as select(CTAS) query and store result by transforming format to parquet or orc for faster access
+
+- MAE - less sensitive to outlier as it give direct diff between actual & predicted outcome
+- MSE - square the error
+
+
+- Validation sets are optional, The validation set introduces new data to the trained model. You can use a validation set to periodically measure model performance as training is happening and also tune any hyperparameters of the model.
+- Test set is used to determine how well the model generalizes: used on final trained model to assess its performance on unseen data.
+
+- first-time, spikey, unpredictable, short-term workload ==== on demand instance
+- real-time prediction ==== reserved instance - high available
+- committed, steady usage === savings plan
+- fault tolerance, heterogeneous, stateless, flexible start & end ==== spot instance
+
+AWS Techniques====
+Supervised Learning == LR, LR, Neural Network(predicting digit from handwritten image), Decision Tree
+Un-Supervised Learning == clustering, association rule(Rule based relationship between input-output), probability density(probability-not sure-unsuper), dimensionality reduction
+
+
+FM based
+- RAG === not train model only extend its knowledge, no weight change. when data changes frequently like inventory, pricing 
+- fine-tunning === further small training, so weight will be changed init. when specific requirement then do it
+- Prompt engineering === not change weight of FM
+
+- Use a tree-based algorithm like XGBoost, which offers a balance between accuracy and interpretability with feature importance
+
+- choose F1 & recall when FP,FN both are important and two options are needed to choose while cant afford FN mainly
+
+- If want to create baseline model - use Linear learner = simple model
+- Autopilot - give best high performant model
+- jumpstart - pre-built model, maybe not best fit for baseline model to particular requirement
+
+- DW will drop unused columns with little/no coding as it is ml- based
+
+- Hyperband = reallocation of resources, early stopping, parallel training jobs
+- Grid Search === computationally intensive
+
+- Gradient Decent = optimization algo, while training calculate params (weight/bias) to minimize loss 
+- HyperParameters == batchsize, learning rate etc === define model, send before training with model
+
+Endpoint type selection
+- dedicated endpoint = lowest latency, high TPS
+- multi-model = 
+1. large no of models - frequent/infrequent(take time to load) used model,
+2. reduce hosting cost, 
+3. reduce deployment overhead - sm load model in memory and scale them based on traffic
+- multi-container = isolation
+
+CloudWatch can do logging?
+
+
+ensembles models
+Bagging : multiple model, parallel, random sampling with replacement
+Boosting : multiple weak learner, sequential, cost based error correction of previous model
+stacking : many heterogeneous model, output of all model will stacked & sent to meta model, good accuracy, meta model use cross validation, use strength of all model and work on weakness of all and give best output
+
+- when data distribution change - in live data and train data ===== consider feature attribution drift --- can be
+- SM Clarify has two monitoring job
+1. check bias drift - check bias in model's output
+2. compare feature attribution drift in live and train data(when data distribution changed)
+
+when SM Mlops - pipeline is not in option
+- to manage containerized application having many containers for training, pre-processing, deployment etc... you can use EKS for orchestring those containers. - it will do  building, storing, deploying, and maintaining c app
+- your containers image you have to put in ECR first than use EKS
+- to do automating CI/CD codepipeline can be used 
+
+- When data loss is issue with EC2 instance reboot, don't keep data in EC2, except process it with other services like KDS/KDA
+
+- Parameters : use to generate output and get response from model
+- HP : customize the model and control training process
+
+Prompt: input provided to model to guide the model to generate output for that given input
+
+- IntervalInSeconds : in Firehose buffer size can be set to 0 so telling firehose to do data delivery as soon as it arrived no buffer it. For latency reduce requirement, this params is in buffering hint : default buffer interval is 60 sec
+
+- when require good response time & high throughput ===== use auto-scaling 
+- autoscaling work with cloudwatch check == metric(InvocationPerInstance) and target to target metrics
+- one model dont use multi-modal
+
+- when latency is less of concern then use asynchroneous inference otherwise not
+
+- Kendra : Amazon Kendra provides search and Retrieval Augmented Generation (RAG) functionality for your application.
+
+- predictable traffic pattern ==== > use provisioned concurrency (pre-specified-keep endpoint warm) with serverless inference
+- not predictable traffic pattern ====> use auto-scaling 
+
+- In EFS : for training data should be inside EFS... no s3 access is there
+
+- All other mode will read data from s3 bucket.
+how to choose mode for training : 
+- small dataset (50-100gb) : filemode
+- small dataset & all files are small : use serialization to reduce download overhead, file format like TFRecord, WebDataset, RecordIO
+- for larger dataset & many small files : where serialization is not possible - FSx for luster gives hundreads of giga bytes/sec, millions of IOPS ideal when many small files
+- for larger files : use fastfile mode 
+
+- ECS --- standalone batch processing job
+- Lambda/eventbridge --- schedule task
+
+Cluster Size = no of GPU * no of instances
+
+-pipeline execution is used to achieve true parallelism in model parallelism as it has loss of performance becuase in it data processed by GPU sequentially 
+
+- Bedroack mainly used for NLP, generative task
+
+Related to CloudFormation
+- The AWS::SageMaker::Model CloudFormation resource is specifically designed to define an ML model hosted on Amazon SageMaker. include artifact, container, iam role
+- AWS::EC2::Instance : manually host model on EC2 instance, not using SM hosting capability
+
+- Write a training script in Python that adheres to TensorFlow's Estimator API, upload it to an S3 bucket, and use SageMaker script mode with the built-in TensorFlow container to execute the script  -- containers also provide some additional Python packages, such as Pandas and NumPy, so you can write your own code for training an algorithm. These frameworks also allow you to install any Python package hosted on PyPi by including a requirements.txt, specify sm version in container
+
+- Nested types can be stored in: Parquet like array and object in column format
+- XML not supported by canvas as input file
+
+- notebook instance will use IAM role to access bucket/service
+- prefix added to bucket to make data compartment 
+- iam role will have resource based policy specifying that prefix bucket
+
+- sm canvas has data validation feature which check data quality after you import data n target column
+
+- Model Pruning : Reduce Model size(quantization) - by removing some neuron(mostly not active) & magnitude of weight(neuron*neuron) which are not impactful to calculate output.- perform calculation in low precision like 8 bit rather than actual 32 bit ---- quantization   
+- pruning and quantization will reduce computation requirement by model without much impacting on accuracy
+
+- RANDOM_CUT_FOREST algorithm - A built-in anomaly detection algorithm within Apache Flink
+
+- SM Canvas has now Data Wrangler init
+
+- https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html
+
+- ordered split & in unordered data split by key  will avoid data leakage 
+
+- SageMaker Studio Classic offers an integrated environment for creating, training, debuging, deploying, and monitoring & visualization feature for ML models. 
+
+- FM models are used for text, image & embedding generation & classification 
+
+- base model : fm which is packaged ready to use
+
+- model customization : fine tunning(new train dataset for particular task)  & continue pre-training(no labeled data)
+
+- you can filter the cost by using tag on resource and based on those tag get detailed cost report
+
+- CloudWatch Lambda Insights detailed metrics to monitor the Lambda function’s memory usage, CPU usage, and invocation times, cold start, lambda worker shutdown etc
+
+- if model forgetting previous knowledge(catastrophic) then use transfer learning for new training data
+- Catastrophic forgetting when new distribution data come and we don incremental training/fine tunning in model.
+
+- L1 reduce noice in model and produce more sparse model
+- L2 stabilise weight when high co-relation between the features
+
+- Renate is python library provided by aws to allow automatic model retraining taking care all problems like catastrophic forgetting n so performance degradation because of that
+
+-  Data augmentation is more relevant for addressing overfitting
+
+- Shadow testing model will not split traffic, it will copy live data and give inference on them in hidden mode, while a/b testing will split traffic on live environment, so shadow testing will not do user exposer, a/b will do user exposer.
+
+-increase batch size and reduce epoch will reduce training time and avoid overfitting because of large batch size
+
+- aws lambda is compute service which let you run your app code without managing server, by YAML script you can provide security, access configuration
+
+neural network will need categorical data in one hot encoding format as if use label encoding it can assign more weightage as per label int... which is not right thing in NN --- NN will go with 0-1  based data more
+
+- label encoding can lead to ordinal relationship between category's value... so be mindful before assigning it
+
+
+
+
+
