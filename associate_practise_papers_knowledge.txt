@@ -12,7 +12,11 @@ revisit == 7
 
 - IAM group can not attach with any resource(like notebook instances)
 - IAM group have members
-- policy can be attached to group/role/individual user
+- Create roles and assign permissions to them
+- Assign roles to users or groups - a single role can be assigned to group too
+- Creates IAM group with users who are allowed to assume IAM roles
+- Use the iam-group-with-assumable-roles-policy
+- policy can be attached to role/individual user
 
 - To grant permissions to any resources like SageMaker notebook instances, you must use IAM roles or directly attach policies to individual IAM users. 
 
@@ -58,7 +62,8 @@ Prunning(feature selection) : identify most impactful features and eliminates th
 - SM ML Lineage tracking will store info of ML workflow steps... with that info we can recreate ML workflow
 it will keep track of all metadata of ml model training to deployment
 - SM lineage tracking is main feature for auditing and compliance and experiment is entity of lineage tracking
-- Keep running history of ML model for auditing and compilance
+- Keep running history of ML model for auditing and compliance
+
 
 - SM pipeline - built-in versioning, lineage tracking, and support for continuous integration and delivery (CI/CD), visualize by DAG.
 
@@ -284,7 +289,9 @@ Related to CloudFormation
 - CloudWatch Lambda Insights detailed metrics to monitor the Lambda function’s memory usage, CPU usage, and invocation times, cold start, lambda worker shutdown etc
 
 - if model forgetting previous knowledge(catastrophic) then use transfer learning for new training data
-- Catastrophic forgetting when new distribution data come and we don incremental training/fine tunning in model.
+- Catastrophic forgetting when new distribution data come and we don use incremental training/fine tunning in model.
+- In fine tunning/incremental training will retrain the model with new data set not change the weight of model
+
 
 - L1 reduce noice in model and produce more sparse model
 - L2 stabilise weight when high co-relation between the features

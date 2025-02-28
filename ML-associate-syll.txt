@@ -135,16 +135,16 @@ CW log encryption to encrypt log data with specific KMS key.. by default they ar
 
 CW log metrics filters are there to trigger the alarm
 3 states for alarm : 1. ok, 2. insufficient data, 3. alarm
-composit alarm : AND, OR conditional checking and triggering alarm
+composite alarm : AND, OR conditional checking and triggering alarm
 
 CLI - set-alarm-state === can be used to trigger alarm even if it is not breached yet.
 
 
-X-ray : visually analyse all request made to ec2 instance - useful for troubledshooting, identify users are impacted and more 
-code in java, .net, node.js, python, go
+X-ray : visually analyze all request made to ec2 instance - useful for troubleshooting, identify users are impacted and more 
+code in java, .NET, node.js, python, go
 application sdk will capture calls for http, database, aws service, sqs
 compatible with : lambda, beanstalk, ecs, elb, api gateway, ec2 instance or application server on premise
-to start it run aws x-ray deamon, or enable x-ray aws integration
+to start it run aws x-ray daemon, or enable x-ray aws integration
 
 CT is global service
 CT events : 
@@ -207,7 +207,7 @@ parquet :columnar storage format, optimized for analytics, compression n encodin
 
 s3 has key n value, key is full path to object. n value is object. in s3 no directory concept. key = prefix + object name
  
-s3 event notification : SQS, SNS, lambda fun event pass and handled by/ event bridge 
+s3 event notification : receive event notification when anything happens in s3 bucket, putobj, getobj, delobj etc association with eventbridge
 
 event bridge : archive/replay/deliver events
 
@@ -248,7 +248,7 @@ change data location, formate by using athena query by using create table
 less no but large files perform better in athena
 partition(msck repair table can be used to partition) & columnar formate are better too
 ACID transaction, Iceberg table support, time travel op(get deleted records), governed table feature
-
+q1	a
 cross account access to s3 by bucket policy
 
 PII redaction in transcribe available
@@ -860,3 +860,40 @@ $ Trusted Adviser
 6. operational excellence
 
 - Graviton3 chip is useful for CPU based training like inferencia, trainium chip
+
+### deployment type of FSx on aws
+
+- FSx = let you launch 3rd party file system on aws
+
+1. Scratch FS = temporary storage
+2. Persistent FS = long term storage
+
+### FSx for Luster 
+- parallel distributed filesystem
+- large scale computing & ml
+- from on premise server use by VPN & direct connect
+- read & write from/to s3 by this
+
+### NetApp ONTAP === storage OS, and Software that manage data for business
+
+### FSx for NetApp ONTAP
+- move workload running on NetApp ONTAP to aws
+- all os compatible
+- storage shrink & grow as required
+- snapshot, replication, de-duplication, low-cost, compression
+- point in time instantaneous cloning - helpful for testing new workload fast
+
+## Apache Kafka on AWS
+- create, update, delete kafka cluster on aws - zookeeper node, broker, worker nodes are in cluster
+- data store in EBS, - VPC, AZ deploying cluster
+- producer and consumer in kafka
+
+- glue data brew has custom transformation called recipe for transformation
+
+
+
+
+
+### EBS provisioned IOPS
+
+###
