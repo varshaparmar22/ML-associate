@@ -427,13 +427,13 @@ Bedrock GaurdRail - work on text models - word/topic filter, profanity, PII remo
 LLM Agent --- tools to your LLM
 - agent has memory
 - plan module -- to answer question and use tool to do so
-- prompts for tools guide how to use tool
+- prompts for tools guide how to use too
 - tools are lambda function to do something
 
 LLM agent - get request for something
 decompose it & check if it has to go for action groups (made up of tools means lamdba fun) or go to knowledge base to give answer.
 agent can write code to answer question or product chart
-
+[]=---
 - Deploying Bedrock Agent 
 create alias(endpoint of agent) - create deployed snapshot
 provisioned & On-demand throughput
@@ -446,9 +446,9 @@ in Bedrock features
 - watermark detection in image model
 - bedrock studio : no need of aws account create web app workspace, Single sign on with IAM and identity provider, user can share projects & components
 
-- for common inference C5 instance will work,  for not nueral training M5 can work
+- for common inference C5 instance will work,  for not neural training M5 can work
 
-- AWS::SageMaker::Model == create model at endpoint to host in cloudformation
+- AWS::SageMaker::Model == create model at endpoint to host in CloudFormation
 
 - Model Monitor Data Capture : log input/output of inference endpoint data, available for BOTO, & python SDK, realtime & batch data support, useful for training, debugging, monitoring, inference data can be encrypted
 
@@ -690,9 +690,9 @@ replicate secrets across multiple region - usage : multi region app/db, disaster
 protect against web exploits at layer 7(http layer)
 can be deployed on ALB, API Gateway, CloudFront, COgnito userpool, AppSync GraphQL API
 define Web ACL rule
-- for IP address, http header/body/uri string/sql injection/cross site scripting
+- for http header/body/uri string/sql injection/cross site scripting
 - for size constrain, geo match(block countries)
-- rate based rule - count occurance of event - DDoS attack
+- rate based rule - count occurance of event - DDoS attack\
 
 Web ACL are regional except CloudFront
 WAF not support Network Load Balancer as it work on layer 4(NLB)
@@ -814,7 +814,7 @@ App + x-ray SDK ==>(send traces)==> x-ray daemon ==> send data to x-ray(every 1 
 # Lambda - IAM role, policy(x-raywriteonlyaccess), x-ray imported in code, enable lambda x-ray active tracing  
 
 $ CloudTrail
-- CLI,console,sdk, IAM role user activity log
+- CLI, console, sdk, IAM role user activity log
 - Events : 
 1. management event(logged default) : change in resource in you aws account read/write event of resource
 2. Data event (not logged default): s3 object level actrivity(put/delete/get obj), lambda execution activity\
