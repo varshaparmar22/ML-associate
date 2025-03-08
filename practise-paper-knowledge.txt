@@ -1,5 +1,8 @@
 === https://tutorialsdojo.com/aws-cheat-sheets-aws-machine-learning-and-ai/?src=udemy
 
+
+- use normalization (like Min-Max scaling) when data is non-Gaussian or distribution is unknown, and standardization (Z-score normalization) when data is Gaussian and algorithms are sensitive to scale. 
+
 - to load data in redshift from s3 by  using firehose, firehose should be allowed with s3:PutObjectAcl, which is specified in allow section of s3, IAM role
 
 - lambda will allocate cpu power based on memory configuration
