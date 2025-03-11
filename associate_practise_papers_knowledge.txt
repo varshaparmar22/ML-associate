@@ -46,7 +46,7 @@ revisit == 7
 
 - Bedrock does not support fine-tuning the base model within its interface. You need to create your own private copy of the base Foundation Model and then fine-tune this copy with your custom dataset.
 
-- Fine-tuning trains a pretrained model on a new dataset without training from scratch. This process, also known as transfer learning, can produce accurate models with smaller datasets and less training time.
+- Fine-tuning trains a pretrained model on a new dataset without training from scratch. This process, also known as incremental training, can produce accurate models with smaller datasets and less training time.
 
 - savings plan - commitment of 1-3 years and 72% SAVING ON on-demand instances
 - on-demand instances - spikey, short term, unpredictable workload, no upfront cost, commitment
@@ -77,7 +77,7 @@ In cf all components can be treated as stack and create its template and referen
 
 - Create a Docker container with the required environment, push the container image to Amazon ECR (Elastic Container Registry), and use SageMaker’s Script Mode to execute the training script within the container
 - Script mode enables you to write custom training and inference code & execute it while still utilizing common ML framework containers maintained by AWS.
-- SageMaker supports most of the popular ML frameworks through pre-built containers, and has taken the extra step to optimize them to work especially well on AWS compute and network infrastructure in order to achieve near-linear scaling efficiency. These pre-built containers also provide some additional Python packages, such as Pandas and NumPy, so you can write your own code for training an algorithm. These frameworks also allow you to install any Python package hosted on PyPi by including a requirements.txt file with your training code or to include your own code directories.
+- SageMaker supports most of the popular ML frameworks through pre-built containers, and has taken the extra step to optimize them to work especially well on AWS compute and network infrastructure in order to achieve near-linear scaling efficienc'y. These pre-built containers also provide some additional Python packages, such as Pandas and NumPy, so you can write your own code for training an algorithm. These frameworks also allow you to install any Python package hosted on PyPi by including a requirements.txt file with your training code or to include your own code directories.
 - script mode is inevitable approach to write custom container with your requirements and dependencies -Bring your own container - BYOC
 
 - SageMaker Model Registry to register, track, and manage different versions of models, capturing all relevant metadata, including data sources, hyperparameters, and training code, Manage the approval status of a model, model card
@@ -309,8 +309,3 @@ Related to CloudFormation
 neural network will need categorical data in one hot encoding format as if use label encoding it can assign more weightage as per label int... which is not right thing in NN --- NN will go with 0-1  based data more
 
 - label encoding can lead to ordinal relationship between category's value... so be mindful before assigning it
-
-
-
-
-
