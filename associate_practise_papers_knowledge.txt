@@ -314,3 +314,5 @@ neural network will need categorical data in one hot encoding format as if use l
 - The key features of XGBoost are parallelization, distributed computing, cache optimization, and out-of-core processing.
 
 - In machine learning, while "residual error" and "loss" are related, they aren't exactly the same. Residual error represents the difference between the actual and predicted values, while loss functions quantify the negative consequences of those errors, used to optimize model performance. 
+
+-  SageMaker ML Lineage Tracking - Automatically tracks lineage information, including input datasets, model artifacts, and inference endpoints, ensuring compliance and auditability.
