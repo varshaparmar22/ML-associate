@@ -316,3 +316,25 @@ neural network will need categorical data in one hot encoding format as if use l
 - In machine learning, while "residual error" and "loss" are related, they aren't exactly the same. Residual error represents the difference between the actual and predicted values, while loss functions quantify the negative consequences of those errors, used to optimize model performance. 
 
 -  SageMaker ML Lineage Tracking - Automatically tracks lineage information, including input datasets, model artifacts, and inference endpoints, ensuring compliance and auditability.
+
+- SageMaker Experiments tracks and organizes experiment trials
+
+- Concept drift happens when the relationship between input features and the target variable changes over time.
+
+- DeepAR is designed for forecasting future time series data - not anomaly data checking and predicting future failure
+- DW - simplify data aggregation, cleaning, and feature engineering for machine learning workflows. It connects seamlessly to data sources like Amazon S3 and SQL databases, allowing engineers to preprocess large datasets and detect anomalies efficiently. It also provides built-in visualizations for analyzing trends, correlations, and outliers.
+
+- SageMaker Pipelines with conditional steps to implement manual approval workflows for model deployment
+
+- scaling  can be based on schedule too
+
+- AWS Lambda is excellent for serverless applications to deploy - Lambda is better suited for lightweight, event-driven tasks rather than long-running, complex inference jobs.
+
+- AWS Elastic Beanstalk is a managed service for deploying applications, but it is not designed for orchestrating complex ML workflows with multiple resource types like SageMaker, EC2, and RDS.'
+
+- pipe line execution : 
+1. create pipeline(batch/realtime inference)
+2. give role to event bridge to strtpipeline execution
+3. schedule rule based action(like cron job)
+
+- if model is not giving proper output as expected while training , we can analyse training by debugging or tensprboard to check the process of training, get to know gradients and what happens there why result is wrong
