@@ -346,11 +346,60 @@ neural network will need categorical data in one hot encoding format as if use l
 - multi-model => frequently/infrequently used model, on same infrastrucure, less no of instances to host all at once, little latency issue for infrequently used model, highr cost saving, cpu & gpu backed model support, similar latency, similar size of model then use it
 - model should be load into memory if invocation is arrived.
 
+- use multi-container --- multi diff ==> dependency/runtime/infra, &  isolation is required
 
+- when models are best at something and not any weak point - use hybrid approach to combine all models based on weihted average and get best final model out of it 
+- stacking, baggin, boosting resolve weakness and use streanth of models
+- from model monitoring result either do retarining or set baseline again if found drift
+- monolithic architecture will require whole all redeployment for any single update, micro-service is better
 
+- troughput n response time is bad use auto-scaling
+- Elastic network interface(virtual network card) : bridge between instances from vpc and network
+- FastFile mode can reach a throughput of more than one GB/s when reading large files sequentially using multiple workers
+- if handling imbalance dataset --- LL & xgboost ==== choose LL
+- step function can handle complex workflow like large files... lambda can not do that
+- small files === fsx for luster, large files === fastfile mode   ==== high throughput and low latency
+- if ML high computation choose gpu instance
+- cloudwatch log will capture all the log matrics(details log data)  ==== low latency issue identified by CW log
+- check key usage check cloudtrail
+- autoscaling+multimodal  === useful for 
 
+- AWS Compute Optimizer : Get recommendations to optimize the performance and cost of your AWS resources.
+Identifies and recommends cleaning up idle resources like EC2 instances, Auto Scaling groups, EBS volumes, ECS services on Fargate, and RDS instances to reduce costs.
+AWS Compute Optimizer provides detailed recommendations for optimizing AWS compute resources, including EC2, ECS, and EBS, based on utilization metrics.
 
+- tag based access control is best for assignign fine grained access control
+- cloudwatch dashboard are for technical users, for non-technical user use quicksight.
+- combination of f1 score + recall will be answer for trade-off question mostly
+- Kendra ==== semantic search capability & support natural lang query & indexing capability for your data
+- SM pipeline canbe triggered directly by eventBridge - by setting it as target to eventbridge rule - IMP
+- AWS CodeDeploy with a rolling update strategy allows for incremental deployment across the EC2 instances, minimizing downtime and enabling easy rollback if issues are detected.
+- QuickSight parameters and controls to create interactive filters === sel region and p category dynamically
+- if containerazed ml workload batch job/workload then choose only ecs/eks
+- IF eks application === use auto scaling with ==  HPS = horizontal pod autoscaler(by cpu n memory),,, fargate will be used by aws resources not eks == == choose based on that requirements
+- if want to sort data and get result then use sort key for dynamodb
+- global secondary index - GSI ==> when you want to query the data by some attribute - along with optional sort key, not primary key  ===== used with dynamodb ========= best configuration for dnb table
+- SM clarify has bias reports that can be run on training and live data to generate pre, post training bias metrics - to compare it and identify to retrain the model, rather than goiing for shapley values
+- for identifying bias and fairness in model prediction use f1 score and auc-roc eveluation -by roc cheking TRP across different demographic user groups
+- CodeBuild has buildspec file ===> for command and setting and important 
+- codebuild will incorporate process of pre-processing and training and artifacting kind of 
+- amazon lookput for equipment will be useful for model retraining
+- Lambda === real time processing, 
+- SM === real time ML running
+- secure n automated process can be done by lambda
+- Personalize has realtime and auto scaling already, no need to provide seperatly by aws features
+- Adding a controlled amount of noise to images during training can often improve a model's ability to generalize and handle real-world variations, making it more robust
+- simple model will memorise data more and complex model will not
+-for chat bot real time ineteraction will be there if not mentioning
+- integrating external data for model prediction use Glue for pre-processing and SM to train model based on it
+- variance and bias is there use boosting to resolve it
+- Amazon DevOps Guru uses machine learning to identify operational issues and suggest remediations
+- after Glue DataBrew job will create data metrics that can be sent to somewhere like in CW
 
-
+- step func == data ingestion, training orchestra
+- SM === realtime
+- step function === recokgnition, processing, storing
+- sm realtime + vpc === high availability, scaling, privacy , compilance
+- data sync==== Kendra + Lmabda
 
 
