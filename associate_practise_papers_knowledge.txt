@@ -395,11 +395,41 @@ AWS Compute Optimizer provides detailed recommendations for optimizing AWS compu
 - variance and bias is there use boosting to resolve it
 - Amazon DevOps Guru uses machine learning to identify operational issues and suggest remediations
 - after Glue DataBrew job will create data metrics that can be sent to somewhere like in CW
+- elastic load balancer === distribute the traffic, but auto scaling will implement multiple instances
 
 - step func == data ingestion, training orchestra
 - SM === realtime
 - step function === recokgnition, processing, storing
 - sm realtime + vpc === high availability, scaling, privacy , compilance
 - data sync==== Kendra + Lmabda
+- latency === monitorin === cloudwatch
+- lambda will call translate, transcribe, comprehend based on s3 event notification
+- realiability ==== multiple models kind of / multiple models
+- reduce computation with good performance use === transfer learning
+- chatbot === normally will be real time
+- security === encryption- high availability === auto scaling
+- lookout for equipment has model retraining feature - with manual mode and managed mode
+- Reckognition doesn't need lambda for image processing === it has that inbuilt
+- lambda should be triggered by eventbridge or something else
+- Macie discover sensitive data and also protect it by automatic remediation
+- lambda === processing
+- lex---(its log!!) ==> firehose ==> s3
+- noicy data ====> do PCA
+- manag and analyse customer transaction data (from polly) - kind of storing  === Dynamodb
+
+
+- large dataset => put in s3 => built in streaming capabilities of SM
+- Kendra == create metrics for operation of creating indexing of data ==> monitored by CW
+- latency === for fast individual prediction(use gpu), throughput === overall no of datapoints accessing(per say auto-scaling)
+- fraud detection == data goes to s3, lamda to process, then use on fraud detector
+- dynamodb + lambda === event driven operational task not for realtime inference
+- Amazon Personalize automatically retrains the models backing your recommenders every 7 days. Just provide data, it will do retraining so lambda can work to provide data 
+- macie can be used to identify unusual data access patterns
+- lambda + retries with DLQ - Dead Letter Queue by SQS - to handle failure
+- operational issues === DevOp guru
+- translate + api gateway + lambda + dynamodb
+
+
+
 
 
