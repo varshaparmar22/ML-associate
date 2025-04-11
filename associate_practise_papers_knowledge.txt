@@ -428,8 +428,34 @@ AWS Compute Optimizer provides detailed recommendations for optimizing AWS compu
 - lambda + retries with DLQ - Dead Letter Queue by SQS - to handle failure
 - operational issues === DevOp guru
 - translate + api gateway + lambda + dynamodb
-
-
+- for ml dont rely on cpu only for auto scaling as i/o & memory requirement is also need to be considered
+- EKS === nodes + pods both need to considered for auto scaling with custom metrics, Configure Cluster Autoscaler to add or remove nodes based on pod scheduling requirements and scale pods horizontally using HPA based on custom metrics tailored to the ML workload. for auto scaling
+- polly ==== clarity + appropriateness => punctuation + grammer need to consider
+- XGBoost ===  feature importance scores and other interpretability tools
+- Automated fragmentation and indexing enhance the accessibility and processability of video data in real-time, crucial for effective machine learning pipelines.
+- to sent notification on slack === aws chatbot will be used instead of SNS
+- stacking can be useful === diff model give best inference on diff subset of data == combine them n use as 1
+- bedrock == data validation rules for compilance
+- Route 53's DNS routing capabilities ensure that requests are directed to the closest region where Polly is hosted  ===  terms of latency and availability
+- AWS CodeDeploy includes an automatic rollback feature
+- Amazon SQS to decouple data ingestion from preprocessing stages handled by a dedicated AWS Lambda function triggered by SQS
+- SQS - serving as a message queue that temporarily holds data until it can be processed
+- macie - examine for sensitive data and anomalies or diff access patterns
+- machine learning job status changes, Amazon SNS sends a notification to all subscribers of the topic
+- ECS Service Auto Scaling with target tracking scaling policies. - target like cpu/memory usage
+- Amazon Redshift Concurrency Scaling automatically adds additional cluster capacity for autoscaling
+- realtime === reserved instances
+- AWS Elastic Beanstalk =deploying and managing web applications and services = capacity provisioning, load balancing, and auto-scaling, health monitoring
+- S3 Select == retrieve only the data needed from s3 objects, reduce processing and loading, specific slices of data are needed for training models
+- Devop Gurru === notifying about unusual patterns in the application metrics that could indicate issues like memory leaks or high response times, which can affect model performance.
+- DGR Detect abnormal application behavior using machine learning
+- DGR anomalous behavior along with actionable remediation recommendations.
+- DGR analyze application metrics, logs, and events
+- anomaly detection in seasonal event use large dataset so model can differenciate between anomaly and high traffic spike kind of normal event based on season
+- apply row/column level security in QS for user to restrict on accessing secret data
+- AWS CodeArtifact - artifact repository service = securely store, publish, and share software packages used in software development process. has versioning capability, Store and share artifacts across accounts, share private packages across organizations by publishing to a central organizational repository,approval workflows with CodeArtifact with CT, evenbridge, publish packages
+- SageMaker Model Monitor  for monitoring the performance and usage of ml models in production
+- aws chatbot : push/alert the messages to communication channels such as slack, and sns will be sending messages to subscribers to only within aws , provide monitoring and interaction
 
 
 
