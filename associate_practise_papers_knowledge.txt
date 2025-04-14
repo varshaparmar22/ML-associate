@@ -468,10 +468,120 @@ AWS Compute Optimizer provides detailed recommendations for optimizing AWS compu
 - Amazon Kendra to index the archived articles in the S3 bucket and enable semantic search with natural language queries
 - kendra has GenAI index. New indexing to use RAG in bedrock knowledge base, tools, q business
 - Transformed Data == features === can be put in feature store
-- erforming complex transformations on petabyte-scale data is most efficient with SageMaker Data Wrangler
+- performing complex transformations on petabyte-scale data is most efficient with SageMaker Data Wrangler
+- image , text are unstructured data
+- AWS Compute Optimizer to analyze the specifications and utilization metrics of your AWS compute resources
+Compute Optimizer is a service that analyzes your AWS resources' configuration and utilization metrics to provide you with rightsizing recommendations. 2 dashboard-level metrics: savings opportunity(cost based, monthly savings -  account level, resource type level, or resource level) and performance improvement opportunity(underprovisioned resources at the account level and resource type level).including EC2, ECS, and EBS, based on utilization metrics.
+- Trusted Advisor has broad tools that focus on overall account health and optimization across multiple areas, including cloud cost optimization, performance, resilience, security, operational excellence, and service limits; Compute optimizer offers more specific tools that focuses on compute resource optimization.
+- Masking PII - Redshift, Glue DataBrew, (comprehend + data wrangler)
+- DataMasque offers a solution specifically designed for masking sensitive data within Amazon Relational Database Service (RDS) databases.
+- Linear Learner can be used for binary classification, XGBoost is generally more effective for tabular data and predictive tasks.
+- Real-Time Inference == millisecond latency = payload sizes up to 6 MB= processing times 60 seconds.
+- async Inference == no subsec latency = payload sizes up to 1 GB = processing times 15min
+- serverless == no infra set, intermittent workload == payload sizes up to 4 MB= processing times 60 seconds.
+- Batch = payload sizes up to 100 MB
+- multi-model  use cpu & gpu backed model, little latency issue, so if need high IOPS or latency sensitivity then only go for dedicated endpoint
+- to call serverless endpoint = invokeendpoint request
+  - model download, server respond to ping(endpoint) within  3 minutes
+  - response to == inference request == timeout 1 minutes invocation(endpoint)
+- multi-model - very cost effective as it use very less no of resources and little latancy with cold start problem for infrequently used models
+- model built outside SM canvas must be register in registery, & user to access model artifcat should have bucket permission where it is stored
+- outsided model = model should be built in sm studio classic. user should be in that
+- sm canvas and sm classic both user should be in same sm domain
+- explainability, compliance, transparency ==== clarify
+- Asynchronous Inference enables you to save on costs by autoscaling the instance count to zero when there are no requests to process, so you only pay when your endpoint is processing requests.
+amazon recognition use face collecion to validate match with collection. No need to label match as collection has that label alredy. And do face matching. - face will be stored as vector, you have to create user to upload more images of same user
+- Batch transform mainly use for large data processing when you dont need persistent endpoint
+- Dynamodb can be used directly but it is appropriate to export data by Glue to s3 for faster accessing in ML
+- Normalizing the sensor readings = ensuring that all features have the same scale.
+- Using the entire dataset for training and relying solely on cross-validation does not provide an independent evaluation of the model’s performance. = not good practise
+- On-demand instances provide flexibility for sporadic training jobs
+- auto-scaling provisioned resources ensure efficient handling of traffic spikes for inference
+- provisioning resources refers to the process of making AWS services and their underlying infrastructure available for use
+- reserved instance === commitement of use
+- to do translation === use step function ==  serverless and managed workflow 
+- cloud formation will not create ci/cd pipeline
+- if need more generalized model, with good hps, not biased model n autopilot is there choose it
+- provisioned concurrency === cold start can be handled
+-  DNNs remain complex and may not fully meet the interpretability
+- Latency ensures predictions are delivered within acceptable timeframes, throughput measures the system's capacity to handle traffic
+- pipemode = choose for large data without downloading it in local. other will download it
+- pre-trained model NOT serve  === as a baseline
+- CodeBuild + CodePipeline = automated build and test processes whenever changes are pushed to the source repository, ensuring ci/cd
+- step scaling = predefined scaling, NOT dynamic
+- SSMl - polly - provide all features like - pitches, pauses, news caster style, PRONOUNCIATION, whispering, emphasis. so its universal to use in polly with LAMBDA
+- comprehend can identify PII data from all text(not from s3 bucket) easily 
+- use macie for PII for in first place, unusual download activities or access from risky locations
+- GuardDuty = detecting and responding to threats and security vulnerabilities = AWS environment. 
+- Macie focuses on discovering, classifying, and protecting sensitive data stored in AWS, helping you maintain data privacy and compliance. -  Lambda function to remove the sensitive data.
+- you could create a tag called "Project: MyProject" and then create a budget that monitors the costs associated with all resources tagged with "Project: MyProject". This allows you to track the costs of a specific project and receive alerts if it exceeds its budget. like that for add tag to user profile too
+- NACL - subnet - allow, deny rule.. default deny rule not let anybody in = to block IP add = stateless
+- SG - resource - allow.. default allow outbout traffic, for inboud require explicit allow = stateful
+- WAF - not work with VPC(network layer), its application layer
+- S3 Event Notifications = call only Lambda or SNS  to do something,while eventridge will do anything by calling evenrule
+- Redshift = dynamic data masking policies
+- invocation metrics = CPU utilization and request count(traffic) ======= auto scaling can happend based on
+- dynamodb - GSIs enable flexible querying based on other attributes. one table composite primary key
+- The bias versus variance trade-off refers to the challenge of balancing the error due to the models complexity (variance) and the error due to incorrect assumptions in the model (bias),
+- CloudWatch Alarms = trigger auto-scaling
+= Amazon FSx for Lustre file system- caching data locally for faster access, compute-intensive workloads
+-  AWS Secrets Manager-(Lambda function - api key rotation.)(Managed Rotation -database credentials rotation)
+-  AWS Trusted Advisor - underutilized or idle resources and reserved instance purchasing opportunities.
+- SageMaker's batch transform is ideal for preprocessing and postprocessing
+- AWS Batch is optimized for batch computing
+- ml.c5.large,ml.m5.large = cpu based instances
+- g4dn = moderate GPU workloads
+- p4d instances (NVIDIA A100 GPUs) - large-scale deep learning workloads
+- VPC endpoint for Amazon S3 in the 1 account - cross-account bucket policy in the 2 account
+- vpc endpoint === gateway endpoint, interface endpoint (not using public internet)
+- Transcribe == S3 for input and output storage.
+- AWS Elastic Beanstalk = automatic scaling and deployment, not = rollback 
+- AWS CodeDeploy with a rolling update strategy 
+- scale the application based on CPU or memory utilization.
+- Attach an IAM role =SageMaker notebook instance with s3:GetObject permissions 
+- kms:Decrypt permissions for the KMS key.
+- IAM roles and policies are more secure and scalable rather than ACL
+- add the IAM role’s ARN to the KMS key policy for kms:Decrypt permissions.
+- data aggregation  === use EMR, Flink
+- step scaling policies == condition = memory usage.
+- sometimes model monitor + shadow variant with updated data trained willbe helpful to detecting and addressing model drift
+- automatic key rotation for KMS keys to ensure cryptographic best practices
+- blue/green deployments has diff endpoint of model so it is best for auto rollback
+- codedeploy has rolling update with auto rollback cap, but not seperate endpoint
+- SageMaker's blue/green deployment strategy and endpoint traffic splitting provide robust solutions for deploying new model versions
+- Deploy the model on SageMaker endpoints with VPC-only access+SG = network isolation and security
+- explore data efficiently = DataBrew to create data profiles of the dataset, apply transformations to clean the data, and validate the transformations with a sample of the dataset.
+- LL - simple, baseline, interpretable model
+- lightweight model using AWS Lambda with API Gateway
+- bagging, boosting works in same model family
+- Step func =  Map states = parallelism = iterating over a list of items
+- Step func =  parallel states = model training tasks concurrently
+- increase batch size lead to less update to params n less computation time n cost
+- reduce epochs with above combo reduce training time    = convergence and performance while addressing training time issues
+- AWS CodeBuild with a buildspec file to define the build commands and settings, and integrate with Amazon S3 to store the build artifacts.
+- private repository in Amazon ECR, configuring repository policies to control access, and enabling image scanning to detect vulnerabilities is the best approach to securely store and manage container images
 
-
-
+EFS
+- Mount the EFS file system on each SageMaker instanc, datasync is fro migration between data store
+- Throughput mode – Elastic(unprdictable, spikey workload), Provisioned(when you know workload, cost occurance), or Bursting(storage based, throughput that scales with the amount of storage in your file system)
+- Bursting Throughput mode can handle spiky workloads ---- busrty-spikey
+- when multiple instances are accessing same data then bursty-pikey will work
+- Performance mode – General Purpose or Max I/O
+- Max I/O performance mode has higher per-operation latencies than General Purpose performance mode. use for highly parallelized workloads that can tolerate higher latencies 
+- For faster performance, we recommend always using General Purpose performance mode.
+- normally use general purpose performance with burstling through put mode
+- SageMaker Clarify to generate pre-training and post-training bias metrics 
+- Shapely value === feature importance
+- CodeBuild - preprocessing, training when ci/cd require
+- OpenZFS == general-purpose file storage
+- NetApp ONTAP = advanced data management features
+- FX for luster = high computation, high throughput,low latency, concurrent instance access, large dataset access
+- AWS Trusted Advisor to detect underutilized SageMaker endpoints and suggest downsizing or termination to reduce costs - optimization - identify underutilized SageMaker resources and potential security risks, such as overly permissive IAM roles or exposed SageMaker notebooks.
+- QuickSight calculated fields to create new fields
+sns can send email too
+- model - quantization decreases the precision of the weightsk
+-pre-trained - bedrock, pre-built - jumpstart
+- Glue job =Dynamic Frames allow seamless handling of semi-structured data, and the 'G.1X' worker type provides an optimal balance of performance and cost for moderate workloads.
 
 
 
