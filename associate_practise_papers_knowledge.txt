@@ -585,3 +585,28 @@ sns can send email too
 
 
 
+F1  ===  2TP / (2TP+FP+FN)
+
+RMSE = accuracy == care about right & wrong answers
+
+-model parallelizam library
+
+- data parallizm =====> shard calculation of gradient, shard trainable parameters
+- model parallizm ====> shard optimization state means shard weight calculation
+
+- all this sharding will be done on multiple GPU resources
+
+====== Accelerate training 
+- Elsatic Fabric Adpter = network device === use better network bandwidth
+- use NVIDIa GPU, nvidia communication collective library
+
+
+MISc = minimize communication scale of diff GPU instances --- use large
+P4de  ---- largest instanse(high networking & memory) to do training of trillians of params model  === minimize c overhead
+
+
+
+
+
+
+
