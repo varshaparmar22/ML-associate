@@ -604,9 +604,52 @@ RMSE = accuracy == care about right & wrong answers
 MISc = minimize communication scale of diff GPU instances --- use large
 P4de  ---- largest instanse(high networking & memory) to do training of trillians of params model  === minimize c overhead
 
+LLM
+P === probaility for token inclusion
+K = 1,2,3.... etc  no of token can be put for inclusion list
+Temprature === randomness in token (high more random, less more consitent)
+- continue pre training is also a type of fine tunning
+- elasticSearch , openSearch work as vector database... store n search by vector
+- aurora, memorydb can also work as vector db
+How knowledge base can be created
+- upload text docin s3
+- create embedding of those text by cohere or titan
+- store those embedding in vector db
+- now do vector search from those db, when prompt invoke to ask something which is RAG based 
+- creating vector and running prompt will be done by bedrock
 
+Create RAG with knowledge base
+- user query => vector search => get no of response(context)
+- augment that latest context with u.query and send in to bedrock 
+- get rephrased response from it
 
+Add this RAG into Agent------- agentic RAG
 
+- contextual grounding check === final output data relevent to context recieved from vector search
+- relevency check = relevent to u query
 
+LLM Agent - agentic AI
+LLM can do anything outside of its knowledge - with agent
+agent  == tools => have memory => have planning module 
+memory ===> chat history of LLM & some external datastore
+user request comes in ==> agent will use LLM to decompose that request by LLM and identify if
+something is there in agent to help with that request
+- agent has prompt how to use it
+1. use knowledge base to give answer
+2. Use some lambda func --- to do anything 
 
+Agent Prompt ==> problem comes in ====> distil down by llm and idebtify what to use
+1. action group (lambda func) = tool
+define params for lambda fun ==== things will be done in plain text with help of LLM
+2. knowledge base(agentic RAG)
 
+result of 1 & 2 is Augmented Prompt
+
+- Code Interpreter option in agent
+agent can write code by its own to do something like (answer the ques/produce chart/calculation) --- self build agent
+
+to deploy agent on out side world === alias ==== deployed snapshot
+1. on demand Trhoughput ==== quoata set at account level
+2. Provisioned Throughput ==== can purchase 
+
+invokeAgent by alias ID, Agents for amazon Bedrock Runtime Endpoint
