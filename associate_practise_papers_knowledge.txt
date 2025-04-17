@@ -653,3 +653,28 @@ to deploy agent on out side world === alias ==== deployed snapshot
 2. Provisioned Throughput ==== can purchase 
 
 invokeAgent by alias ID, Agents for amazon Bedrock Runtime Endpoint
+
+- serverless application manager will create infrastructure for serverless app  --- like lambda it can create
+
+
+- SAM cli will help you to test cloudformation on local
+- cdk app === which has lambda fun
+- run cdk synth and create cf template of it 
+- that template will be invoked by sam cli command
+
+global services include: 
+Amazon IAM (Identity and Access Management), 
+Amazon CloudFront (Content Delivery Network), 
+Amazon Route 53 (DNS service), 
+AWS Global Accelerator, 
+AWS Organizations (centralized governance), and 
+AWS WAF (Web Application Firewall). 
+
+
+A/B testing ===== comparing two version of models
+Green/Blue deployment ===== reduce downtime to realese the new model along with comparing
+
+
+
+
+
