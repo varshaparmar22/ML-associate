@@ -144,7 +144,7 @@ Deploy models to production.
 Automate model deployment with CI/CD.
 Share models with other users.
 
-Model registry collections like ----fraud detection models, customer segmentation models etc
+Model registry collections likecv ----fraud detection models, customer segmentation models etc
 
 - Athena => query on s3 data by date - create table as select(CTAS) query and store result by transforming format to parquet or orc for faster access
 
@@ -338,6 +338,7 @@ neural network will need categorical data in one hot encoding format as if use l
 3. schedule rule based action(like cron job)
 
 - if model is not giving proper output as expected while training , we can analyse training by debugging or tensprboard to check the process of training, get to know gradients and what happens there why result is wrong
+This feature is for debugging the training of deep learning models using PyTorch or TensorFlow.
 
 - for real-time prediction - reserved instance will be more suitable than on-demand as it is more cost effective
 
@@ -518,7 +519,7 @@ amazon recognition use face collecion to validate match with collection. No need
 - NACL - subnet - allow, deny rule.. default deny rule not let anybody in = to block IP add = stateless
 - SG - resource - allow.. default allow outbout traffic, for inboud require explicit allow = stateful
 - WAF - not work with VPC(network layer), its application layer
-- S3 Event Notifications = call only Lambda or SNS  to do something,while eventridge will do anything by calling evenrule
+- S3 Event Notifications = call only Lambda or SNS, SQS  to do something,while eventridge will do anything by calling evenrule
 - Redshift = dynamic data masking policies
 - invocation metrics = CPU utilization and request count(traffic) ======= auto scaling can happend based on
 - dynamodb - GSIs enable flexible querying based on other attributes. one table composite primary key
@@ -674,7 +675,8 @@ AWS WAF (Web Application Firewall).
 A/B testing ===== comparing two version of models
 Green/Blue deployment ===== reduce downtime to realese the new model along with comparing
 
-
-
-
-
+- payload size is file size to handle for each inference request by model 
+serverless === 4mb
+asyn ==== 1 gb
+batch === 100 mb
+realtime === 6mb
