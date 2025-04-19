@@ -2,7 +2,7 @@ revisit == 7
 
 - SageMaker Data Wrangler’s corrupt image transformation to get realworld kind images having blurriness, noise, resolution changes(create corrupt images)
 
-- SageMaker Data Wrangler - such as missing values, duplicate rows, and data types) and helps detect anomalies (such as outliers, class imbalance - balanced data feature(random oversample, random undersample, SMOTEs), and data leakage) in your data. - 300 prebuilt PySpark transformations - vectorize text, featurize datetime, encoding, balancing data, or image augmentation are covered. It can write query by using sql to get data from variety of sources, it is data visualization tool too, can handle any data formate
+- SageMaker Data Wrangler - such as missing values, duplicate rows, drop field, and data types) and helps detect anomalies (such as outliers, class imbalance - balanced data feature(random oversample, random undersample, SMOTEs), and data leakage) in your data. - 300 prebuilt PySpark transformations - vectorize text, featurize datetime, encoding, balancing data, or image augmentation are covered. It can write query by using sql to get data from variety of sources, it is data visualization tool too, can handle any data formate
 
 - Apply Extreme Gradient Boosting (XGBoost) - handle imbalanced datasets effectively through regularization, weighted classes, and optimized computational efficiency
 
@@ -680,3 +680,45 @@ serverless === 4mb
 asyn ==== 1 gb
 batch === 100 mb
 realtime === 6mb
+- Sagemaker Data Wrangler import database from only   --- s3, rs,athena, emr,snowflake, databrick & 50 +
+- for tabular data choose xgboost
+
+-LLM model not giving same output everytime ---- and you want then use temparature and k params... dont use retraining as it is resource intensive
+- If chatbot - will use lambda, but not deploy on lambda as it has latency issue
+- Accuracy is not suitable for imbalanced datasets as it show high performance even if the model ignores the minority class
+- AUC-ROC is a useful metric for imbalanced datasets, it is less effective in providing actionable insights compared to precision and recall in this scenario.
+- LL  ---- Balance_multiclass_weights, Gives each class equal importance in loss functions, for imbalanced dataset --- built in capability
+- CloudFormation WILL NOT define the CI/CD infrastructure as code
+- for codebuild ==== need to define custom docker container to deploy then it will go into ci/cd pipeline
+- AWS CodePipeline == build, test, and deployment stages & (AWS CodeBuild + custom Docker) = best CI/CD pipeline 
+- Glue can handle === s3, rds, dynamodb, redshift, other sql db, on premise db, JDBC/ODBC
+- high variance ==== sensitive to little change in training data as it learn noice from data
+- high bias === model is so simple n not capturing patterns
+- high risk borrower and low risk borrower ====== Using the F1 score balances the trade-off between precision and recall, which is important for considering both false positives and false negatives. Prioritizing recall ensures that high-risk borrowers are identified, reducing false negatives.
+- tagging resources is more efficient and effective for tracking costs than relying solely on user profiles
+- only track === CT, monitor & do something === CW
+- Kinesis analytics can not ingest data direct from IOT 
+- Budget is account based ==== means SM user profile based ==== if want to make it resource based by adding tags on resources, more modification will be needed to set monitor budget and get alert, so keep it simple to user profile base only, add tag to Sm user profile --- based on that budget will work automatically 
+Adding tags to the SageMaker user profile allows costs to be tracked for specific resources. AWS Budgets can then be configured to monitor these tagged resources and send alerts when thresholds are breached.
+
+- Customer Churn prediction === XGBoost, as in linear learner it will take one param and do binary classication, but for customer churn multiple dimesion dta will be followed to give prediction.
+
+- dynamodb data can be used directly by boto3 api for notebook for analysis in ml... when need faster access
+
+Data wrangler have class imbalance problem resolution... Glue Data Brew doesnot have it
+
+- identify bias base on some feature like income ==== CDD evaluates the disparity in positive prediction rates acrAdding tags to the SageMaker user profile allows costs to be tracked for specific resources. AWS Budgets can then be configured to monitor these tagged resources and send alerts when thresholds are breached.oss demographic groups, conditioned on a specific feature like income, to detect bias that may not be apparent when only considering overall outcomes------ Conditional Demographic Disparity (CDD) measures the difference in "positive prediction rates" between demographic groups, while conditioning on relevant features like income. This allows you to identify subtle biases that might be masked when looking only at overall predictions, ensuring that the model's decisions are fair across different groups given their specific circumstances. Dont follow accuracy(tp,tn) for cdd
+
+- for recommandation model dont go for lambda as it is large model
+
+RCF - identifying unexpected patterns in sensor data
+DEEPAR - DeepAR is designed for forecasting future time series data
+
+- AWS Lake Formation is specifically designed for aggregating and managing large datasets from various sources, including Amazon S3, databases, and other on-premises or cloud-based sources. It simplifies the process of:
+Integrating data from various locations.
+Cataloging the data in a centralized data lake.
+Managing permissions and security for the aggregated dataset.
+
+- so aggregation, preprocessing, permission, sercuirty, lifecycle === LF   === on multiple dataset
+- if big size single file --- for transformation go for datawrangler not glue
+
