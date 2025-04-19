@@ -478,7 +478,7 @@ Compute Optimizer is a service that analyzes your AWS resources' configuration a
 - DataMasque offers a solution specifically designed for masking sensitive data within Amazon Relational Database Service (RDS) databases.
 - Linear Learner can be used for binary classification, XGBoost is generally more effective for tabular data and predictive tasks.
 - Real-Time Inference == millisecond latency = payload sizes up to 6 MB= processing times 60 seconds.
-- async Inference == no subsec latency = payload sizes up to 1 GB = processing times 15min
+- async Inference == no subsec latency = payload sizes up to 1 GB = processing times 60min
 - serverless == no infra set, intermittent workload == payload sizes up to 4 MB= processing times 60 seconds.
 - Batch = payload sizes up to 100 MB
 - multi-model  use cpu & gpu backed model, little latency issue, so if need high IOPS or latency sensitivity then only go for dedicated endpoint
@@ -734,6 +734,11 @@ Managing permissions and security for the aggregated dataset.
 2. Blue/green deployment - no downtime
 
 
+Governance ====== Amazon SageMaker Model Registry, AWS CloudTrail, and AWS Config
+Compliance  ====== AWS Artifact, Amazon Macie, Amazon SageMaker Clarify
+- on serverless endpoint ===== you can not configure vpc
 
-
-
+FSx for Lustre === has additional operational overhead.
+Linear deployment updates progressively and sequentially --- no testing in-between
+cross account access can be done by IAM role
+Higher Top P — to allow the model to consider less likely outputs.
