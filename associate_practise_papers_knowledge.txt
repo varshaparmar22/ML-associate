@@ -707,12 +707,17 @@ Adding tags to the SageMaker user profile allows costs to be tracked for specifi
 
 Data wrangler have class imbalance problem resolution... Glue Data Brew doesnot have it
 
-- identify bias base on some feature like income ==== CDD evaluates the disparity in positive prediction rates acrAdding tags to the SageMaker user profile allows costs to be tracked for specific resources. AWS Budgets can then be configured to monitor these tagged resources and send alerts when thresholds are breached.oss demographic groups, conditioned on a specific feature like income, to detect bias that may not be apparent when only considering overall outcomes------ Conditional Demographic Disparity (CDD) measures the difference in "positive prediction rates" between demographic groups, while conditioning on relevant features like income. This allows you to identify subtle biases that might be masked when looking only at overall predictions, ensuring that the model's decisions are fair across different groups given their specific circumstances. Dont follow accuracy(tp,tn) for cdd
-
+- identify bias base on some feature like income ==== CDD evaluates the disparity in positive prediction rates across demographic groups, conditioned on a specific feature like income, to detect bias that may not be apparent when only considering overall outcomes------ Conditional Demographic Disparity (CDD) measures the difference in "positive prediction rates" between demographic groups, while conditioning on relevant features like income. This allows you to identify subtle biases that might be masked when looking only at overall predictions, ensuring that the model's decisions are fair across different groups given their specific circumstances. Dont follow accuracy(tp,tn) for cdd
+- Adding tags to the SageMaker user profile allows costs to be tracked for specific resources. AWS Budgets can then be configured to monitor these tagged resources and send alerts when thresholds are breached.
 - for recommandation model dont go for lambda as it is large model
 
 RCF - identifying unexpected patterns in sensor data
 DEEPAR - DeepAR is designed for forecasting future time series data
+Answer === RCF ============= Good for real-time monitoring to catch unexpected behavior that could indicate a failure is happening or just happened.
+Use case: “Sensor readings are suddenly off – raise an alert for potential failure.”
+Answer === DEEPAR =============Best for predicting when a failure might occur by analyzing trends, patterns, and seasonality.
+Use case: “Predict that equipment will likely fail in 3 days due to increasing vibration levels.”
+
 
 - AWS Lake Formation is specifically designed for aggregating and managing large datasets from various sources, including Amazon S3, databases, and other on-premises or cloud-based sources. It simplifies the process of:
 Integrating data from various locations.
@@ -721,4 +726,14 @@ Managing permissions and security for the aggregated dataset.
 
 - so aggregation, preprocessing, permission, sercuirty, lifecycle === LF   === on multiple dataset
 - if big size single file --- for transformation go for datawrangler not glue
+- cw log will not trigger notification, cw alarm will ====== both will do monitoring though
+- to improve performance you can choose XGBoost based on condition though
+- to aggreagate data EMR, FLink can be useful - i think they will increase operational overhead but in question/answer it is not- saying
+- CodeDeploy supports =====> 
+1. in place deployment(having rolling update- has downtime) 
+2. Blue/green deployment - no downtime
+
+
+
+
 
