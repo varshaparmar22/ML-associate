@@ -740,5 +740,20 @@ Compliance  ====== AWS Artifact, Amazon Macie, Amazon SageMaker Clarify
 
 FSx for Lustre === has additional operational overhead.
 Linear deployment updates progressively and sequentially --- no testing in-between
-cross account access can be done by IAM role
-Higher Top P — to allow the model to consider less likely outputs.
+- cross account access can be done by IAM role
+Higher Top P — less likely outputs.
+- visually analyse training by tensorboard
+- avro binary format -- data and schema init
+- if binary - serialization possible
+parquet - columnar, analytics, encoding, compression
+EFS = linux  === use security group 
+EFS Bursting TP == throughput based on the amount of data stored in EFS. more data more tp
+EFS Elastic Throughput Mode == unpredictable, spiky workloads
+EFS Provisioned Throughput Mode == exact throughput
+EFS Performance Mode General = all app, low latency
+EFS I/O Mode == high TP, High latency, high parallel
+
+
+
+
+
