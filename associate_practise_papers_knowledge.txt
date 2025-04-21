@@ -753,7 +753,28 @@ EFS Provisioned Throughput Mode == exact throughput
 EFS Performance Mode General = all app, low latency
 EFS I/O Mode == high TP, High latency, high parallel
 
+LF workflow
+1. create analyst role 
+2. create glue connection to diff dbs
+3. create s3 bucket
+4. create Lf connectio  to s3 bucket
+5. create db in LF for glue data catalog
+6. create blueprint of workflow(db snapshot)
+7. run workflow
+8. give SELECT permission to athena, rs, emr to access 
 
+- CloudTrail ===== event/api call
+- Governanace, audit, compilance ===========> cloud trail
+- CloudTrail ==== region (one/all)
+- operation happens on resources =====> management event (CT)
+- CT insight === unusual activity checking by checking baseline -- check write event mainly and sent to s3, ct console, or generate eventBridge event
+- 90 days retension in CT of CT events (managemnt, data, insight)
+
+- Compilance of Resource ==== aws config
+- config rules - custom/predefined, eveluated/trigger or both for any config change
+- remediation - custom/managed ssm automation doc - can call lambda
+- remediation retries
+- monitor resource=> not compilant => trigger evenbridge/ trigger sns  direct too
 
 
 
