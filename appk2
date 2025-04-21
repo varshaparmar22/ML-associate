@@ -1,1 +1,6 @@
+Glue ==== de-duplication === ml feature
+network latency ==== outside aws environment latency(user to sm endpoint vice-versa)
+overhead latency  ==== inside was environment latency (sm endpoint to model container vice-versa)
+conditioned disparcity ====> condition should be followed to check
+logloss = quality of probability of output, 0 is best, costfun in logistic regre,=== specify model make incorect prediction with high probability. binary & multiclass model
 
