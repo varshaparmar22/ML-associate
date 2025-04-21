@@ -4,4 +4,12 @@
 -conditioned disparcity ====> condition should be followed to check
 -logloss = quality of probability of output, 0 is best, costfun in logistic regre,===
 specify model make incorect prediction with high probability. binary & multiclass model
+-lineage tracking === which dataset, training job, Hp etc. are producing given model - auditing & reproducibility
+- sm pipeline=== contional steps can be added, this or that
+- fastfile mode === many small file = rapid access, low latency, only access data from s3 
+- lambda = lightweight models only can be deployed not recommandation kind
+- transparent mmodel = how input convert into output ==== optimization should be transparent 
+- sm script mode == 1.install custom lib(if any) 2. use your training script, requirement.txt, model code
+3. use sm's prebuit container with above setup to launch container on endpoint
+- Sm pipeline has callback step for glue, for emr direct step is there, many other steps are there too
 
