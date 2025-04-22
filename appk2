@@ -4,7 +4,8 @@
 -conditioned disparcity ====> condition should be followed to check
 -logloss = quality of probability of output, 0 is best, costfun in logistic regre,===
 specify model make incorect prediction with high probability. binary & multiclass model
--lineage tracking === which dataset, training job, Hp etc. are producing given model - auditing & reproducibility
+-lineage tracking === which dataset, training job, Hp etc. are producing given model - 
+auditing & reproducibility
 - sm pipeline=== contional steps can be added, this or that
 - fastfile mode === many small file = rapid access, low latency, only access data from s3 
 - lambda = lightweight models only can be deployed not recommandation kind
@@ -26,10 +27,39 @@ specify model make incorect prediction with high probability. binary & multiclas
 - MSAF : processing, transforming, filtering, enrichment(like with sql)
 - KDF : ingestion & deliver -  no retension
 - Kafka : mainly use for transfering real-time data between apps & systems
-- check pattern => bar plot, check frequency => histogram
+- check pattern => bar plot, check distribution and frequency => histogram   (bar/pattern, fd/histogram)
 - bedrock provide unified api, not distinct api for fm. means one api just chane fm id to get access
 -  private customization=> fine tune FM as per need
 - multi-colinearity : statical approach to check co-relation between feature not visualization
 - TVD : maximum divergence/disparcity in outcome distribution between diff demographic group
+- KUllback liberal divergance : related to probabilty
+- EFS : not provide low latency and high TP
+- snowcone : 14 tb, snowball : 100 tb, snowmobile : 100 Pb
+- Amazon S3 Transfer Acceleration : use optimized network protocols and AWS edge locations, acc s3 transfer
+- Parquet = structured and semi-structured data, NOT unstructured data. NOt for realtime data processing
+- JSON line === for realtime data processing is best
+- JSON === wont improve processing performance as it has hierarchical structure
+- shard provides a fixed amount of throughput, add more shard to handle high volume of data fast
+-AWS Global Accelerator : static IP add, improve app's availability
+- AWS DataSync : use for data migration
+- SCPs = guardrails on actions, a user or role can do.
+- AWS Resource Access Manager (RAM)  = cross account resource access
+- execution roles are crucial for granting the required permissions for SageMaker components to 
+interact with other AWS services, such as Amazon S3
+- inline policy : to specific thing give permission, like particular domain, in sm studio many domains can work
+together
+- visual tool : minimal operational effort
+- Virtual Drift in model : only when infrastructure or deployment changes.
+- Access Denied error = 403
+- 401 Unauthorized:MissingAuthenticationTokenException
+- 400 Bad Request: IncompleteSignatureException, ValidationException, InvalidAction
+
+
+
+
+
+
+
+
 
 
