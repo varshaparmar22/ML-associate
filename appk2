@@ -12,4 +12,24 @@ specify model make incorect prediction with high probability. binary & multiclas
 - sm script mode == 1.install custom lib(if any) 2. use your training script, requirement.txt, model code
 3. use sm's prebuit container with above setup to launch container on endpoint
 - Sm pipeline has callback step for glue, for emr direct step is there, many other steps are there too
+- varying traffic --- auto scaling
+- choose report, alert if only they are specified to implement
+- attach the tag for cost management:
+1. create tag, 
+2. attach tag to resource, 
+3. tie up those tag in cost allocation
+- Parquet : big data, columnar, binary, compression, splittable, fast query
+- avaro : serialization
+- Credit bureau data : check person's financial behaviour
+- Fsx for luster : sub milisec latency, hundreds of gigabytes/sec tp, millions of IOPS, high computing
+- KDS : data ingestion/storage
+- MSAF : processing, transforming, filtering, enrichment(like with sql)
+- KDF : ingestion & deliver -  no retension
+- Kafka : mainly use for transfering real-time data between apps & systems
+- check pattern => bar plot, check frequency => histogram
+- bedrock provide unified api, not distinct api for fm. means one api just chane fm id to get access
+-  private customization=> fine tune FM as per need
+- multi-colinearity : statical approach to check co-relation between feature not visualization
+- TVD : maximum divergence/disparcity in outcome distribution between diff demographic group
+
 
