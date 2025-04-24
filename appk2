@@ -1,60 +1,422 @@
 -Glue ==== de-duplication === ml feature
+
 -network latency ==== outside aws environment latency(user to sm endpoint vice-versa)
+
 -overhead latency  ==== inside was environment latency (sm endpoint to model container vice-versa)
+
 -conditioned disparcity ====> condition should be followed to check
+
 -logloss = quality of probability of output, 0 is best, costfun in logistic regre,===
 specify model make incorect prediction with high probability. binary & multiclass model
+
 -lineage tracking === which dataset, training job, Hp etc. are producing given model - 
 auditing & reproducibility
+
 - sm pipeline=== contional steps can be added, this or that
+
 - fastfile mode === many small file = rapid access, low latency, only access data from s3 
+
 - lambda = lightweight models only can be deployed not recommandation kind
+
 - transparent mmodel = how input convert into output ==== optimization should be transparent 
+
 - sm script mode == 1.install custom lib(if any) 2. use your training script, requirement.txt, model code
 3. use sm's prebuit container with above setup to launch container on endpoint
+
 - Sm pipeline has callback step for glue, for emr direct step is there, many other steps are there too
+
 - varying traffic --- auto scaling
+
 - choose report, alert if only they are specified to implement
-- attach the tag for cost management:
+
+- attach the tag for cost management:(tag can be aws/user generated but tie up to cost allocation is must in each)
 1. create tag, 
 2. attach tag to resource, 
 3. tie up those tag in cost allocation
+
 - Parquet : big data, columnar, binary, compression, splittable, fast query
+
 - avaro : serialization
+
 - Credit bureau data : check person's financial behaviour
-- Fsx for luster : sub milisec latency, hundreds of gigabytes/sec tp, millions of IOPS, high computing
+
+- Fsx for luster : sub milisec latency, hundreds of gigabytes/sec tp, millions of IOPS, high computing, parallel
+
 - KDS : data ingestion/storage
+
 - MSAF : processing, transforming, filtering, enrichment(like with sql)
+
 - KDF : ingestion & deliver -  no retension
+
 - Kafka : mainly use for transfering real-time data between apps & systems
-- check pattern => bar plot, check distribution and frequency => histogram   (bar/pattern, fd/histogram)
+
+- pattern/comparison => bar plot(bar/pattern)
+
+- distribution/frequency/count => histogram (fd/hist)
+
+- Concentration & distribution in continuous range => density plot
+
+- pattern/trend => heatmap
+
 - bedrock provide unified api, not distinct api for fm. means one api just chane fm id to get access
+
 -  private customization=> fine tune FM as per need
+
 - multi-colinearity : statical approach to check co-relation between feature not visualization
-- TVD : maximum divergence/disparcity in outcome distribution between diff demographic group
-- KUllback liberal divergance : related to probabilty
+
+- TVD : [[[[maximum divergence/disparcity]]]] in outcome distribution between diff demographic group
+
+- KUllback liberal divergance : divergence between 2 probability, compare outcome distribution across diff group
+
 - EFS : not provide low latency and high TP
+
 - snowcone : 14 tb, snowball : 100 tb, snowmobile : 100 Pb
+
 - Amazon S3 Transfer Acceleration : use optimized network protocols and AWS edge locations, acc s3 transfer
+
 - Parquet = structured and semi-structured data, NOT unstructured data. NOt for realtime data processing
+
 - JSON line === for realtime data processing is best
+
 - JSON === wont improve processing performance as it has hierarchical structure
+
 - shard provides a fixed amount of throughput, add more shard to handle high volume of data fast
+
 -AWS Global Accelerator : static IP add, improve app's availability
+
 - AWS DataSync : use for data migration
+
 - SCPs = guardrails on actions, a user or role can do.
+
 - AWS Resource Access Manager (RAM)  = cross account resource access
+
 - execution roles are crucial for granting the required permissions for SageMaker components to 
 interact with other AWS services, such as Amazon S3
+
 - inline policy : to specific thing give permission, like particular domain, in sm studio many domains can work
 together
+
 - visual tool : minimal operational effort
+
 - Virtual Drift in model : only when infrastructure or deployment changes.
+
 - Access Denied error = 403
+
 - 401 Unauthorized:MissingAuthenticationTokenException
+
 - 400 Bad Request: IncompleteSignatureException, ValidationException, InvalidAction
 
 
++======================================================================================
+
+-variant === testing new model-
+
+- sm pipeline === UI drag n drop
+
+- in spot training ==> MaxWaitTimeInSeconds must be larger than MaxRuntimeInSeconds
+
+- Accelerated computing group of ML instances : g,p family - has hardware accelerator. for ML, Deep Learning, when real-time/near real-time need - graphics rendering, machine learning, and data-parallel computations
+
+- High-performance group : CPU based - scientific modeling, web-scale applications, or batch processing, c
+
+- Memory-optimized group :  in-memory databases or big data analytics. r,x,z 
+
+- General-purpose instances : web servers, development environments, and databases, balanced of compute, memory, and networking, t,a,m
+
+- storage optimized : big data workloads, NoSQL databases, and distributed file systems, i,d
+
+- sm Model Monitor to analyze the training data and generate a baseline of statistics and constraints.
+
+- Data wrangler + SM Data preprocessing  (feature engineering + data preprocessing-scheduling and executing processing task) good combo
+
+- Direct connection : on-premise + aws
+
+- PrivateLink = private connection between(vpc+aws) no internet === use aws network
+
+- validation:ndcg == ranking metric for ranking tasks, such as search engine results
+
+- model giving wrong prediction in evaluation/training === clarify can help to identify issue
+
+- Amazon SageMaker Clarify => why your ML model made a specific prediction and bias impacted this prediction during training or inference
+  help to mitigate that issue, generate report too === CreateProcessingJob api, SageMaker ClarifyProcessor for that processing job
+
+- CreateModelInvocationJob : for batch inference job in Bedrock 
+
+- Debuggeer can detect : overfitting, class imbalance, vanishing gradients, or divergence -  during training
+
+- realtime monitoring in training =======> debugger
+
+- TensorBord : visualization, analyzing = accuracy, loss, gradient while training but it is manual to check not automatic as debugger
+
+- lambda : execution duration (15 minutes max) and payload size (6 MB for synchronous and 256 KB for asynchronous invocations).
+
+- serverless : 4 --- 60 sec
+
+- realtime : 6 ----- 60sec - realme6pro
+
+- async : 1gb----60min
+
+- batch : 100mb
+
+- custom ML logic into an existing Amazon SageMaker Pipelines workflow => @step decorator 
+
+- TransformStep : for data/batch transformation not anyother
+
+- @remote : remote fun call, throw u outside pipeline
+
+- SM training : s3, EFS, FSx for luster
+
+- customized Bedrock model : purchasing Provisioned Throughput is necessary - before using model for real purpose
+
+- Knowledge Base : 1. RAG app   2. Agent
+  1.RAG app : RetrieveAndGenerate  api => retrive from KB and generate response
+  2.RAG app : Retrieve api => retrive (direct query) from KB
+  Agent :  reason through steps to assist 
+
+- multyi-modal + a/b testing  is possible
+
+- TPR, FPR ==== true and false will chnage in formula only, p,n will be at same place ======== ROC curve
+
+- TNR, FNR ==== true and false will chnage in formula only, p,n will be at same place
+
+- using VPC only:(to connect notebook to comprehend kind)
+  Notebook instance === in === private subnet & has access to vpc endpoint ==== (PrivateLink) ==MUST
+
+- Security Group ==== in/out bound traffic control
+- Top P => higher => less likely o/p => 0.8 means pool having 80% tokens to choose from, 0.1 means 10% to choose from == % of pool size
+
+- K == pool size
+
+- Macie = ==== = only s3 related, not other direct data like from textract
+
+- SM savings Plan : service to save cost on SM resource - 1-3 years commitement = optimize ML cost in SM - direct helpful - no visualization and analysis
+
+- Titan (text=>text gen), (image gen=>texttoimage gen), (text embedding=>embedding), (multimodal embedding=>text, image embedding)
+
+- QuickSight ML Insights => ML-powered anomaly detection, ML-powered forecasting, and Autonarratives enhance dashboards.
+
+- ElasticSearch => search-based analytics and indexing, not for ML, for log or text search
+
+- Mchanical Terk ==> associate GT(inbuilt recruiting, training, and monitoring), scalable n efficient
+
+- Model optimization techniques = quantization, compilation, and automatic model parallelism, inference latency and throughput.
+
+- ModelExplainabilityMonitor  class: create shap baseline value, monitor will check against feature attribution value n alert if any deviation, model begins to emphasize one input over other
+
+- SHAP baselines = create an explainability baseline for how each feature should contribute to the model’s predictions.
+
+- bias : steady input which effecting output.
+
+- ModelDataQualityMonitor  : track quality and distribution not attribution towards prediction
+
+- ModelPerformanceMonitor : track performance of model
+
+- FastFile mode ==== Images, audio, video
+
+- Pipe mode ======= CSV, JSON, logs
+
+- Bert based NLP model==== need parallel access to data from file, pipe mode works sequential base while,  FF mode = parallel base, so FF
+
+- ML type          CV, NLP (large files)==> FF...........  Tabular/structured ML ==> Pipe
+
+- in FF --- start up is fast, but training data will be stored on training instance gradually so that much space will be needed
+
+- Amazon SageMaker Processing jobs, aws step function : serverless environment
+
+- lambda = short lived, not suitable for ML data processing (long task) - execution time limitation, 6mb payload size
+
+- apache airflow === having server
+
+- step scaling : predefined thresholds of metrics like CPU utilization
+
+- Density estimation  : distribution of a continuous variable, like purchase amounts
+
+- residual plot = biased, underfitting, or overfitting the data.
+
+- AWS Glue = structured and semi-structured data
+
+- Wrangler == text, image or any data
+
+- user feedback is imp for improving prompt engineering
+
+- in RAG accurate & contextually relevant answer => prompt engineering
+
+- RLHF - Reinforcement Learning with Human Feedback (RLHF)
+
+- SM training : s3, fsx for luster, efs only
+
+- sample_size = 100 in KNN ===> all instance will divide data from 100
+
+- To schedule pipeline by eventbridge
+1. create pipeline
+2. create role for eventbridge
+3. schedule pipeline by event bridge rule
+
+- 2 variables ===== correlation/relationship/trends with anomaly === scatter
+
+
+- Heatmap= intersection of 2 dimension
+
+- CT data event ::::: Bedrock ::::: 1. Bedrock agent alias, 2. Bedrock knowledge base = resource level action 
+
+- model registery : Attach metadata, such as training metrics, dataset, hyper parameters to each model.
+
+- check tensors with tensorboard in cnn training
+
+- ensure reproducibility of result === randomseed === 25 kind(same sequence of 25)
+
+- Spark ML container/sci-kit learn container for data processing in inference pipeline
+
+- Async inference ====== can be batch transform/inference
+
+- customer churn===logistic regression ==== dont fall for probability of model to predict === distractor
+
+- hyperband- minimum computation time, its parallel, early stopping, dynamic resource allocation
+
+- after update if data quality down in model monitor , set new baseline of model
+
+- model quality => retrain model with new data
+
+- Strong correlations may indicate redundant variables, while weak correlations may signal the need for additional features or data transformations.
+
+- cost allocation tag is feature in cost and billing management
+
+- cut-off means threshold
+
+- high Precision => low false positives & high Recall => high true positive rate
+
+- Cloud watch log insight : in-depth log analysis - sql query engine, visual too 
+
+- QS has basic forcasting capability, not data preparation
+
+-  Amazon Managed Service for Apache Flink: perform real-time data transformations, filtering, and enrichment
+
+- Amazon Comprehend Custom Entity Recognition - domain specific sdata key word extraction
+
+- Opensearch => searching & indexing data
+
+- SM Debugger: debug training, identify memory, compute usage, training issues like overfitting, vanish gradient, under utilized resource, under performing jobs, analyse the metrics and offer recommendation like reduce resource consumption, identify bottlenecks, and improve training process, 
+
+- aws traininum : sustainability, low envornmental footprint
+
+- we have model made focus on training ===== now make sustainable by debugger & trainium, 
+- AMT can do work while model development not after that
+
+Amazon SageMaker Edge Manager : deployment, monitoring, and maintenance of models on devices at the edge
+
+- in Model registery model group --- logical collection of model version --- same problem/usecase
+
+- in sm multi-modal - infrequent used model will have little latency issue as it need to load in memory 
+
+- sm estimator === to train machine learning model - define & execute training process
+
+- for manual approval workflow -- need code to do by python Boto3 to approve model, registery to get version of model, pipeline for condioned deployment
+
+- in CF aws::SageMaker::Model === create model ---- specify all model properties tag, contaienrs, primarycontainer, enablenetworkisolation, executionrolearn, modelname, vpcconfig, inferenceexecutionconfig etc
+
+- in CF aws::SageMaker::Endpoint  => to create endpoint, aws::SageMaker::EndpointConfig  => to create related endpoint configuration
+other are ModelPackage, Project => respectively manage version & manage project in SM
+
+- clarify during development and monitor after deployment useful for bias detection
+
+- to use modal in canvas => register model in model registry, give access to s3 bucket where it is stored to canvas user
+
+- Amazon SageMaker JumpStart offers pretrained, open-source models for various types of problems, executable example notebooks 
+ fine-tune these models before deploying
+
+- remove columns from ds will be easy with columnar format data like parquet
+
+- Model registry COLLECTION = to categorize model into diff types
+
+- max_depth in XGBoost - reduce to reduce overfitting ====== use first to reduce overfitting in xgboost
+
+- Production variant : behind single endpoint deploy multiple models/version of model
+
+- Concept drift occurs when the statistical properties of the target variable, which the model is trying to predict, change over time in unforeseen ways
+
+- glue's findmatches capability will detect duplicats flag n merge records too
+
+- Transcribe can process audio n video files
+
+- Jurrasic ===> NLP ==> summarization, text generation, sentiment analysis
+
+- High Recall ==========  positive ---positive & Ok little FP
+
+- High Precision =========== positive ---positive & Ok little FN
+
+- Managing EC2 auto scaling is bad choice. 
+- Use serverless with provisioned concurrency when you need low latency/real-time workload to handle, traffic burst is there
+- low-latency is required dont choose asynchronous 
+
+- Provisioned Concurrency usage, based on the      memory + duration + level     of concurrency enabled.
+
+-LighGBM - gradient boosting ML, like XGBoost...mainly all features from XGBoost it has... complex relationship between features, 
+mainly it is cpu based training with single/distributed. N cpu inference. handle both type of data like categorical n numerical &
+large-scale data 
+
+TabTransformer : tabular data, (transformer archi + embedding ) for categorical variables
+
+Factorization Machine is ===sparse dataset.... if model has complex relationship between variables it can not go
+
+
+Min-Max Normalization = (x – min) / (max – min)
+
+
+- Use the min-max normalization statistics derived from the training data to normalize the incoming sales data.
+
+
+- Serverless ==== handle low/high/no traffic very well, auto scaling, 
+ MaxConcurrency =1 means maximum request model can handle at once.. so sequentially handle all request.
+ ensures efficient handling of traffic bursts during peak periods while minimizing costs during low-traffic periods.
+ so kind of realtime inference it can give
+
+
+- ASYNCH IS NOT REALTIME........ go for SERVERLESS == REALTIME
+
+----- Fluctuating traffic ========== go for  =========SERVERLESS
+- asyn for batch inference
+
+
+ SageMaker Studio Classic : building, training, and deploying , monitoring === all type of deploying
+
+- interruption === spot instances
+
+- ImportModel feature ==== cross account usage of model with required permission like resource based IAM policy
+
+- on-premises infrastructure and AWS communication ==== direct connect
+
+- import your data from S3 using the schema detected by AWS Glue. Use the Data Wrangler’s built-in transformations to clean and format your data. & save data into s3 back
+when glue n data wrangler is there ----- wrangler will be best choice in many circumstances
+
+- regularization adds a penalty to large weights, encouraging simpler models.
+
+- Smaller batch sizes can introduce more noise into the training process
+
+- Amazon SageMaker Model Registry is a feature of Amazon SageMaker that provides a centralized repository for organizing and managing machine learning models within an organization(having many account).
+
+- If clearly only recommendation required for compute instances then go for AWS compute optimizer --- it will check configuration, metrics of resources n give recommendation, it use ml too so give more precise result--- ECS, E2, EBS, lambda(EKS cluster inside use ec2 instances)
+uses machine learning to analyze historical utilization patterns and provide actionable recommendations for optimizing AWS resources
+
+- Trusted Adviser ===  not primarily designed for containerized workloads or ML model applications. It offers more general cost-saving advice across various AWS services.
+
+- Kendra search serving --- 
+use ml, 
+do indexing, 
+do semantic search, 
+improve search result overtime by ml
+document security by access controls
+
+Amazon Kendra S3 connector is special service to connect s3 with kendra -  full and incremental synchronizations from S3 to Kendra to keep the search index up to date. 
+
+- blurring image will not improve model accuracy... it will reduce noise, protect privacy in image
+- DW image features : resize image, rotate, flip, Enhance Image Contrast, Blur
+- to improve model on not clear images prediction === use enhance image contrast- gamma correction, enhance low quality images
+
+- if categorical feature has unique interdependency with each-other and other numerical features then use encoding on categorical feature to capture it well
+
+- mainly in all models need to convert categorical data ===== > numeric data
+
+- blocked/filter feature to filter out response from gen ai q business chatbot
 
 
 
