@@ -2,7 +2,22 @@ revisit == 7
 
 - SageMaker Data Wrangler’s corrupt image transformation to get realworld kind images having blurriness, noise, resolution changes(create corrupt images)
 
-- SageMaker Data Wrangler - such as missing values, duplicate rows, drop field, and data types) and helps detect anomalies (such as outliers, class imbalance - balanced data feature(random oversample, random undersample, SMOTEs), and data leakage) in your data. - 300 prebuilt PySpark transformations - vectorize text, featurize datetime, encoding categorical, balancing data, or image augmentation, train,test,validation split are covered. It can write query by using sql to get data from variety of sources, it is data visualization tool too, can handle any data formate
+- SageMaker Data Wrangler - such as 
+missing values, 
+duplicate rows, 
+drop field, 
+data types,  
+filtering, 
+joining, 
+removing columns 
+detect anomalies/outliers, 
+class imbalance - balanced data feature(random oversample, random undersample, SMOTEs)
+vectorize text, 
+featurize datetime, 
+encoding categorical, 
+image augmentation, 
+train,test,validation split are covered.
+data leakage in your data. - 300 prebuilt PySpark transformations - It can write query by using sql to get data from variety of sources, it is data visualization tool too, can handle any data formate
 
 - Apply Extreme Gradient Boosting (XGBoost) - handle imbalanced datasets effectively through regularization, weighted classes, and optimized computational efficiency
 
