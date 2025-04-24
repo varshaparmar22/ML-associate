@@ -11,6 +11,9 @@ filtering,
 joining, 
 removing columns 
 detect anomalies/outliers, 
+feature corelation
+pattern detection
+visualization
 class imbalance - balanced data feature(random oversample, random undersample, SMOTEs)
 vectorize text, 
 featurize datetime, 
