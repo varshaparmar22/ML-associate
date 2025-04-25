@@ -18,7 +18,7 @@ auditing & reproducibility
 
 - lambda = lightweight models only can be deployed not recommandation kind
 
-- transparent mmodel = how input convert into output ==== optimization should be transparent 
+- transparent model = how input convert into output ==== optimization should be transparent 
 
 - sm script mode == 1.install custom lib(if any) 2. use your training script, requirement.txt, model code
 3. use sm's prebuit container with above setup to launch container on endpoint
@@ -72,18 +72,23 @@ auditing & reproducibility
 
 - snowcone : 14 tb, snowball : 100 tb, snowmobile : 100 Pb
 
-- Amazon S3 Transfer Acceleration : use optimized network protocols and AWS cloudfronts's edge locations, acc s3 transfer
+- Amazon S3 Transfer Acceleration : use optimized network protocols and AWS cloudfronts's edge locations, 
+acc s3 transfer
 
 - Parquet = structured and semi-structured data, NOT unstructured data. NOt for realtime data processing
 
-- JSON line === when want to handle unstructured data like image, video, audio --- one single line on each line can be parsed
+- JSON line === when want to handle unstructured data like image, video, audio --- one single line on 
+each line can be parsed
 
 - JSON === wont improve processing performance as it has hierarchical structure
 
-- shard provides a fixed amount of throughput, add more shard to handle high volume of data fast - improve ingestion performance and reduce latency
+- shard provides a fixed amount of throughput, add more shard to handle high volume of data fast - 
+improve ingestion performance and reduce latency
 - high latency low tp -=== try increase shard   <==== KINESIS
 
--AWS Global Accelerator : static IP add, improving the availability and performance of applications by routing user traffic through the AWS global network infrastructure. Traffic accelerator
+-AWS Global Accelerator : static IP add, improving the availability and performance of applications 
+by routing user traffic through the AWS global network infrastructure. Traffic accelerator. 
+Rout traffic to that endpoint which is hosting app
 
 - AWS DataSync : use for data migration, on-premise-aws -- online tool
 
@@ -95,7 +100,7 @@ auditing & reproducibility
 interact with other AWS services, such as Amazon S3
 
 - inline policy : to specific thing give permission, like particular domain, in sm studio many domains can work
-together
+together - when dont want to conflict with anything
 
 - visual tool : minimal operational effort
 
@@ -119,7 +124,8 @@ together
 
 - policy attach to role --- give access to all users which are using that role outside of domain too
 
-- policy attached to IAM group  --- give access to all users from given group so user from it can be outside domain one too
+- policy attached to IAM group  --- give access to all users from given group so user from it can be 
+outside domain one too
 
 
 
@@ -131,30 +137,36 @@ together
 
 - in spot training ==> MaxWaitTimeInSeconds must be larger than MaxRuntimeInSeconds
 
-- Accelerated computing group of ML instances : g,p family - has hardware accelerator. for ML, Deep Learning, when real-time/near real-time need - graphics rendering, machine learning, and data-parallel computations
+- Accelerated computing group of ML instances : g,p family - has hardware accelerator. 
+for ML, Deep Learning, when real-time/near real-time need - graphics rendering, machine learning, 
+and data-parallel computations
 
 - High-performance group : CPU based - scientific modeling, web-scale applications, or batch processing, c
 
 - Memory-optimized group :  in-memory databases or big data analytics. r,x,z 
 
-- General-purpose instances : web servers, development environments, and databases, balanced of compute, memory, and networking, t,a,m
+- General-purpose instances : web servers, development environments, and databases, balanced of compute, 
+memory, and networking, t,a,m
 
 - storage optimized : big data workloads, NoSQL databases, and distributed file systems, i,d
 
 - sm Model Monitor to analyze the training data and generate a baseline of statistics and constraints.
 
-- Data wrangler + SM Data preprocessing  (feature engineering + data preprocessing-scheduling and executing processing task) good combo
+- Data wrangler + SM Data preprocessing  (feature engineering + data preprocessing-scheduling and 
+executing processing task) good combo
 
 - Direct connection : on-premise + aws
 
 - PrivateLink = private connection between(vpc+aws) no internet === use aws network
 
+
 - validation:ndcg == ranking metric for ranking tasks, such as search engine results
 
 - model giving wrong prediction in evaluation/training === clarify can help to identify issue
 
-- Amazon SageMaker Clarify => why your ML model made a specific prediction and bias impacted this prediction during training or inference
-  help to mitigate that issue, generate report too === CreateProcessingJob api, SageMaker ClarifyProcessor for that processing job
+- Amazon SageMaker Clarify => why your ML model made a specific prediction and bias impacted this prediction
+during training or inference help to mitigate that issue, generate report too === 
+CreateProcessingJob api, SageMaker ClarifyProcessor for that processing job
 
 - CreateModelInvocationJob : for batch inference job in Bedrock 
 
@@ -162,9 +174,13 @@ together
 
 - realtime monitoring in training =======> debugger
 
-- TensorBord : visualization, analyzing = accuracy, loss, gradient while training but it is manual to check not automatic as debugger
+- TensorBord : visualization, analyzing = accuracy, loss, gradient while training but 
+it is manual to check not automatic as debugger
 
-- lambda : execution duration (15 minutes max) and payload size (6 MB for synchronous and 256 KB for asynchronous invocations).
+- Debugger & TensorBoard ===== SAME ====== Debugger(atomatic),  Tensorboard(manual)
+
+- lambda : execution duration (15 minutes max) and payload size (6 MB for synchronous and 
+256 KB for asynchronous invocations).
 
 - serverless : 4 --- 60 sec
 
@@ -182,7 +198,8 @@ together
 
 - SM training : s3, EFS, FSx for luster
 
-- customized Bedrock model : purchasing Provisioned Throughput is necessary - before using model for real purpose
+- customized Bedrock model : purchasing Provisioned Throughput is necessary - before using model for 
+real purpose
 
 - Knowledge Base : 1. RAG app   2. Agent
   1.RAG app : RetrieveAndGenerate  api => retrive from KB and generate response
@@ -199,27 +216,34 @@ together
   Notebook instance === in === private subnet & has access to vpc endpoint ==== (PrivateLink) ==MUST
 
 - Security Group ==== in/out bound traffic control
-- Top P => higher => less likely o/p => 0.8 means pool having 80% tokens to choose from, 0.1 means 10% to choose from == % of pool size
+- Top P => higher => less likely o/p => 0.8 means pool having 80% tokens to choose from, 0.1 means 
+10% to choose from == % of pool size
 
 - K == pool size
 
 - Macie = ==== = only s3 related, not other direct data like from textract
 
-- SM savings Plan : service to save cost on SM resource - 1-3 years commitement = optimize ML cost in SM - direct helpful - no visualization and analysis
+- SM savings Plan : service to save cost on SM resource - 1-3 years commitement = optimize ML cost in SM - 
+direct helpful - no visualization and analysis
 
-- Titan (text=>text gen), (image gen=>texttoimage gen), (text embedding=>embedding), (multimodal embedding=>text, image embedding)
+- Titan (text=>text gen), (image gen=>texttoimage gen), (text embedding=>embedding), 
+(multimodal embedding=>text, image embedding)
 
-- QuickSight ML Insights => ML-powered anomaly detection, ML-powered forecasting, and Autonarratives enhance dashboards.
+- QuickSight ML Insights => ML-powered anomaly detection, ML-powered forecasting, and 
+Autonarratives enhance dashboards.
 
 - ElasticSearch => search-based analytics and indexing, not for ML, for log or text search
 
 - Mchanical Terk ==> associate GT(inbuilt recruiting, training, and monitoring), scalable n efficient
 
-- Model optimization techniques = quantization, compilation, and automatic model parallelism, inference latency and throughput.
+- Model optimization techniques = quantization, compilation, and automatic model parallelism, 
+inference latency and throughput.
 
-- ModelExplainabilityMonitor  class: create shap baseline value, monitor will check against feature attribution value n alert if any deviation, model begins to emphasize one input over other
+- ModelExplainabilityMonitor  class: create shap baseline value, monitor will check against 
+feature attribution value n alert if any deviation, model begins to emphasize one input over other
 
-- SHAP baselines = create an explainability baseline for how each feature should contribute to the model’s predictions.
+- SHAP baselines = create an explainability baseline for how each feature should contribute to the 
+model’s predictions.
 
 - bias : steady input which effecting output.
 
@@ -231,15 +255,18 @@ together
 
 - Pipe mode ======= CSV, JSON, logs
 
-- Bert based NLP model==== need parallel access to data from file, pipe mode works sequential base while,  FF mode = parallel base, so FF
+- Bert based NLP model==== need parallel access to data from file, pipe mode works sequential base while, 
+FF mode = parallel base, so FF
 
 - ML type          CV, NLP (large files)==> FF...........  Tabular/structured ML ==> Pipe
 
-- in FF --- start up is fast, but training data will be stored on training instance gradually so that much space will be needed
+- in FF --- start up is fast, but training data will be stored on training instance gradually so that
+much space will be needed
 
 - Amazon SageMaker Processing jobs, aws step function : serverless environment
 
-- lambda = short lived, not suitable for ML data processing (long task) - execution time limitation, 6mb payload size
+- lambda = short lived, not suitable for ML data processing (long task) - execution time limitation, 
+6mb payload size
 
 - apache airflow === having server
 
@@ -293,7 +320,8 @@ together
 
 - model quality => retrain model with new data
 
-- Strong correlations may indicate redundant variables, while weak correlations may signal the need for additional features or data transformations.
+- Strong correlations may indicate redundant variables, while weak correlations may signal the need for 
+additional features or data transformations.
 
 - cost allocation tag is feature in cost and billing management
 
@@ -311,7 +339,9 @@ together
 
 - Opensearch => searching & indexing data, vector database, vector search for RAG
 
-- SM Debugger: debug training, identify memory, compute usage, training issues like overfitting, vanish gradient, under utilized resource, under performing jobs, analyse the metrics and offer recommendation like reduce resource consumption, identify bottlenecks, and improve training process, 
+- SM Debugger: debug training, identify memory, compute usage, training issues like overfitting, 
+vanish gradient, under utilized resource, under performing jobs, analyse the metrics and offer 
+recommendation like reduce resource consumption, identify bottlenecks, and improve training process, 
 
 - aws traininum : sustainability, low envornmental footprint
 
@@ -326,18 +356,23 @@ Amazon SageMaker Edge Manager : deployment, monitoring, and maintenance of model
 
 - sm estimator === to train machine learning model - define & execute training process
 
-- for manual approval workflow -- need code to do by python Boto3 to approve model, registery to get version of model, pipeline for condioned deployment
+- for manual approval workflow -- need code to do by python Boto3 to approve model, registery to get 
+version of model, pipeline for condioned deployment
 
-- in CF aws::SageMaker::Model === create model ---- specify all model properties tag, contaienrs, primarycontainer, enablenetworkisolation, executionrolearn, modelname, vpcconfig, inferenceexecutionconfig etc
+- in CF aws::SageMaker::Model === create model ---- specify all model properties tag, contaienrs, 
+primarycontainer, enablenetworkisolation, executionrolearn, modelname, vpcconfig, inferenceexecutionconfig etc
 
-- in CF aws::SageMaker::Endpoint  => to create endpoint, aws::SageMaker::EndpointConfig  => to create related endpoint configuration
+- in CF aws::SageMaker::Endpoint  => to create endpoint, aws::SageMaker::EndpointConfig  => to create
+related endpoint configuration
 other are ModelPackage, Project => respectively manage version & manage project in SM
 
 - clarify during development and monitor after deployment useful for bias detection
 
-- to use modal in canvas => register model in model registry, give access to s3 bucket where it is stored to canvas user
+- to use modal in canvas => register model in model registry, give access to s3 bucket where it is 
+stored to canvas user
 
-- Amazon SageMaker JumpStart offers pretrained, open-source models for various types of problems, executable example notebooks 
+- Amazon SageMaker JumpStart offers pretrained, open-source models for various types of problems, 
+executable example notebooks 
  fine-tune these models before deploying
 
 - remove columns from ds will be easy with columnar format data like parquet
@@ -348,7 +383,8 @@ other are ModelPackage, Project => respectively manage version & manage project 
 
 - Production variant : behind single endpoint deploy multiple models/version of model
 
-- Concept drift occurs when the statistical properties of the target variable, which the model is trying to predict, change over time in unforeseen ways
+- Concept drift occurs when the statistical properties of the target variable, which the model is
+trying to predict, change over time in unforeseen ways
 
 - glue's findmatches capability will detect duplicats flag n merge records too
 
@@ -361,30 +397,32 @@ other are ModelPackage, Project => respectively manage version & manage project 
 - High Precision =========== positive ---positive & Ok little FN
 
 - Managing EC2 auto scaling is bad choice. 
-- Use serverless with provisioned concurrency when you need low latency/real-time workload to handle, traffic burst is there
+- Use serverless with provisioned concurrency when you need low latency/real-time workload to handle,
+traffic burst is there
 - low-latency is required dont choose asynchronous 
 
 - Provisioned Concurrency usage, based on the      memory + duration + level     of concurrency enabled.
 
--LighGBM - gradient boosting ML, like XGBoost...mainly all features from XGBoost it has... complex relationship between features, 
-mainly it is cpu based training with single/distributed. N cpu inference. handle both type of data like categorical n numerical &
+-LighGBM - gradient boosting ML, like XGBoost...mainly all features from XGBoost it has... 
+complex relationship between features, 
+mainly it is cpu based training with single/distributed. N cpu inference. handle both type of 
+data like categorical n numerical &
 large-scale data 
 
 TabTransformer : tabular data, (transformer archi + embedding ) for categorical variables
 
-Factorization Machine is ===sparse dataset.... if model has complex relationship between variables it can not go
+Factorization Machine is ===sparse dataset.... if model has complex relationship between variables 
+it can not go
 
 
 Min-Max Normalization = (x – min) / (max – min)
-
-
-- Use the min-max normalization statistics derived from the training data to normalize the incoming sales data.
+- Use the min-max normalization statistics derived from training data to normalize the incoming sales data.
 
 
 - Serverless ==== handle low/high/no traffic very well, auto scaling, 
  MaxConcurrency =1 means maximum request model can handle at once.. so sequentially handle all request.
- ensures efficient handling of traffic bursts during peak periods while minimizing costs during low-traffic periods.
- so kind of realtime inference it can give
+ ensures efficient handling of traffic bursts during peak periods while minimizing costs in low-traffic 
+periods so kind of realtime inference it can give
 
 
 - ASYNCH IS NOT REALTIME........ go for SERVERLESS == REALTIME
@@ -397,23 +435,29 @@ Min-Max Normalization = (x – min) / (max – min)
 
 - interruption === spot instances
 
-- ImportModel feature ==== cross account usage of model with required permission like resource based IAM policy
+- ImportModel feature= cross account usage of model with required permission like resource basedIAMpolicy
 
 - on-premises infrastructure and AWS communication ==== direct connect
 
-- import your data from S3 using the schema detected by AWS Glue. Use the Data Wrangler’s built-in transformations to clean and format your data. & save data into s3 back
+- import your data from S3 using the schema detected by AWS Glue. Use the Data Wrangler’s built-in
+transformations to clean and format your data. & save data into s3 back
 when glue n data wrangler is there ----- wrangler will be best choice in many circumstances
 
 - regularization adds a penalty to large weights, encouraging simpler models.
 
 - Smaller batch sizes can introduce more noise into the training process
 
-- Amazon SageMaker Model Registry is a feature of Amazon SageMaker that provides a centralized repository for organizing and managing machine learning models within an organization(having many account).
+- Amazon SageMaker Model Registry is a feature of Amazon SageMaker that provides a centralized repository 
+for organizing and managing machine learning models within an organization(having many account).
 
-- If clearly only recommendation required for compute instances then go for AWS compute optimizer --- it will check configuration, metrics of resources n give recommendation, it use ml too so give more precise result--- ECS, E2, EBS, lambda(EKS cluster inside use ec2 instances)
-uses machine learning to analyze historical utilization patterns and provide actionable recommendations for optimizing AWS resources
+- If clearly only recommendation required for compute instances then go for AWS compute optimizer ---
+it will check configuration, metrics of resources n give recommendation, it use ml too so give more 
+precise result--- ECS, E2, EBS, lambda(EKS cluster inside use ec2 instances)
+uses machine learning to analyze historical utilization patterns and provide actionable recommendations 
+for optimizing AWS resources
 
-- Trusted Adviser ===  not primarily designed for containerized workloads or ML model applications. It offers more general cost-saving advice across various AWS services.
+- Trusted Adviser ===  not primarily designed for containerized workloads or ML model applications. 
+It offers more general cost-saving advice across various AWS services.
 
 - Kendra search serving --- 
 use ml, 
@@ -422,13 +466,16 @@ do semantic search,
 improve search result overtime by ml
 document security by access controls
 
-Amazon Kendra S3 connector is special service to connect s3 with kendra -  full and incremental synchronizations from S3 to Kendra to keep the search index up to date. 
+Amazon Kendra S3 connector is special service to connect s3 with kendra -  full and incremental 
+synchronizations from S3 to Kendra to keep the search index up to date. 
 
 - blurring image will not improve model accuracy... it will reduce noise, protect privacy in image
 - DW image features : resize image, rotate, flip, Enhance Image Contrast, Blur
-- to improve model on not clear images prediction === use enhance image contrast- gamma correction, enhance low quality images
+- to improve model on not clear images prediction === use enhance image contrast- gamma correction, 
+enhance low quality images
 
-- if categorical feature has unique interdependency with each-other and other numerical features then use encoding on categorical feature to capture it well
+- if categorical feature has unique interdependency with each-other and other numerical features then 
+use encoding on categorical feature to capture it well
 
 - mainly in all models need to convert categorical data ===== > numeric data
 
@@ -436,7 +483,8 @@ Amazon Kendra S3 connector is special service to connect s3 with kendra -  full 
 
 - FSx for luster is Linux based file system
 
-- robust scaler === use when outlier is there. Remove median from given value n scale data by interquartile range (IQR) -- p25,p75
+- robust scaler === use when outlier is there. Remove median from given value n scale data by interquartile 
+range (IQR) -- p25,p75
 - standard scaler --- remove mean(effected by outlier) and scale data by standard deviation
 - z-score normalization --- scale feature value to unit norm -1,0,1
 
@@ -453,7 +501,8 @@ for performance improvement
 
 - Big data processing === EMR  ===== distributed computing framework
 
-- Detecting-Redacting PII/PHI is not to create from code... use aws services for it or prebuilt model(canvas or some) to achieve it
+- Detecting-Redacting PII/PHI is not to create from code... use aws services for it or 
+prebuilt model(canvas or some) to achieve it
 
 - with lambda === configuring, deploying, maintaining are associated so its not minimal operational overhead
 - converting pdf to text will increase operational overhead too
@@ -468,20 +517,26 @@ for performance improvement
 - Spearman === man===not normal, non-linear relationship between numerical features
 - pearson ==== son ==== linear-relationship ==== normal distribution
 
-- for time-series/ordered data(sorted by order) === we need to preserve order ==== split in dw by Ordered split
+- for time-series/ordered data(sorted by order) === we need to preserve order ==== split in dw by Ordered
+split
 - dw === ordered/keybased/randomized/stratified === split type
 
 Blue/green deployment : two model/model variant deployment, having auto rollback feature
 canary : small portion traffic shift and monitor it and them ramp it up
 
 
-- Custom Python script for processing for model: create container with script n add all dependencies, push to ECR n use it as PROCESSING container
-- in BYOC you have to create container with all dependency. if want to use benefits of prebuilt container then extend them in your container and use script mode.The custom Python scripts must be packaged and executed within a container or computing environment.
+- Custom Python script for processing for model: create container with script n add all dependencies, 
+push to ECR n use it as PROCESSING container
+- in BYOC you have to create container with all dependency. if want to use benefits of prebuilt container
+then extend them in your container and use script mode.The custom Python scripts must be packaged and 
+executed within a container or computing environment.
+
 
 Processing Job
 new data s3 => s3 event notification => trigger lambda => sm processing job calling => result in s3
 
-- Batch : schedule task like once daily, not realtime need, a few minutes to several hours or even days can take too
+- Batch : schedule task like once daily, not realtime need, a few minutes to several hours or even days 
+can take too
 
 - scaling occur very rapid change in cooldown pariod
 
@@ -491,7 +546,8 @@ new data s3 => s3 event notification => trigger lambda => sm processing job call
 
 - AWS Transfer Family not intend to integrate directly with SageMaker for training across regions.
 
-- Model card : information about each model, including its background, intended use cases, performance metrics, and business context.
+- Model card : information about each model, including its background, intended use cases, 
+performance metrics, and business context.
 
 Bedrock to fine tune model
 1 create Hp tunning
@@ -506,9 +562,11 @@ creating knowledge base
 
 configure data source & configure vector source N create
 
-- Object detection == identify and locate multiple objects within an image === counting specific items, such as animals, in drone imagery
+- Object detection == identify and locate multiple objects within an image === counting specific items, 
+such as animals, in drone imagery
 
-- Semantic segmentation algorithm  == autonomous vehicles to identify road signs and medical imaging, give each thing, give label to each object in image 
+- Semantic segmentation algorithm  == autonomous vehicles to identify road signs and medical imaging, 
+give each thing, give label to each object in image 
 
 - Image classification algorithm   single label to entire image
 
