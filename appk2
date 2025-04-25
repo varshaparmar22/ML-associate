@@ -34,13 +34,13 @@ auditing & reproducibility
 2. attach tag to resource, 
 3. tie up those tag in cost allocation
 
-- Parquet : big data, columnar, binary, compression, splittable, fast query
+- Parquet : big data, columnar, binary, compression, splittable, fast query, data compression, encoding
 
 - avaro : serialization
 
 - Credit bureau data : check person's financial behaviour
 
-- Fsx for luster : sub milisec latency, hundreds of gigabytes/sec tp, millions of IOPS, high computing, parallel
+- Fsx for luster : sub milisec latency, hundreds of gigabytes/sec tp, millions of IOPS, high computing, parallel, large dataset
 
 - KDS : data ingestion/storage
 
@@ -72,19 +72,20 @@ auditing & reproducibility
 
 - snowcone : 14 tb, snowball : 100 tb, snowmobile : 100 Pb
 
-- Amazon S3 Transfer Acceleration : use optimized network protocols and AWS edge locations, acc s3 transfer
+- Amazon S3 Transfer Acceleration : use optimized network protocols and AWS cloudfronts's edge locations, acc s3 transfer
 
 - Parquet = structured and semi-structured data, NOT unstructured data. NOt for realtime data processing
 
-- JSON line === for realtime data processing is best
+- JSON line === when want to handle unstructured data like image, video, audio --- one single line on each line can be parsed
 
 - JSON === wont improve processing performance as it has hierarchical structure
 
-- shard provides a fixed amount of throughput, add more shard to handle high volume of data fast
+- shard provides a fixed amount of throughput, add more shard to handle high volume of data fast - improve ingestion performance and reduce latency
+- high latency low tp -=== try increase shard   <==== KINESIS
 
--AWS Global Accelerator : static IP add, improve app's availability
+-AWS Global Accelerator : static IP add, improving the availability and performance of applications by routing user traffic through the AWS global network infrastructure. Traffic accelerator
 
-- AWS DataSync : use for data migration
+- AWS DataSync : use for data migration, on-premise-aws -- online tool
 
 - SCPs = guardrails on actions, a user or role can do.
 
@@ -105,6 +106,21 @@ together
 - 401 Unauthorized:MissingAuthenticationTokenException
 
 - 400 Bad Request: IncompleteSignatureException, ValidationException, InvalidAction
+
+- IAM role be assumed by entities (users, applications, services), temporary access short term
+
+- access across account ==== cross account access is must
+
+- S3 Access Points : associated with network path & will need IAM role to assign access to s3 to someone
+
+- execution role is IMP for notebook, domain, ec2 instance to do some task
+
+- IAM policy attached to user --- user will have access to everywhere not domain specific
+
+- policy attach to role --- give access to all users which are using that role outside of domain too
+
+- policy attached to IAM group  --- give access to all users from given group so user from it can be outside domain one too
+
 
 
 +======================================================================================
@@ -293,7 +309,7 @@ together
 
 - Amazon Comprehend Custom Entity Recognition - domain specific sdata key word extraction
 
-- Opensearch => searching & indexing data
+- Opensearch => searching & indexing data, vector database, vector search for RAG
 
 - SM Debugger: debug training, identify memory, compute usage, training issues like overfitting, vanish gradient, under utilized resource, under performing jobs, analyse the metrics and offer recommendation like reduce resource consumption, identify bottlenecks, and improve training process, 
 
@@ -417,6 +433,91 @@ Amazon Kendra S3 connector is special service to connect s3 with kendra -  full 
 - mainly in all models need to convert categorical data ===== > numeric data
 
 - blocked/filter feature to filter out response from gen ai q business chatbot
+
+- FSx for luster is Linux based file system
+
+- robust scaler === use when outlier is there. Remove median from given value n scale data by interquartile range (IQR) -- p25,p75
+- standard scaler --- remove mean(effected by outlier) and scale data by standard deviation
+- z-score normalization --- scale feature value to unit norm -1,0,1
+
+$$$ CSV to Parquet = to prepare data for ml
+
+# Save as Parquet with optional compression (Snappy is default)
+df.to_parquet("your_file.parquet", compression="snappy")
+
+1. remove irrelevant columns
+2. convert into parquet
+3. do compression
+
+for performance improvement
+
+- Big data processing === EMR  ===== distributed computing framework
+
+- Detecting-Redacting PII/PHI is not to create from code... use aws services for it or prebuilt model(canvas or some) to achieve it
+
+- with lambda === configuring, deploying, maintaining are associated so its not minimal operational overhead
+- converting pdf to text will increase operational overhead too
+
+- Feature is change =====> output of model is change ==== partial dependency plot
+  pdp ====visualize marginal effect of one /more features on prediction
+
+- TVD = overall difference between two probability distributions.
+
+- Kullback-Leibler Divergence (KL) = difference between two probability distributions.
+
+- Spearman === man===not normal, non-linear relationship between numerical features
+- pearson ==== son ==== linear-relationship ==== normal distribution
+
+- for time-series/ordered data(sorted by order) === we need to preserve order ==== split in dw by Ordered split
+- dw === ordered/keybased/randomized/stratified === split type
+
+Blue/green deployment : two model/model variant deployment, having auto rollback feature
+canary : small portion traffic shift and monitor it and them ramp it up
+
+
+- Custom Python script for processing for model: create container with script n add all dependencies, push to ECR n use it as PROCESSING container
+- in BYOC you have to create container with all dependency. if want to use benefits of prebuilt container then extend them in your container and use script mode.The custom Python scripts must be packaged and executed within a container or computing environment.
+
+Processing Job
+new data s3 => s3 event notification => trigger lambda => sm processing job calling => result in s3
+
+- Batch : schedule task like once daily, not realtime need, a few minutes to several hours or even days can take too
+
+- scaling occur very rapid change in cooldown pariod
+
+- gateway endpoint within the VPC : Amazon S3 and DynamoDB within the same region. 
+
+- interface endpoint within the VPC : cross region
+
+- AWS Transfer Family not intend to integrate directly with SageMaker for training across regions.
+
+- Model card : information about each model, including its background, intended use cases, performance metrics, and business context.
+
+Bedrock to fine tune model
+1 create Hp tunning
+2. analyse result - training & validation
+3. purchase provisioned throughput for deploying it on endpoint to work- before using this in bedrock task
+model should be fine tunned and provisioned first
+
+creating knowledge base
+1. create bucket
+2. create(configure) knowledge base in bedrock
+3. load data in knowledge base
+
+configure data source & configure vector source N create
+
+- Object detection == identify and locate multiple objects within an image === counting specific items, such as animals, in drone imagery
+
+- Semantic segmentation algorithm  == autonomous vehicles to identify road signs and medical imaging, give each thing, give label to each object in image 
+
+- Image classification algorithm   single label to entire image
+
+- To update Feature Group : 
+1. use UpdateFeatureGroup to add new feature(attribute) in group,
+2. PutRecord to update all new/old record (data populated) with attribute value of new feature
+
+reindexing will not update-- need to use putrecord to update old/new records for values
+
 
 
 
