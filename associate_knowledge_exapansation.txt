@@ -1,0 +1,134 @@
+AWS Identity and Access Management (IAM) is crucial for managing security and access control for machine learning (ML) systems, models, and related resources. IAM ensures that only authorized users or services can interact with ML components by setting up roles and permissions.
+
+IAM supports two main types of policies:
+
+– Identity-Based Policies: These policies are attached to IAM users, groups, or roles to specify what actions they can perform and on which resources. They define access permissions for individuals or groups.
+
+– Resource-Based Policies: These policies are applied directly to resources, such as S3 buckets or VPC endpoints, to control who or what can access them. They help manage access at the resource level.
+
+IAM Users: When an IAM user is created, it is an AWS identity that has long-term credentials, such as a username, password, and optionally access keys. These credentials are generally used for persistent access, where the user needs to access AWS resources over a long period.
+
+IAM Roles: An IAM role is an AWS identity that has specific permissions and is intended to be assumed by entities (users, applications, services). IAM roles do not have long-term credentials. Instead, they are designed to provide temporary security credentials that expire after a short period, typically ranging from a few minutes to a maximum of 12 hours. When you create an IAM role, you can attach one or more identity-based policies to it. These policies define what actions the role can perform when it is assumed.
+
+
+By creating an IAM role in the media analytics company's account and granting the necessary permissions to access the S3 bucket, the video processing startup can assume this role and securely access the bucket. This approach follows the principle of least privilege and allows for granular access control.
+
+The process involves:
+
+Creating an IAM role in the media analytics company's account with the required permissions to access the S3 bucket.
+Granting the video processing startup's AWS account the ability to assume this role using the sts:AssumeRole permission.
+The video processing startup can then assume the role and access the S3 bucket using temporary security credentials provided by AWS Security Token Service (STS).
+
+Total Variation Distance (TVD) – TVD quantifies the maximum divergence in outcome distributions between different demographic groups. It’s a critical metric for identifying how much the predicted outcomes for one group differ from another, thus helping to assess bias in the model’s predictions.
+largest possible difference between the probability distributions for label outcomes 
+
+Kullback-Leibler Divergence (KL) : This metric primarily measures the divergence between two probability distributions often used to compare the distribution of outcomes across different groups. KL Divergence is not specifically tailored for measuring class imbalance or comparing the proportion of labels across demographic groups. It is typically used in broader contexts of distribution comparisons and might not provide a direct assessment of bias related to demographic attributes.
+
+
+Kullback-Leibler Divergence (KL) : probability
+Jensen-Shannon Divergence (JS)  : entropy
+(CDD): disparcity based on condition in label distribution
+Kolmogorov-Smirnov (KS) : maximum divergence
+Lp-norm (LP) : distance between the facet distributions of the observed labels in a training dataset
+
+
+
+You carry out the following steps in bedrock model customization.
+
+1. Prepare a labeled dataset and, if needed, a validation dataset. Ensure the training data is in the required format, such as JSON Lines (JSONL), for structured input and output pairs.
+2. Configure IAM permissions to access the S3 buckets containing your data. You can either use an existing IAM role or let the console create a new one with the necessary permissions.
+3. Optionally set up KMS keys and/or a VPC for additional security to protect your data and secure communication.
+4. Start a training job by either fine-tuning a model on your dataset or continuing pre-training with additional data. Adjust hyperparameters to optimize performance.
+5. Buy Provisioned Throughput for the fine-tuned model to support high-throughput deployment and handle the expected load. === IMP
+6. Deploy the customized model and use it for inference tasks in Amazon Bedrock. 
+
+
+
+
+Retrieval-Augmented Generation (RAG) is a technique used in natural language processing (NLP) that combines the strengths of retrieval-based and generation-based models. It involves retrieving relevant information from a knowledge base and then using a language model to generate a response based on the retrieved information.
+
+Amazon OpenSearch Service can be utilized as a vector database, which is ideal for storing and retrieving high-dimensional vectors needed for RAG applications. This enables the chatbot to efficiently search and retrieve relevant document vectors that contain the necessary operational guidelines.
+
+
+Bedrock can ingest data from various sources, including Amazon S3 buckets, and create a knowledge base that can be used by the RAG chatbot to retrieve relevant information from the operational guidelines.
+
+In a RAG setup, the retrieval process involves querying the Amazon OpenSearch Service vector database with a natural language query, using vector similarity search to find the most relevant sections of documents. These retrieved document vectors are then passed to a large language model (LLM) for generating the final response. Similarly, the knowledge base created in Amazon Bedrock can be queried by the retrieval component to identify the most relevant operational procedures, which are then used by the LLM to craft a response.
+
+
+
+
+– General-purpose instances are created to offer a balanced combination of compute, memory, and networking resources. They are suitable for various applications, such as web servers, development environments, and databases that need balanced performance. The T, M, and A instance families fall into this category and provide adaptable compute power.
+
+– Compute-optimized instances are perfect for compute-bound applications that require high-performance processing, such as high-performance web servers, scientific modeling, and gaming servers. The C instance family falls under this category, offering greater compute power relative to memory.
+
+– Memory-optimized instances are specifically built for workloads that need substantial memory compared to computational power. This is ideal for in-memory databases, big data analytics, and high-performance computing (HPC) workloads. The R, X, and Z instance families offer a high memory-to-CPU ratio to cater to these requirements.
+
+– Accelerated computing instances feature GPUs or FPGAs (Field Programmable Gate Arrays) to accelerate graphics rendering, machine learning, and data-parallel computations. These instances, such as the P and G families, offer the best performance for tasks like deep learning inference and model training.
+
+– Storage-optimized instances are specifically designed for workloads that demand high disk throughput and low-latency storage. These instances offer rapid local storage for large datasets and are well-suited for big data workloads, NoSQL databases, and distributed file systems. Examples of storage-optimized instances include the I and D families.
+
+
+A knowledge base can be used not only to answer user queries and analyze documents but also to augment prompts provided to foundation models by adding context. It retains conversation context when answering queries and grounds answers in citations, allowing users to verify the information and ensure the response is accurate and factually correct.
+
+
+
+IDENTICAL_DATA_AND_ALGORITHM: This warm start type is used when the new tuning job uses the same input data and algorithm as the previous job. It allows SageMaker to start the new tuning job from the best hyperparameter values in the previous job.
+
+TRANSFER_LEARNING: This warm start type is used when the new tuning job uses a dataset or algorithm different than the previous job. It allows SageMaker to transfer the knowledge gained from the previous job to the new job, potentially leading to faster convergence and better results.
+
+
+Create a new Docker image by extending the SageMaker pre-built scikit-learn container to include the necessary third-party libraries and custom dependencies. Push this new image to Amazon ECR and use it for the training job. By extending a pre-built image, you can take advantage of the included deep-learning libraries and settings without creating an image from scratch. You can modify the container to add libraries, adjust settings, and install additional dependencies.
+
+
+By creating an inline policy for the execution role of the SageMaker Studio domain, administrators can customize the permissions that are specific to that domain, without affecting other domains or users within the environment. This approach is particularly useful in shared environments where multiple teams may operate within the same SageMaker Studio instance but require different levels of access. The inline policy is attached directly to the execution role, making it part of the role's configuration and ensuring that only the designated SageMaker domain has the permissions necessary to access specific AWS resources like S3 buckets. This method aligns with best practices for security and access management within AWS, ensuring that permissions are both minimal and appropriate for the task at hand.
+
+
+Create an inline policy for the execution role of the SageMaker Studio domain.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
