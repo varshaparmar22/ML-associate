@@ -29,7 +29,8 @@ auditing & reproducibility
 
 - choose report, alert if only they are specified to implement
 
-- attach the tag for cost management:(tag can be aws/user generated but tie up to cost allocation is must in each)
+- attach the tag for cost management:(tag can be aws/user generated but tie up to cost allocation is 
+must in each)
 1. create tag, 
 2. attach tag to resource, 
 3. tie up those tag in cost allocation
@@ -40,7 +41,8 @@ auditing & reproducibility
 
 - Credit bureau data : check person's financial behaviour
 
-- Fsx for luster : sub milisec latency, hundreds of gigabytes/sec tp, millions of IOPS, high computing, parallel, large dataset
+- Fsx for luster : sub milisec latency, hundreds of gigabytes/sec tp, millions of IOPS, high computing, 
+parallel, large dataset
 
 - KDS : data ingestion/storage
 
@@ -206,7 +208,7 @@ real purpose
   2.RAG app : Retrieve api => retrive (direct query) from KB
   Agent :  reason through steps to assist 
 
-- multyi-modal + a/b testing  is possible
+- multi-modal + a/b testing  is possible
 
 - TPR, FPR ==== true and false will chnage in formula only, p,n will be at same place ======== ROC curve
 
