@@ -578,8 +578,47 @@ give each thing, give label to each object in image
 
 reindexing will not update-- need to use putrecord to update old/new records for values
 
+- To minimize false positive ==== minimize False Positive Rate
+
+- High performance === high compute power
+
+- Accelerated Computing === GPU - deep learning inference and model training.
+
+- if ML pre-processing is required like pre-processing, feature engineering, splitting etc === go for Sm pre-processing if in option
+  not Glue ---- as glue is for normal ETL process, not ml specific
+
+- CreateModelInvocationJob======== for batch job in bedrock
+- InvokModel ======== just invoke model for inference (single)
 
 
+SM Debugger : detects errors, bottlenecks, or other inefficiencies during the training process,
+automatically generate alerts when anomalies or specific conditions, such as class imbalances or overfitting, 
+occur during the training
+ minimizing operational overhead === use debugger == realtime, automated
+
+- TensorBoard : visualizing training metrics such as accuracy, loss, and gradients- manual to do
+
+- Sporadic inference need --- async - handle cold start problem
+
+- Notebook instance in === VPC endpoint & aws service in === VPC endpoint --------- they will be connected by 
+Privatelink(interface endpoint)
+Notebook instance MUST be in Private SUBNEt to connect to aws service in VPC with proper permissions
+
+- AWS Billing and Cost Management : monitor, manage, budget, billing alert
+
+- ModelExplainabilityMonitor leverages SHAP (Shapley Additive Explanations) values to track the contribution of each feature.
+
+- auditing + tracking API calls + compliance + monitoring across multiple services -CloudTrail
+
+- 1. create pipeline, 2. Create role, 3. Schedule BridgeEvent   ==== schedule pipeline execution
+
+- for gaming server compute optimized (high performance instance) will go, for ML use acc computing
+
+- big data analytics = operation in memory == memory optimized
+
+- check work monitoring to select cloudwatch log/alert/insight === apps, service, system related 
+
+- audit/compliance/log === cloudtrail === api call related 
 
 
 
