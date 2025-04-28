@@ -275,7 +275,7 @@ Related to CloudFormation
 - Write a training script in Python that adheres to TensorFlow's Estimator API, upload it to an S3 bucket, and use SageMaker script mode with the built-in TensorFlow container to execute the script  -- containers also provide some additional Python packages, such as Pandas and NumPy, so you can write your own code for training an algorithm. These frameworks also allow you to install any Python package hosted on PyPi by including a requirements.txt, specify sm version in container
 
 - Nested types can be stored in: Parquet like array and object in column format
-- XML not supported by canvas as input file
+- XML not in canvas, csv,parquet,json,excel in canvas
 
 - notebook instance will use IAM role to access bucket/service
 - prefix added to bucket to make data compartment 
