@@ -35,7 +35,7 @@ must in each)
 2. attach tag to resource, 
 3. tie up those tag in cost allocation
 
-- Parquet : big data, columnar, binary, compression, splittable, fast query, data compression, encoding
+- Parquet : big data, columnar, binary, splittable, fast query, data compression, encoding, optimized for analytics
 
 - avaro : serialization
 
@@ -350,6 +350,8 @@ recommendation like reduce resource consumption, identify bottlenecks, and impro
 - we have model made focus on training ===== now make sustainable by debugger & trainium, 
 - AMT can do work while model development not after that
 
+- During training need to implement sustainability ===== CHoose Debugger
+
 Amazon SageMaker Edge Manager : deployment, monitoring, and maintenance of models on devices at the edge
 
 - in Model registery model group --- logical collection of model version --- same problem/usecase
@@ -381,7 +383,7 @@ executable example notebooks
 
 - Model registry COLLECTION = to categorize model into diff types
 
-- max_depth in XGBoost - reduce to reduce overfitting ====== use first to reduce overfitting in xgboost
+- max_depth in XGBoost - reduce to reduce overfitting ====== reduce overfitting in xgboost= generalize better the model
 
 - Production variant : behind single endpoint deploy multiple models/version of model
 
@@ -620,8 +622,87 @@ Notebook instance MUST be in Private SUBNEt to connect to aws service in VPC wit
 
 - audit/compliance/log === cloudtrail === api call related 
 
+- scatterplot is ideal for visualizing the relationship between two continuous variables
+
+- Based on user query search is there is the - semantic search
+
+- TensorBoard show you each n every layer result of NN network so to check tensors it will be easy with it
+  converging, or vanishing or exploding weights and gradients, accessing tensor data, compare multiple training jobs
+  Debugger is not visual
+
+-  random seed ensures that the tuning job generates the same sequence of random numbers across multiple runs, leading to consistent and reproducible results. 
+
+- SM AUTO-PILOT == do only -----SUPERVISED TASK. having label is must
+
+- Inference pipeline work for realtime/batch inference
+
+- AMT is Hyperband, a multi-fidelity tuning approach
+
+-  AWS Trainium supports popular ML frameworks such as TensorFlow, PyTorch, and MXNet. 
+
+- AWS Trainium is a purpose-built instance type
+
+With Model Monitor, you can establish:
+
+– Continuous monitoring with a real-time endpoint.
+
+– Regular monitoring through batch transform jobs.
+
+– Scheduled monitoring for asynchronous batch transform jobs.
+
+- Tabtransformer === tabular data handling, categorical & numerical data n associate with their embedding
+
+- Amazon SageMaker Studio Classic -- workflow can create - building, training, and deploying & monitoring machine learning models
+- AWS glue can create data ingestion pipeline too --- ETL
+
+- Amazon Q Business==== name as a 'blocked word', the service can automatically omit it from the chatbot’s responses.
+
+- EFS is only for Linux instances only --- 
+
+- Mechanical turk -==== ANY human task
+- ground truth ==== data labeling ---- incorporate with mechanical turk, private companies, 
+
+- SM interleaved pipeline for model parallelism for tensorflow and pytorch
+
+- Sm Model Parallelism library only work for PYTORCH
+
+- Sharded Data Parallelism ====  Data Parallelism(calculation of gradient) + model Parallelism(calculation of weight & activation layer)
+  implemented in sm model parallel library for pytorch only === already there in DLC of pytorch
+
+- Training accelerator device for training -- Elastic fabric adpter = network device  = can attach to instance =
+  use maximum bandwith and use nvidia collective communication library
+
+- MISC - minimize communication scale --- p4de GPU instance(400 gbps networking, 80gb memory)
+
+- Trn1  == 800 gbps networking, Trn1n  == 1600 gbps networking 
+
+- deploy models by : 
+ 1. ModelBuilder from the SageMaker Python SDK - by code
+ 2. SageMaker JumpStart : pre trained model on pre configured endpoint
+ 3. Cloud Formation 
+
+Boto3 ======= raw access to AWS APIs. any aws service can be accessed
+exa= CreateTrainingJob, CreateEndpoint
+
+SageMaker Python SDK ==== built on boto3 === high level library for working with SM === mainly for ML = training,tunning,deployment
+hides all low-level API calls.  training, model uploading, deployment, tuning== can even do local testing 
+ex = estimator.fit(), predictor.predict()
+
+If you want maximum flexibility (custom configs, fine-grained networking, special resource setups), go Boto3.
+If you want to quickly train/deploy models without worrying about API structure, go SageMaker Python SDK.
+
+ALB == Web apps, API gateways, microservices routing, path-based routing.
+NLB == IoT apps, gaming, real-time systems, highly sensitive latency apps. HIGH TP
 
 
+cloudwatch containers insight : for log, metrics of container like EKS, ECS
 
+cloudformation+infrastructure composer === visualize cf
 
+- cloudwaTCH alarms are based on metrics, not log
 
+- A C - trail can be applied to All Regions (default) or a single Region.
+Management Events:
+• Operations that are performed on resources in your AWS account
+
+- AWS config can use eventbridge/sns direct to send notification about compliance state/config change
