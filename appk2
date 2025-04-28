@@ -94,7 +94,8 @@ Rout traffic to that endpoint which is hosting app
 
 - AWS DataSync : use for data migration, on-premise-aws -- online tool
 
-- SCPs = guardrails on actions, a user or role can do.
+- SCPs = guardrails on actions, a user or role can do. -  SCPs as master guardrails or account-wide permissions 
+boundaries. - service control policy --- organisation based - IAM is not matter here
 
 - AWS Resource Access Manager (RAM)  = cross account resource access
 
@@ -294,7 +295,7 @@ much space will be needed
 
 - To schedule pipeline by eventbridge
 1. create pipeline
-2. create role for eventbridge
+2. create rule for eventbridge
 3. schedule pipeline by event bridge rule
 
 - 2 variables ===== correlation/relationship/trends with anomaly === scatter
@@ -383,7 +384,7 @@ executable example notebooks
 
 - Model registry COLLECTION = to categorize model into diff types
 
-- max_depth in XGBoost - reduce to reduce overfitting ====== reduce overfitting in xgboost= generalize better the model
+- max_depth in XGBoost - reduce to reduce overfitting ====== reduce overfitting in xgboost= generalize better 
 
 - Production variant : behind single endpoint deploy multiple models/version of model
 
@@ -586,7 +587,8 @@ reindexing will not update-- need to use putrecord to update old/new records for
 
 - Accelerated Computing === GPU - deep learning inference and model training.
 
-- if ML pre-processing is required like pre-processing, feature engineering, splitting etc === go for Sm pre-processing if in option
+- if ML pre-processing is required like pre-processing, feature engineering, splitting etc === go for Sm 
+pre-processing if in option
   not Glue ---- as glue is for normal ETL process, not ml specific
 
 - CreateModelInvocationJob======== for batch job in bedrock
@@ -608,7 +610,8 @@ Notebook instance MUST be in Private SUBNEt to connect to aws service in VPC wit
 
 - AWS Billing and Cost Management : monitor, manage, budget, billing alert
 
-- ModelExplainabilityMonitor leverages SHAP (Shapley Additive Explanations) values to track the contribution of each feature.
+- ModelExplainabilityMonitor leverages SHAP (Shapley Additive Explanations) values to track the contribution
+of each feature.
 
 - auditing + tracking API calls + compliance + monitoring across multiple services -CloudTrail
 
@@ -627,10 +630,11 @@ Notebook instance MUST be in Private SUBNEt to connect to aws service in VPC wit
 - Based on user query search is there is the - semantic search
 
 - TensorBoard show you each n every layer result of NN network so to check tensors it will be easy with it
-  converging, or vanishing or exploding weights and gradients, accessing tensor data, compare multiple training jobs
-  Debugger is not visual
+  converging, or vanishing or exploding weights and gradients, accessing tensor data, compare multiple
+training jobs Debugger is not visual
 
--  random seed ensures that the tuning job generates the same sequence of random numbers across multiple runs, leading to consistent and reproducible results. 
+-  random seed ensures that the tuning job generates the same sequence of random numbers across multiple runs,
+leading to consistent and reproducible results. 
 
 - SM AUTO-PILOT == do only -----SUPERVISED TASK. having label is must
 
@@ -652,10 +656,12 @@ With Model Monitor, you can establish:
 
 - Tabtransformer === tabular data handling, categorical & numerical data n associate with their embedding
 
-- Amazon SageMaker Studio Classic -- workflow can create - building, training, and deploying & monitoring machine learning models
+- Amazon SageMaker Studio Classic -- workflow can create - building, training, and deploying & monitoring 
+machine learning models
 - AWS glue can create data ingestion pipeline too --- ETL
 
-- Amazon Q Business==== name as a 'blocked word', the service can automatically omit it from the chatbot’s responses.
+- Amazon Q Business==== name as a 'blocked word', the service can automatically omit it from the chatbot’s 
+responses.
 
 - EFS is only for Linux instances only --- 
 
