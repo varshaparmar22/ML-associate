@@ -52,9 +52,7 @@ data leakage in your data. - 300 prebuilt PySpark transformations - It can write
 - s3 express one zone = directory bucket = support file mode, fast file mode and pipe mode 
 
 - FSx for luster and EFS both will be mounted on training instance first
-
-- FastFile mode will work with only s3 data files without them downloading in training instance - works well with many small files
-
+- FastFile model work well with large files
 - scale_pos_weight in xgboost helps to handle class imbalance\
 
 - when IOT sensor send abnormal reading - RCF will use - anomaly detection - identifying unusual patterns that precede failures.
