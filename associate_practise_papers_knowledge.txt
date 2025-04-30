@@ -792,5 +792,14 @@ LF workflow
 - remediation retries
 - monitor resource=> not compilant => trigger evenbridge/ trigger sns  direct too
 
+- FastFile mode works well with large files, use it only when you know your instance store has enough storage space inside to fit whole db as afterwards it is going to store init
+it wont support menifest/augmented menifest file format.
+it will not combine with fsx for luster, it-FF will take data from s3
+
+- AWS Compute Optimizer is a service that analyzes your AWS resources' configuration and utilization metrics to provide you with rightsizing recommendations. 
+
+
+
+
 
 
