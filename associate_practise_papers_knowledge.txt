@@ -802,4 +802,16 @@ it will not combine with fsx for luster, it-FF will take data from s3
 - Amazon SageMaker Studio- (IDE) for building, training, and deploying ML models on AWS.
 - SageMaker Studio: Canvas users can optionally share their models with data scientists using SageMaker Studio, allowing for refinement and deployment.
 
+- Flink distributed processing framework for stream data - streaming ETL - transform,aggre,enrich data
+- aggregate streaming data -- flink, data firehose --- for realtime go realtime
+- from studio class we can share models in canvas
+- tag user profile in sm domain and that tag will be useful in budget based on user particular tag based
+access to resource or other service --- can be tracked ===== simple no setting for individual user 
+All resources that the user profile creates will have a domain ARN tag and a user profile ARN tag. The domain ARN tag is based on domain ID, while the user profile ARN tag is based on the user profile name.
+- domain will organiz - user profile, applications, their associated resources
+EFS, authorized users, security/policy/apps/vpc configurations --- in domain
+1. user profile -- have personel EFS,& shared resources across domain
+2. shared spaces -- shared IDE app, EFS dir by all domain users
+- SNS can call lambda function too
+- SG --- allow permi, NACL - allow & deny permission for --- IP add
 
