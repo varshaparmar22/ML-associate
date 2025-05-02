@@ -814,4 +814,33 @@ EFS, authorized users, security/policy/apps/vpc configurations --- in domain
 2. shared spaces -- shared IDE app, EFS dir by all domain users
 - SNS can call lambda function too
 - SG --- allow permi, NACL - allow & deny permission for --- IP add
+- model should have similar true positive rate across all dem group to check bias and f1 & auc roc
+- callback steps => for manual approval steps or running custom workloads. in SM PIPELINE
+- ROute table -- route network traffic to resources
+- Kendra GenAI index == for q business & bedrock
+Data Quality and Insights Report  ==== with data wrangler --- based on that you can do data transformation in dw, like missing, outlier, duplicate, skwed data  --- check it and trasform according
+Redshift has dynamic data masking policy to obfuscate sensitive data - obscures sensitive columns at query time - this masking policy can be created based on user,role, column, cell level - partialy /completely redact data or hash it. n join can be applied on those data too without its access
+- Materialized View in REDSHIFT
+static, need refresh, consume additional storage - view capability, not to go to compute large query again n again
+- bias = incorrect assumption of model
+- variance = models complexity
+- in image-everything stored as vector -- either reckognition or any unstructured data
+- Reck - face colleciton(labeld), facematch
+- create face-collection - indexface operation
+- create user - associated faces
+- Searchface, searchfacebyimage, searchuser,searchuserbyimage,startfacesearch
+- dynamodb can not be imported by data wrangler
+- lf tag will be attached with data catalog when it is infer from data, tag will manage permission for data via lf data catalog for principal
+- automatic secret rotation is done by lambda because the new changes secret will be reflected in secret and the db/place where it is used like service - create rotation fun and at last set network access for rot fun
+- CW log data stays for 15 months
+- In notebook.. it should have permission to put/get object from bucket or decrypt data by kms:Decrypt
+- to assign permission on kms you can use kms key arn/particular bucket arn too
+- from SM studio you can visualize data quality metrics from monitor
+- for large dataset n you dont want realtime then go for batch
+- XGBoos : Its robust handling of a variety of data types, relationships, distributions.
+The variety of hyperparameters that you can fine-tune
+You can use XGBoost for regression, classification (binary and multiclass), and ranking problems.
+- Once the file system is successfully mounted, you can upload your dataset to the mounted location, making it accessible for training your models within the SageMaker environment. This approach allows you to leverage the storage capacity and capabilities of FSx ONTAP while working with SageMaker for model development and training.
+
+
 
