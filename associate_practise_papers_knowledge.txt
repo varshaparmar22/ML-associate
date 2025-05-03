@@ -853,3 +853,37 @@ You can use XGBoost for regression, classification (binary and multiclass), and 
 scaling can be done based on custom metric too
 - schedule/step scaling = by api/cli,  schedule ==one time / recurrent based on condition
 - LR warmup step : training step when lr increase gradually to not have divergence/slow convergence
+- green fleet works smoothly for baking periods(set eval period) - check n rollback if issue while
+- Document classification is semi-supervised learning technique
+- model drift ==== retrain the model, data drift === create new baseline(if updated recently)== MANAGE DRIFT
+- You can take actions like retraining models, auditing upstream systems, or fixing quality issues without having to monitor models manually or build additional tooling.
+-predictable burst in traffic ==== only then = provisioned concurrency with serverless
+- automatic scaling === auto scaling
+-aws SAM - serverless application model framework
+- lambda will invoke template/containers and run architecture to deploy model on it
+- lambda starts with api
+- data/model distribution shift/drift can be identify by featrue attribution not bias 
+- compute average of objective matrics == all traning jobs previously
+then compute median of those averages - -- to match with current to find - at same epoch - stoptraining
+- high correlation between features === L2 regularization
+- prevent over/under fitting & inc generalization ==== L1 regularization
+- fine tunning/incremental training will lead to catastrophic forgetting -- use transfer learning
+to solve it.. in that storage of small old data / metadata will be consider in TL so old knowledge]
+will be considered
+epoch = whoe dataset passed in model
+iteration =  single forward & backword pass by batch size(like 20 records in model with for/back pass)
+cluster size = GPU*no of Instances
+https://docs.aws.amazon.com/sagemaker/latest/dg/distributed-training.html
+
+
+
+
+
+
+
+
+
+
+
+
+
