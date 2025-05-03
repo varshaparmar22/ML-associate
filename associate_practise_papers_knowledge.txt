@@ -841,6 +841,15 @@ static, need refresh, consume additional storage - view capability, not to go to
 The variety of hyperparameters that you can fine-tune
 You can use XGBoost for regression, classification (binary and multiclass), and ranking problems.
 - Once the file system is successfully mounted, you can upload your dataset to the mounted location, making it accessible for training your models within the SageMaker environment. This approach allows you to leverage the storage capacity and capabilities of FSx ONTAP while working with SageMaker for model development and training.
-
-
-
+- Provisioned Throuhput : tp you can purchase to increase amount/rate token processed during inference -- IM
+- CloudWatch Lambda Insights to monitor the Lambda function’s memory usage, CPU usage, and invocation times
+- SM model Monitoring == realtime, batch, async batch(scheduled)
+- Model Customization ; trained model, you have new training data which are useful for adjusting model params again examle: fine tunning, continue pre-training
+- for data leakage issue -- use ordered split - for ordered data
+- for unordered data - data leakage - use split by key
+- A2I store the refined result in s3 after proving human reiew over inference.
+- howmany instance to deploy under what condition === step scaling
+- for scaling consider - metric & target value (matrics of invocation, actual value of invocation no)
+scaling can be done based on custom metric too
+- schedule/step scaling = by api/cli,  schedule ==one time / recurrent based on condition
+- LR warmup step : training step when lr increase gradually to not have divergence/slow convergence
