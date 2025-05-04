@@ -874,11 +874,22 @@ epoch = whoe dataset passed in model
 iteration =  single forward & backword pass by batch size(like 20 records in model with for/back pass)
 cluster size = GPU*no of Instances
 https://docs.aws.amazon.com/sagemaker/latest/dg/distributed-training.html
-
-
-
-
-
+- to maintain model performance === data should be clean & consistant
+so implement data validation rule in monitor to keep data clean N c, 
+- in canvas new feature for - Data Validation - check quality of data like
+missing, outlier, distribution change, 
+- ECS can handle service (long running task), standalone task(batch), schedule task(task run with help of eventbridge)
+- event / api logged by ct, ct lake data stored in orc format, 10 yras retension, lake dashboard kind feat
+- cost hs anomaly detection too
+- interpretability : model's inner working like weight/feature would be understandable
+- explainability : in human terms exaplain how model make this prediction output/input consider
+- by prompt engin -- we can customize FM model
+- fine tunning will change weight of model
+- fastfile mode accept only s3 file
+- If your dataset is too large=, has many small files that you can't serialize easily, or uses FSx for Lustre 
+Its file system scales to hundreds of gigabytes per second (GB/s) of throughput and millions of IOPS, which is ideal when you have many small files.
+- larege dataset and many samll files use fsx for luster
+- when large dataset and large files more than 50 mb use fastfile mode
 
 
 
