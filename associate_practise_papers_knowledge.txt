@@ -890,7 +890,7 @@ missing, outlier, distribution change,
 Its file system scales to hundreds of gigabytes per second (GB/s) of throughput and millions of IOPS, which is ideal when you have many small files.
 - larege dataset and many samll files use fsx for luster
 - when large dataset and large files more than 50 mb use fastfile mode
-
+- MaxWaitTimeInSeconds = training time + wait time
 
 
 
