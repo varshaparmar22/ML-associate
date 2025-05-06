@@ -891,6 +891,28 @@ Its file system scales to hundreds of gigabytes per second (GB/s) of throughput 
 - larege dataset and many samll files use fsx for luster
 - when large dataset and large files more than 50 mb use fastfile mode
 - MaxWaitTimeInSeconds = training time + wait time
+- changing data every epochs slightly so model will not overfit. - data augmentation like image augm
+- data wrangler has dat quality/insight rules too
+- share, manage resources access across diff accounts aws RAM from your acc/organisation
+- policy can be attached to group of models in registry to manage access to it
+- after training model will be registered in sm registry
+- LF permissions are augmented on IAM permission policy
+- Large scale ETL wont work with data wrangler
+- serverless inference integrate with lambda
+- precision and recall should be followed when there is imbalanced dataset
+- fraud detection has complex relationship in features so xgboost can handle it better
+- ImportModel will work with bedrock n other builtin aws algos, to import your own custom model
+- howmany instances will be deployed under some condition = step scaling
+- schedule policy = time based and recurring based
+- standardization - mean = 0, standard deviation = 1 == map -1,0,1
+- Use FastFile for cost-efficiency and when you don’t need high-throughput I/O.
+- Use FSx for Lustre for high-performance needs.
+- large data set + high trhoughput ===== NOt Use ===== FastFile/file mode
+- dont mix two input mode with each other for same dataset in same training job
+- most latency sensitive app == s3 express one zone can be helpfull - single digit milisec latency
+- SM Lineage Tracking  create and store info about steps of ml workflow so reproduce, track model, dataset lineage.
+- 3 savings plan : compute, ec2 instance & sm saving plans
+- specific instance prediction --- check how feature value is effecting on it = shaply value
 
 
 
