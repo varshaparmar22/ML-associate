@@ -712,3 +712,13 @@ Management Events:
 • Operations that are performed on resources in your AWS account
 
 - AWS config can use eventbridge/sns direct to send notification about compliance state/config change
+- SM jumpstart has built in fine tunning functionality, bu js you can compare, evaluate fm models based 
+on their pre-defined quality and metrices
+- Stacking involves training a meta-model on the predictions of several base models
+
+
+
+
+
+
+
