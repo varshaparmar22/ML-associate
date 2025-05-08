@@ -395,7 +395,7 @@ AWS Compute Optimizer provides detailed recommendations for optimizing AWS compu
 - if containerazed ml workload batch job/workload then choose only ecs/eks
 - IF eks application === use auto scaling with ==  HPS = horizontal pod autoscaler(by cpu n memory),,, fargate will be used by aws resources not eks == == choose based on that requirements
 - if want to sort data and get result then use sort key for dynamodb
-- global secondary index - GSI ==> when you want to query the data by some attribute - along with optional sort key, not primary key  ===== used with dynamodb ========= best configuration for dnb table
+- global secondary index - GSI ==> when you want to query the data by some attribute - along with optional sort key, not primary key  ===== used with dynamlodb ========= best configuration for dnb table
 - SM clarify has bias reports that can be run on training and live data to generate pre, post training bias metrics - to compare it and identify to retrain the model, rather than goiing for shapley values
 - for identifying bias and fairness in model prediction use f1 score and auc-roc eveluation -by roc cheking TRP across different demographic user groups
 - CodeBuild has buildspec file ===> for command and setting and important 
@@ -912,8 +912,8 @@ Its file system scales to hundreds of gigabytes per second (GB/s) of throughput 
 - most latency sensitive app == s3 express one zone can be helpfull - single digit milisec latency
 - SM Lineage Tracking  create and store info about steps of ml workflow so reproduce, track model, dataset lineage.
 - 3 savings plan : compute, ec2 instance & sm saving plans
-- specific instance prediction --- check how feature value is effecting on it = shaply value
-
+- specific instance prediction --- check how feature value is effecting on it = shaply value = per instance explaination
+- giving input and checking how target value respond === pdp plot
 
 
 
