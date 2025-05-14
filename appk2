@@ -14,8 +14,6 @@ auditing & reproducibility
 
 - sm pipeline=== contional steps can be added, this or that
 
-- fastfile mode === many small file = rapid access, low latency, only access data from s3 
-
 - lambda = lightweight models only can be deployed not recommandation kind
 
 - transparent model = how input convert into output ==== optimization should be transparent 
@@ -644,7 +642,7 @@ leading to consistent and reproducible results.
 
 -  AWS Trainium supports popular ML frameworks such as TensorFlow, PyTorch, and MXNet. 
 
-- AWS Trainium is a purpose-built instance type
+- AWS Trainium is a purpose-built instance(microchips) type
 
 With Model Monitor, you can establish:
 
@@ -715,7 +713,7 @@ Management Events:
 - SM jumpstart has built in fine tunning functionality, bu js you can compare, evaluate fm models based 
 on their pre-defined quality and metrices
 - Stacking involves training a meta-model on the predictions of several base models
-
+- fine tunning feature is available in sm jumpstart
 
 
 
