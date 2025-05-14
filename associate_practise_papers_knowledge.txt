@@ -19,6 +19,8 @@ vectorize text,
 featurize datetime, 
 encoding categorical, 
 image augmentation, 
+image resize, enhance,
+PCA,
 train,test,validation split are covered.
 data leakage in your data. - 300 prebuilt PySpark transformations - It can write query by using sql to get data from variety of sources, it is data visualization tool too, can handle any data formate
 
@@ -442,7 +444,8 @@ AWS Compute Optimizer provides detailed recommendations for optimizing AWS compu
 - dynamodb + lambda === event driven operational task not for realtime inference
 - Amazon Personalize automatically retrains the models backing your recommenders every 7 days. Just provide data, it will do retraining so lambda can work to provide data 
 - macie can be used to identify unusual data access patterns
-- lambda + retries with DLQ - Dead Letter Queue by SQS - to handle failure
+- lambda + retries with DLQ - Dead Letter Queue by SQS - to handle failure - 
+In AWS, a Dead-Letter Queue (DLQ) is a queue that captures messages that couldn't be processed successfully by a service after multiple attempts. It's commonly used with Amazon SQS, Lambda, SNS, and other services to help you debug and handle message processing failures.
 - operational issues === DevOp guru
 - translate + api gateway + lambda + dynamodb
 - for ml dont rely on cpu only for auto scaling as i/o & memory requirement is also need to be considered
