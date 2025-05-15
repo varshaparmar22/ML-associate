@@ -714,9 +714,31 @@ Management Events:
 on their pre-defined quality and metrices
 - Stacking involves training a meta-model on the predictions of several base models
 - fine tunning feature is available in sm jumpstart
-
-
-
-
+- in sm script mode : === 1. Your training script (train.py) 2.Any dependencies (optionally via requirements.txt)
+3. choose a prebuilt SageMaker container (e.g., pytorch, tensorflow, etc.). No custom container needed
+- SAM & lambda is associated, lambda is pay per use, realtime, serverless, event driven, lightweight, 
+use with api gateway/event driven, auto scaling,
+- SAM - serverless application model framework - use yalm scrpt to specify security n othr config
+- if model is suffering from latency/performance issue while request == check X-ray to debug
+- production variant/ a/b testing : behind same(one) endpoint multiple model will deployed 
+- parquet : large dataset, parallel proessing as column based, nested structure, array kind storage
+- data validation - in canvas new feature to check data quality
+- cost report can be filter by resource tag, need to activate tag in 'cost allocation tag' section first
+- auto scaling related budget alert can be set too
+- dont want to manage infra === go to serverless
+- LF tag access control --- feature - to assign acc control on lf data catalog for the retriver of LF
+- custom workload, manual approval step, lambda step, emr, glue to run in sm pipeline - it will require role
+- DW has data quality & insight report to chek data quality & abnormality - help you to 
+clean and process data, warning to investigate and make transformation according to that
+- compute optimizer check metrics and configuration of resource and give the recommandation
+- All resources that the user profile creates will have a domain ARN tag and a user profile ARN tag. 
+- budget can be set = based on ml cost/tag based resources - u can specify tag name to set bud
+- ACL are not secure.. use role n bucket policy for access control
+- parameter store will not give secret rotation, secret can be versioned in secret manager
+- managed rotation are for : Amazon Aurora, Amazon ECS, Amazon RDS and Amazon Redshift. in S M
+- async & realtime ==== persistant endpoint
+- batch & serverless === not persistant endpoint
+- after mounting fs on sm training instance you can upload data on it
+- redshift dynamic masking feature for PII - while query time - to user/role 
 
 
