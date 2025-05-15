@@ -570,8 +570,9 @@ such as animals, in drone imagery
 
 - Semantic segmentation algorithm  == autonomous vehicles to identify road signs and medical imaging, 
 give each thing, give label to each object in image 
-
-- Image classification algorithm   single label to entire image
+- boundry/area/segment in image ==== semantic segmentation
+- presence/location in image === object detection
+- Image classification algorithm   single/multi label to entire image
 
 - To update Feature Group : 
 1. use UpdateFeatureGroup to add new feature(attribute) in group,
