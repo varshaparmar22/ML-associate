@@ -96,7 +96,8 @@ In cf all components can be treated as stack and create its template and referen
 - Create a Docker container with the required environment, push the container image to Amazon ECR (Elastic Container Registry), and use SageMaker’s Script Mode to execute the training script within the container
 - Script mode enables you to write custom training and inference code & execute it while still utilizing common ML framework containers maintained by AWS.
 - SageMaker supports most of the popular ML frameworks through pre-built containers, and has taken the extra step to optimize them to work especially well on AWS compute and network infrastructure in order to achieve near-linear scaling efficienc'y. These pre-built containers also provide some additional Python packages, such as Pandas and NumPy, so you can write your own code for training an algorithm. These frameworks also allow you to install any Python package hosted on PyPi by including a requirements.txt file with your training code or to include your own code directories.
-- script mode is inevitable approach to write custom container with your requirements and dependencies -Bring your own container - BYOC
+- script 
+mode is inevitable approach to write custom container with your requirements and dependencies -Bring your own container - BYOC
 
 - SageMaker Model Registry to register, track, and manage different versions of models, capturing all relevant metadata, including data sources, hyperparameters, and training code, Manage the approval status of a model, model card
 
@@ -257,7 +258,7 @@ how to choose mode for training :
 - small dataset (50-100gb) : filemode
 - small dataset & all files are small : use serialization to reduce download overhead, file format like TFRecord, WebDataset, RecordIO
 - for larger dataset & many small files : where serialization is not possible - FSx for luster gives hundreads of giga bytes/sec, millions of IOPS ideal when many small files
-- for larger files : use fastfile mode 
+\- for larger files : use fastfile mode 
 
 - ECS --- standalone batch processing job
 - Lambda/eventbridge --- schedule task
@@ -265,7 +266,6 @@ how to choose mode for training :
 Cluster Size = no of GPU * no of instances
 
 -pipeline execution is used to achieve true parallelism in model parallelism as it has loss of performance becuase in it data processed by GPU sequentially 
-
 - Bedroack mainly used for NLP, generative task
 
 Related to CloudFormation
