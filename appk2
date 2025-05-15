@@ -73,7 +73,7 @@ parallel, large dataset
 - snowcone : 14 tb, snowball : 100 tb, snowmobile : 100 Pb
 
 - Amazon S3 Transfer Acceleration : use optimized network protocols and AWS cloudfronts's edge locations, 
-acc s3 transfer
+acc s3 transfer - accelerate uploads to Amazon S3 over long distances
 
 - Parquet = structured and semi-structured data, NOT unstructured data. NOt for realtime data processing
 
@@ -741,5 +741,17 @@ clean and process data, warning to investigate and make transformation according
 - batch & serverless === not persistant endpoint
 - after mounting fs on sm training instance you can upload data on it
 - redshift dynamic masking feature for PII - while query time - to user/role 
+- validation:error for classification problems= error rate in predicted classes
+ - xgboost -== supervised
+- ss = autonomous vehicles to identify road signs and medical imaging to segment anatomical structures.
+- kafka = ingesting and transporting streaming data.- You write producer and consumer apps to interact with it.
+- Flink =  real-time streamdata processing, analytics, filtering, transformations, and aggregations.
+- kullback - comparing distribution between outcome, tvd = maximum distance between outcome distribution
+- AWS DataSync is an online tool for data transfer b/w on-premises storage and AWS services
+- AWS Global Accelerator -  accelerating traffic to specific application endpoints like EC2 instances or
+Elastic Load Balancers- improving the availability and performance of applications
+- Route 53 - route traffic to nearest host of given application/model 
+
+
 
 
