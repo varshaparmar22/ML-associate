@@ -751,7 +751,31 @@ clean and process data, warning to investigate and make transformation according
 - AWS Global Accelerator -  accelerating traffic to specific application endpoints like EC2 instances or
 Elastic Load Balancers- improving the availability and performance of applications
 - Route 53 - route traffic to nearest host of given application/model 
-
-
-
-
+- codebuild = compiles source code, runs tests, and produces software packages
+- online feature store = for inference
+- offline feature store = for training & exploration
+- S3 → EventBridge → Step Functions	
+- S3 → Lambda → Step Functions
+- Lambda will trigger sm processing job
+- check feature contribution => shapley value = ModelExplainabilityMonitor 
+- SHAP baselines = create an explainability baseline for = 'feature attribution' to the model’s predictions.
+- howmuch outcome distribution b/w two group - kulback - diverge from each other   
+- maximum/total outcome distribution b/w two group - TVD
+- Kolmogorov-Smirnov (KS) = maximum / greatest disparities by demographic group
+- step fun =  triggering the SageMaker Processing jobs for preprocessing, managing the data flow between different steps, 
+and potentially invoking other AWS services like SageMaker Training for model training. 
+- cw log insights = log analysis
+- config = configuration drift and compliance status
+- Identity-Based Policies: IAM users, groups, or roles
+- SCPs = guardrails or limits on actions a user or role can do.
+- sm studio has = monitor, wrangler ---- all features
+- cross account IAM role --- specify other accnt arn in enabled policy statement
+- assume this role using the sts:AssumeRole permission.
+- SageMaker notebook instance is associated with a private subnet and has access to the VPC endpoint.
+for accessing other services like comprehend
+- cw log - monitoring and logging application-level events - running applications or AWS services
+- to share model in canvas it should be registered in registery. 
+- to train/deploy model put it in ECR
+- Parquet format will not work for realtime processsing - it is columnar so batch processing can go
+- Unstructured data ==== XXXXXXXX ==== not use Parquet
+- unstructured data ===== jsonlines
