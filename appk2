@@ -779,3 +779,30 @@ for accessing other services like comprehend
 - Parquet format will not work for realtime processsing - it is columnar so batch processing can go
 - Unstructured data ==== XXXXXXXX ==== not use Parquet
 - unstructured data ===== jsonlines
+- in loan context - customer demographic inf = age, income stat, marital stat, education level, employment etc
+- transport layer - distributed training = inter container traffic = TLS layer encryption
+- vector db will store only vector info, actual doc in knowledge base. Bedrock automatic manage update is kb update
+- Transformer architecture is widely used to generate embeddings of text
+- Diffusion arch - forward diffusion & reverse diffusion
+- Sm Hyperpod = to distribute training data in smaller chunk to do parallel processing across accelerator
+- online predictio  = immidiate check if transaction is fraudulent 
+- Chi-square - determine whether = relationship between cate
+gorical variables
+- Amazon Q = Amazon Q Business + Amazon Q Developer ===== Amazon Q – Generative AI Assistant
+- aws chatbot = slack, chime = run cmmand in slack, interact with aws service like cw from chatbot send notif
+- neptune db === graph, recommandation app
+- AWS codestar ====(for model/app) == > - template based === develop + build +test + deploy === complete proj 
+- aws codepipeline === build + test + deploy === ci/cd
+- Pruning	Reduces the size of a neural network by removing less important weights or neurons
+  Reducing model complexity and size
+- Quantization	Reduces the precision of the weights/activations in the model
+  Speed and memory optimization, especially for inference
+(e.g., from 32-bit floats to 8-bit integers) to reduce memory and improve speed.
+Bayesian optimization
+- Explores: Starts by sampling randomly or evenly across the search space.
+- Exploits: Gradually focuses on regions where earlier trials performed well.
+
+
+
+
+
