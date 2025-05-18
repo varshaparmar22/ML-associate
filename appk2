@@ -794,13 +794,22 @@ gorical variables
 - AWS codestar ====(for model/app) == > - template based === develop + build +test + deploy === complete proj 
 - aws codepipeline === build + test + deploy === ci/cd
 - Pruning	Reduces the size of a neural network by removing less important weights or neurons
-  Reducing model complexity and size
+  Reducing model complexity and size, work in overfitting
 - Quantization	Reduces the precision of the weights/activations in the model
-  Speed and memory optimization, especially for inference
+  Speed and memory optimization, computation & memory demand less
 (e.g., from 32-bit floats to 8-bit integers) to reduce memory and improve speed.
 Bayesian optimization
 - Explores: Starts by sampling randomly or evenly across the search space.
 - Exploits: Gradually focuses on regions where earlier trials performed well.
+- frequent deployment  === github flow
+- for normal instance === compute optimizer
+- for sm instances === sm inference recommander
+- Hippa --private workforce required for labeling
+- cw log has data masking cap for its log data only - data protection feature
+- pipeline fail step is to stop it
+- quntile binning can make linear rel between 2 var.. if they are non linear before
+- prompt => rag => continue pre trainnig => fine tunning === explore any chatbot 
+
 
 
 
