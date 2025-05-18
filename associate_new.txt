@@ -8,6 +8,17 @@
 
 -  entropy is a measure of uncertainty or impurity in a dataset.
 
+- NetApp SnapMirror — replicates data between two different ONTAP systems using proven replication technology
+  Supports replication between FSx and on-prem or Cloud Volumes ONTAP.
+- Bedrock = import model & model weights from an Amazon S3 bucket. SM models can be too
+
+- in multimodel endpoint --- 2 models can have diff auto scaling requirement
+multi-model - auto scaling
+
+
+
+
+
 
 
 
