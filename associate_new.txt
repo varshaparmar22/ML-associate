@@ -1,2 +1,13 @@
-Amazon SQS (Simple Queue Service) is a fully managed message queuing service by AWS that enables decoupling and scaling of microservices, distributed systems, and serverless applications.
+- Amazon SQS (Simple Queue Service) is a fully managed message queuing service by AWS that enables decoupling and scaling of microservices, distributed systems, and serverless applications.
+
+- A CloudWatch Event is essentially a rule that matches incoming events (triggers) and routes them to targets 
+- lambda has cold start prolem, latency issue
+
+- Macie to protect sensitive data
+- Amazon OpenSearch Service is a fully managed, scalable, and secure search and analytics service powered by the OpenSearch and Elasticsearch engines. - Ingest, search, and analyze large volumes of data in near real-time. - Stores data as JSON documents in index
+
+-  entropy is a measure of uncertainty or impurity in a dataset.
+
+
+
 
